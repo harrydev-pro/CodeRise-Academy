@@ -1,0 +1,60 @@
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  getAuthenticatedUser,
+  loginUser,
+  logoutUser,
+  registerUser,
+} from "./authService";
+
+export const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setUser(getAuthenticatedUser());
+    setLoading(false);
+  }, []);
+
+  const register = useCallback(async (form) => {
+    return registerUser(form);
+  }, []);
+
+  const login = useCallback(async (form) => {
+    const result = await loginUser(form);
+
+    if (result.success) {
+      setUser(result.user);
+    }
+
+    return result;
+  }, []);
+
+  const logout = useCallback(async () => {
+    await logoutUser();
+    setUser(null);
+  }, []);
+
+  const value = {
+    user,
+    loading,
+    isAuthenticated: Boolean(user),
+    isAdmin: user?.role === "admin",
+    register,
+    login,
+    logout,
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
