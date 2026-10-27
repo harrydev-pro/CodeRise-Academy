@@ -96,19 +96,13 @@ export default function Programs() {
 
                     <div className="program-price-block">
                       <span className="price-caption">
-                        Current promotional price
+                        
                       </span>
 
                       <div className="program-price">
                         <strong>
-                          {formatCurrency(program.promotionalPrice)}
+                          {formatCurrency(program.originalPrice)}
                         </strong>
-
-                        {program.originalPrice > program.promotionalPrice && (
-                          <del>
-                            {formatCurrency(program.originalPrice)}
-                          </del>
-                        )}
                       </div>
                     </div>
 
