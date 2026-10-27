@@ -233,11 +233,11 @@ export default function Home() {
                   <p>{program.description}</p>
 
                   <div className="program-price">
-                    <strong>
-                      {formatCurrency(program.promotionalPrice)}
-                    </strong>
+                    {/* <strong> */}
+                      {/* {formatCurrency(program.promotionalPrice)} */}
+                    {/* </strong> */}
 
-                    <del>{formatCurrency(program.originalPrice)}</del>
+                    <strong>{formatCurrency(program.originalPrice)}</strong>
                   </div>
 
                   <p className="program-duration">
@@ -277,7 +277,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Button as={Link} to="/register" variant="light">
+          <Button as={Link} to="/register" variant="primary">
             Get Started <ArrowRight size={18} />
           </Button>
         </div>
