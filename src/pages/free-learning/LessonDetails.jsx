@@ -17,6 +17,7 @@ import {
   getUserProgress,
   markLessonCompleted,
 } from "../../features/free-learning/progressService";
+import { getQuizzesByTrack } from "../../features/assessments/quizService";
 
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../../components/common/Button";
@@ -32,6 +33,7 @@ export default function LessonDetails() {
   const track = getTrackById(trackId);
   const lesson = getLessonById(lessonId);
   const lessons = getLessonsByTrack(trackId);
+  const quiz = getQuizzesByTrack(trackId)[0];
 
   const lessonIndex = lessons.findIndex((item) => item.id === lessonId);
 
@@ -240,13 +242,13 @@ export default function LessonDetails() {
               project.
             </p>
 
-            <Link
-              to={`/free-learning/${trackId}/quiz`}
+            {quiz && <Link
+              to={`/free-learning/${trackId}/quizzes/${quiz.id}`}
               className="sidebar-action"
             >
               <ClipboardCheck size={17} />
               Take a quiz
-            </Link>
+            </Link>}
 
             <Link
               to={`/free-learning/${trackId}/projects`}

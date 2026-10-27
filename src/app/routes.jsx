@@ -17,7 +17,7 @@ import NotFound from "../pages/public/NotFound";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
 import VerifyEmail from "../pages/auth/VerifyEmail";
-import ForgotPassword from "../pages/auth/ForgotPassword";
+import ForgotPassword from "../pages/auth/ForgetPassword";
 import ResetPassword from "../pages/auth/ResetPassword";
 
 import Dashboard from "../pages/student/Dashboard";
@@ -35,7 +35,8 @@ import LessonDetails from "../pages/free-learning/LessonDetails";
 import QuizPage from "../pages/free-learning/QuizPage";
 import QuizResults from "../pages/free-learning/QuizResults";
 import ProjectDetails from "../pages/free-learning/ProjectDetails";
-import ProjectSubmission from "../pages/free-learning/ProjectSubmission";
+import ProjectBrief from "../pages/free-learning/ProjectBrief";
+import ProjectSubmission from "../pages/free-learning/ProjectSubmissions";
 
 import VideoCourseCatalog from "../pages/video-courses/VideoCourseCatalog";
 import VideoCourseDetails from "../pages/video-courses/VideoCourseDetails";
@@ -45,19 +46,9 @@ import PurchaseConfirmation from "../pages/video-courses/PurchaseConfirmation";
 
 import ApplicationForm from "../pages/applications/ApplicationForm";
 import ApplicationConfirmation from "../pages/applications/ApplicationConfirmation";
+import AdminPage from "../pages/admin/AdminPage";
+import AdminOverview from "../pages/admin/AdminOverview";
 
-import AdminDashboard from "../pages/admin/AdminDashboard";
-import Users from "../pages/admin/Users";
-import ActivityLogs from "../pages/admin/ActivityLogs";
-import Courses from "../pages/admin/Courses";
-import Lessons from "../pages/admin/Lessons";
-import VideoManagement from "../pages/admin/VideoManagement";
-import ProgramsManagement from "../pages/admin/Programs";
-import Pricing from "../pages/admin/Pricing";
-import QuizManagement from "../pages/admin/QuizManagement";
-import Submissions from "../pages/admin/Submissions";
-import Applications from "../pages/admin/Applications";
-import Settings from "../pages/admin/Settings";
 
 function StudentRoute({ children }) {
   return (
@@ -98,6 +89,14 @@ export default function AppRoutes() {
 
         <Route
           path="/application-confirmation"
+          element={
+            <StudentRoute>
+              <ApplicationConfirmation />
+            </StudentRoute>
+          }
+        />
+        <Route
+          path="/application-confirmation/:applicationId"
           element={
             <StudentRoute>
               <ApplicationConfirmation />
@@ -151,8 +150,12 @@ export default function AppRoutes() {
           element={<QuizResults />}
         />
         <Route
-          path="/free-learning/:trackId/projects/:projectId"
+          path="/free-learning/:trackId/projects"
           element={<ProjectDetails />}
+        />
+        <Route
+          path="/free-learning/:trackId/projects/:projectId"
+          element={<ProjectBrief />}
         />
         <Route
           path="/free-learning/:trackId/projects/:projectId/submit"
@@ -191,18 +194,18 @@ export default function AppRoutes() {
           </AdminRoute>
         }
       >
-        <Route index element={<AdminDashboard />} />
-        <Route path="users" element={<Users />} />
-        <Route path="activity" element={<ActivityLogs />} />
-        <Route path="courses" element={<Courses />} />
-        <Route path="lessons" element={<Lessons />} />
-        <Route path="video-management" element={<VideoManagement />} />
-        <Route path="programs" element={<ProgramsManagement />} />
-        <Route path="pricing" element={<Pricing />} />
-        <Route path="quizzes" element={<QuizManagement />} />
-        <Route path="submissions" element={<Submissions />} />
-        <Route path="applications" element={<Applications />} />
-        <Route path="settings" element={<Settings />} />
+        <Route index element={<AdminOverview />} />
+        <Route path="users" element={<AdminPage />} />
+        <Route path="activity" element={<AdminPage />} />
+        <Route path="courses" element={<AdminPage />} />
+        <Route path="lessons" element={<AdminPage />} />
+        <Route path="video-management" element={<AdminPage />} />
+        <Route path="programs" element={<AdminPage />} />
+        <Route path="pricing" element={<AdminPage />} />
+        <Route path="quizzes" element={<AdminPage />} />
+        <Route path="submissions" element={<AdminPage />} />
+        <Route path="applications" element={<AdminPage />} />
+        <Route path="settings" element={<AdminPage />} />
       </Route>
 
       {/* Unknown URLs */}

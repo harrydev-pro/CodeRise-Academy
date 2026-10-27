@@ -10,7 +10,7 @@ export default function MyResults() {
   const { user } = useAuth();
 
   const results = readStore(
-    STORAGE_KEYS.QUIZ_RESULTS,
+    STORAGE_KEYS.quizResults,
     []
   )
     .filter((result) => result.userId === user?.id)

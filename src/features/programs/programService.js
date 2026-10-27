@@ -93,25 +93,4 @@ export function deleteProgram(programId) {
 
   return true;
 }
-  savePrograms(updatedPrograms);
-
-  return updatedPrograms;
-}
-
-export function addProgram(program) {
-  const programs = getPrograms();
-
-  const updatedPrograms = [
-    ...programs,
-    {
-      ...program,
-      id:
-        program.id ??
-        `program-${Date.now()}`,
-    },
-  ];
-
-  savePrograms(updatedPrograms);
-
-  return updatedPrograms;
-}
+ 

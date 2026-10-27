@@ -28,6 +28,10 @@ export const publicNavigation = [
     path: "/programs",
   },
   {
+    label: "Video Courses",
+    path: "/video-courses",
+  },
+  {
     label: "Contact",
     path: "/contact",
   },
@@ -36,7 +40,7 @@ export const publicNavigation = [
 export const studentNavigation = [
   {
     label: "Dashboard",
-    path: "/student/dashboard",
+    path: "/dashboard",
     icon: LayoutDashboard,
   },
   {
@@ -46,7 +50,7 @@ export const studentNavigation = [
   },
   {
     label: "My Learning",
-    path: "/student/learning",
+    path: "/my-learning",
     icon: GraduationCap,
   },
   {
@@ -56,32 +60,32 @@ export const studentNavigation = [
   },
   {
     label: "Applications",
-    path: "/student/applications",
+    path: "/my-applications",
     icon: FileText,
   },
   {
     label: "My Submissions",
-    path: "/student/submissions",
+    path: "/my-submissions",
     icon: ClipboardCheck,
   },
   {
     label: "My Results",
-    path: "/student/results",
+    path: "/my-results",
     icon: GraduationCap,
   },
   {
     label: "My Purchases",
-    path: "/student/purchases",
+    path: "/my-purchases",
     icon: ShoppingBag,
   },
   {
     label: "Notifications",
-    path: "/student/notifications",
+    path: "/notifications",
     icon: Bell,
   },
   {
     label: "Profile",
-    path: "/student/profile",
+    path: "/profile",
     icon: UserRound,
   },
 ];
@@ -114,7 +118,7 @@ export const adminNavigation = [
   },
   {
     label: "Video Management",
-    path: "/admin/videos",
+    path: "/admin/video-management",
     icon: Video,
   },
   {

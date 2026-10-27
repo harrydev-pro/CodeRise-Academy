@@ -10,7 +10,7 @@ export default function MySubmissions() {
   const { user } = useAuth();
 
   const submissions = readStore(
-    STORAGE_KEYS.SUBMISSIONS,
+    STORAGE_KEYS.submissions,
     []
   )
     .filter((submission) => submission.userId === user?.id)

@@ -56,3 +56,7 @@ export function updateUserRecord(userId, updates) {
 export function getAllUsers() {
   return getStoredUsers();
 }
+
+export function updateUser(userId, updates) {
+  return updateUserRecord(userId, updates);
+}

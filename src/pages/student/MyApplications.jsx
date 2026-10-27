@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { FileText, CalendarDays } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
@@ -11,11 +11,10 @@ import { formatCurrency } from "../../utils/formatCurrency";
 
 export default function MyApplications() {
   const { user } = useAuth();
-  const [refreshKey] = useState(0);
 
   const applications = useMemo(() => {
     const allApplications = readStore(
-      STORAGE_KEYS.APPLICATIONS,
+      STORAGE_KEYS.applications,
       []
     );
 
@@ -25,15 +24,15 @@ export default function MyApplications() {
         (a, b) =>
           new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
       );
-  }, [user?.id, refreshKey]);
+  }, [user?.id]);
 
   const programs = getPrograms();
 
   function getProgramName(application) {
     return (
       programs.find((program) => program.id === application.programId)
-        ?.name ||
-      application.programName ||
+        ?.title ||
+      application.programTitle || application.programName ||
       "Training program"
     );
   }
@@ -85,12 +84,12 @@ export default function MyApplications() {
               <div className="record-meta">
                 <span>
                   <CalendarDays size={15} />
-                  {formatDate(application.createdAt)}
+                  {formatDate(application.submittedAt || application.createdAt)}
                 </span>
 
                 <span>
                   {formatCurrency(
-                    Number(application.price) || 0
+                    Number(application.promoPrice ?? application.price) || 0
                   )}
                 </span>
               </div>

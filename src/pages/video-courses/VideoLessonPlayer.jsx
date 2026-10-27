@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -30,11 +30,7 @@ export default function VideoLessonPlayer() {
 
   const [completedIds, setCompletedIds] = useState([]);
 
-  const purchased = useMemo(() => {
-    if (!user || !course) return false;
-
-    return hasPurchasedCourse(user.id, course.id);
-  }, [user, course]);
+  const purchased = Boolean(user && course && hasPurchasedCourse(user.id, course.id));
 
   if (!course || course.published === false) {
     return (

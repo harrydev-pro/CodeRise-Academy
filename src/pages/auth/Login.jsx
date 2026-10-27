@@ -144,6 +144,7 @@ navigate(`${destination}${search}`, { replace: true });
       <p className="auth-switch">
         New to CodeRise Academy? <Link to="/register">Create an account</Link>
       </p>
+      <div className="demo-login-note"><strong>Admin preview</strong><span>admin@coderiseacademy.com</span><span>Admin123!</span></div>
     </div>
   );
 }

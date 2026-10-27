@@ -14,7 +14,7 @@ export default function MyPurchases() {
   const { user } = useAuth();
 
   const purchases = readStore(
-    STORAGE_KEYS.PURCHASES,
+    STORAGE_KEYS.purchases,
     []
   ).filter(
     (purchase) =>

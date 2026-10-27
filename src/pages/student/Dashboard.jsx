@@ -24,18 +24,13 @@ export default function Dashboard() {
   const tracks = getTracks();
   const programs = getPrograms();
 
-  const applications = readStore(STORAGE_KEYS.APPLICATIONS, []);
-  const submissions = readStore(STORAGE_KEYS.SUBMISSIONS, []);
-  const results = readStore(STORAGE_KEYS.QUIZ_RESULTS, []);
-  const purchases = readStore(STORAGE_KEYS.PURCHASES, []);
+  const applications = readStore(STORAGE_KEYS.applications, []);
+  const results = readStore(STORAGE_KEYS.quizResults, []);
+  const purchases = readStore(STORAGE_KEYS.purchases, []);
 
   const userId = user?.id;
 
   const myApplications = applications.filter(
-    (item) => item.userId === userId
-  );
-
-  const mySubmissions = submissions.filter(
     (item) => item.userId === userId
   );
 
@@ -196,7 +191,7 @@ export default function Dashboard() {
 
         <div className="student-track-grid">
           {tracks.slice(0, 3).map((track) => {
-            const Icon = trackIcons[track.name] || BookOpen;
+            const Icon = trackIcons[track.title] || BookOpen;
 
             return (
               <article className="student-track-card" key={track.id}>
@@ -204,7 +199,7 @@ export default function Dashboard() {
                   <Icon size={25} />
                 </span>
 
-                <h3>{track.name}</h3>
+                <h3>{track.title}</h3>
 
                 <p>{track.description}</p>
 

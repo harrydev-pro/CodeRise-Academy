@@ -4,7 +4,7 @@ import {
   ArrowLeft,
   CheckCircle2,
   FileUp,
-  Github,
+  Code2,
   Globe,
 } from "lucide-react";
 
@@ -214,7 +214,7 @@ export default function ProjectSubmission() {
 
         <div className="form-field">
           <label htmlFor="githubUrl">
-            <Github size={17} />
+            <Code2 size={17} />
             GitHub repository URL
           </label>
 

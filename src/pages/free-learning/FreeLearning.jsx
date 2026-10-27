@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -11,7 +10,6 @@ import {
 
 import { getTracks } from "../../features/free-learning/trackService";
 import { useAuth } from "../../hooks/useAuth";
-import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 
 const trackIcons = {
@@ -32,22 +30,7 @@ const trackDescriptions = {
 export default function FreeLearning() {
   const { user } = useAuth();
 
-  const [tracks, setTracks] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    try {
-      setTracks(getTracks().filter((track) => track.published !== false));
-    } catch (error) {
-      console.error("Unable to load learning tracks:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  if (loading) {
-    return <Loader message="Loading learning tracks..." />;
-  }
+  const tracks = getTracks().filter((track) => track.published !== false);
 
   return (
     <main className="page-container">

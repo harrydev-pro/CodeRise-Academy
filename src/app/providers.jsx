@@ -1,6 +1,6 @@
 import { AuthProvider } from "../features/authentication/AuthContext";
 
-export function AppProviders({ children }) {
+export function AppProvider({ children }) {
   return (
     <AuthProvider>
       {children}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -14,26 +14,12 @@ import {
 } from "../../features/video-courses/videoCourseService";
 
 import { formatCurrency } from "../../utils/formatCurrency";
-import Loader from "../../components/common/Loader";
 import EmptyState from "../../components/common/EmptyState";
 
 export default function VideoCourseCatalog() {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const courses = getVideoCourses().filter((course) => course.published !== false);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
-
-  useEffect(() => {
-    try {
-      setCourses(
-        getVideoCourses().filter((course) => course.published !== false)
-      );
-    } catch (error) {
-      console.error("Unable to load video courses:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
   const categories = [
     "All",
@@ -64,10 +50,6 @@ export default function VideoCourseCatalog() {
       (category === "All" || courseCategory === category)
     );
   });
-
-  if (loading) {
-    return <Loader message="Loading video courses..." />;
-  }
 
   return (
     <main className="page-container">

@@ -1,7 +1,6 @@
 import {
   createContext,
   useCallback,
-  useEffect,
   useState,
 } from "react";
 
@@ -12,16 +11,12 @@ import {
   registerUser,
 } from "./authService";
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setUser(getAuthenticatedUser());
-    setLoading(false);
-  }, []);
+  const [user, setUser] = useState(getAuthenticatedUser);
+  const loading = false;
 
   const register = useCallback(async (form) => {
     return registerUser(form);

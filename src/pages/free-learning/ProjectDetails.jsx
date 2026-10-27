@@ -2,7 +2,6 @@ import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
   ArrowRight,
-  CheckCircle2,
   ClipboardList,
   Code2,
   Trophy,

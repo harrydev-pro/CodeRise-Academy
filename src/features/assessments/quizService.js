@@ -6,6 +6,7 @@ import {
 } from "../../services/storage/storageAdapter";
 
 import { initialQuizzes } from "../../data/initialQuizzes";
+import { getLessonsByTrack } from "../free-learning/lessonService";
 
 export function getQuizzes() {
   return readStore(
@@ -32,6 +33,11 @@ export function getQuizByLesson(lessonId) {
       quiz.lessonId === lessonId &&
       quiz.published
   );
+}
+
+export function getQuizzesByTrack(trackId) {
+  const lessonIds = new Set(getLessonsByTrack(trackId).map((lesson) => lesson.id));
+  return getQuizzes().filter((quiz) => quiz.trackId === trackId || lessonIds.has(quiz.lessonId));
 }
 
 export function saveQuizzes(quizzes) {

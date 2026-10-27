@@ -74,7 +74,7 @@ export default function Programs() {
             <div className="programs-grid">
               {programs.map((program) => {
                 const Icon =
-                  programIcons[program.name] || BookOpen;
+                  programIcons[program.title] || BookOpen;
 
                 return (
                   <article className="program-card" key={program.id}>
@@ -88,7 +88,7 @@ export default function Programs() {
                       </span>
                     </div>
 
-                    <h2>{program.name}</h2>
+                    <h2>{program.title}</h2>
 
                     <p className="program-description">
                       {program.description}
@@ -101,10 +101,10 @@ export default function Programs() {
 
                       <div className="program-price">
                         <strong>
-                          {formatCurrency(program.promoPrice)}
+                          {formatCurrency(program.promotionalPrice)}
                         </strong>
 
-                        {program.originalPrice > program.promoPrice && (
+                        {program.originalPrice > program.promotionalPrice && (
                           <del>
                             {formatCurrency(program.originalPrice)}
                           </del>

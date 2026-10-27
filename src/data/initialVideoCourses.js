@@ -15,7 +15,7 @@ export const initialVideoCourses = [
 
     price: 5000,
 
-    thumbnail: "/images/courses/html-course.jpg",
+    thumbnail: "/course-cover.svg",
 
     published: true,
 
@@ -38,7 +38,7 @@ export const initialVideoCourses = [
 
     price: 7500,
 
-    thumbnail: "/images/courses/css-course.jpg",
+    thumbnail: "/course-cover.svg",
 
     published: true,
 
@@ -61,7 +61,7 @@ export const initialVideoCourses = [
 
     price: 6500,
 
-    thumbnail: "/images/courses/javascript-course.jpg",
+    thumbnail: "/course-cover.svg",
 
     published: true,
 

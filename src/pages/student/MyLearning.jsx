@@ -9,6 +9,7 @@ import {
 
 import Button from "../../components/common/Button";
 import { getTracks } from "../../features/free-learning/trackService";
+import { getLessonsByTrack } from "../../features/free-learning/lessonService";
 import { getUserProgress } from "../../features/free-learning/progressService";
 import { useAuth } from "../../hooks/useAuth";
 
@@ -34,16 +35,13 @@ export default function MyLearning() {
 
       <div className="student-track-grid">
         {tracks.map((track) => {
-          const Icon = icons[track.name] || BookOpen;
+          const Icon = icons[track.title] || BookOpen;
 
-          const trackProgress = progress.find(
-            (item) => item.trackId === track.id
-          );
-
-          const percentage = Math.max(
-            0,
-            Math.min(100, Number(trackProgress?.percentage) || 0)
-          );
+          const completed = new Set(progress.filter(
+            (item) => item.trackId === track.id && item.completed
+          ).map((item) => item.lessonId));
+          const totalLessons = getLessonsByTrack(track.id).length;
+          const percentage = totalLessons ? Math.round(completed.size / totalLessons * 100) : 0;
 
           return (
             <article className="student-track-card" key={track.id}>
@@ -51,7 +49,7 @@ export default function MyLearning() {
                 <Icon size={25} />
               </span>
 
-              <h2>{track.name}</h2>
+              <h2>{track.title}</h2>
 
               <p>{track.description}</p>
 
@@ -63,7 +61,7 @@ export default function MyLearning() {
               <div
                 className="progress-track"
                 role="progressbar"
-                aria-label={`${track.name} progress`}
+                aria-label={`${track.title} progress`}
                 aria-valuenow={percentage}
                 aria-valuemin={0}
                 aria-valuemax={100}

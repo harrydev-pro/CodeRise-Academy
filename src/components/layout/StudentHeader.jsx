@@ -31,7 +31,7 @@ export default function StudentHeader({ onMenuClick }) {
       </div>
 
       <Link
-        to="/student/notifications"
+        to="/notifications"
         aria-label="View notifications"
         className="relative rounded-xl border border-gray-200 p-2.5 text-gray-600 hover:bg-gray-50"
       >

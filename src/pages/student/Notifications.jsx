@@ -10,7 +10,7 @@ export default function Notifications() {
   const { user } = useAuth();
 
   const allNotifications = readStore(
-    STORAGE_KEYS.NOTIFICATIONS,
+    STORAGE_KEYS.notifications,
     []
   );
 
@@ -28,7 +28,7 @@ export default function Notifications() {
         : item
     );
 
-    writeStore(STORAGE_KEYS.NOTIFICATIONS, updated);
+    writeStore(STORAGE_KEYS.notifications, updated);
 
     // Reloading is not required by React, but this demo page has no
     // notification context yet. Refresh the page to see persisted changes.

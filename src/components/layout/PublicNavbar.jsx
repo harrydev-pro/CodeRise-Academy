@@ -8,7 +8,8 @@ import { useAuth } from "../../hooks/useAuth";
 
 export default function PublicNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
+  const dashboardPath = user?.role === "admin" ? "/admin" : "/dashboard";
 
   const linkClass = ({ isActive }) =>
     [
@@ -51,7 +52,7 @@ export default function PublicNavbar() {
 
         <div className="hidden items-center gap-3 md:flex">
           {isAuthenticated ? (
-            <Link to="/student/dashboard">
+            <Link to={dashboardPath}>
               <Button>My Dashboard</Button>
             </Link>
           ) : (
@@ -94,7 +95,7 @@ export default function PublicNavbar() {
 
             {isAuthenticated ? (
               <Link
-                to="/student/dashboard"
+                to={dashboardPath}
                 onClick={() => setMenuOpen(false)}
               >
                 <Button className="w-full">My Dashboard</Button>

@@ -6,7 +6,6 @@ import {
   Trophy,
 } from "lucide-react";
 
-import Button from "../../components/common/Button";
 
 export default function QuizResults() {
   const { trackId } = useParams();

@@ -22,6 +22,15 @@ export function getStudentProgress(userId) {
   };
 }
 
+export function getUserProgress(userId) {
+  if (!userId) return [];
+  const stored = getStudentProgress(userId);
+  if (Array.isArray(stored)) return stored;
+  const tracks = Array.isArray(stored.tracks) ? stored.tracks : [];
+  const completed = Array.isArray(stored.completedLessons) ? stored.completedLessons : [];
+  return [...tracks, ...completed.map((lessonId) => ({ lessonId, completed: true }))];
+}
+
 export function saveStudentProgress(
   userId,
   updates
@@ -65,6 +74,18 @@ export function markLessonComplete(
 
   return saveStudentProgress(userId, {
     completedLessons: [...completedLessons],
+  });
+}
+
+export function markLessonCompleted(userId, trackId, lessonId) {
+  const student = getStudentProgress(userId);
+  const completedLessons = new Set(student.completedLessons || []);
+  completedLessons.add(lessonId);
+  const tracks = Array.isArray(student.tracks) ? student.tracks : [];
+  const withoutExisting = tracks.filter((item) => item.lessonId !== lessonId);
+  saveStudentProgress(userId, {
+    completedLessons: [...completedLessons],
+    tracks: [...withoutExisting, { trackId, lessonId, completed: true }],
   });
 }
 

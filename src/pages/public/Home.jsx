@@ -7,8 +7,6 @@ import {
   Server,
   CheckCircle2,
   GraduationCap,
-  Users,
-  Rocket,
   Lightbulb,
 } from "lucide-react";
 
@@ -93,66 +91,7 @@ export default function Home() {
 
           <div className="hero-visual">
             <div className="hero-visual-glow" />
-
-            <div className="code-window">
-              <div className="code-window-header">
-                <div className="window-dots">
-                  <span />
-                  <span />
-                  <span />
-                </div>
-
-                <span>your-future.jsx</span>
-              </div>
-
-              <div className="code-window-body">
-                <p>
-                  <span className="code-purple">const</span>{" "}
-                  future = {"{"}
-                </p>
-
-                <p className="code-indent">
-                  skills: [
-                </p>
-
-                <p className="code-indent code-green">
-                  "Design",
-                </p>
-
-                <p className="code-indent code-green">
-                  "Development",
-                </p>
-
-                <p className="code-indent code-green">
-                  "Innovation",
-                </p>
-
-                <p className="code-indent">
-                  ],
-                </p>
-
-                <p className="code-indent">
-                  learning:{" "}
-                  <span className="code-orange">true</span>,
-                </p>
-
-                <p className="code-indent">
-                  opportunities:{" "}
-                  <span className="code-orange">"growing"</span>
-                </p>
-
-                <p>{"};"}</p>
-
-                <p className="code-comment">
-                  // Your journey starts today.
-                </p>
-              </div>
-
-              <div className="code-window-footer">
-                <Rocket size={17} />
-                <span>Build something meaningful.</span>
-              </div>
-            </div>
+            <img className="hero-illustration" src="/hero-learning.svg" alt="A learner practicing software development at a computer" />
 
             <div className="floating-card floating-card-top">
               <span className="floating-icon">
@@ -289,13 +228,13 @@ export default function Home() {
                 <article className="program-preview-card" key={program.id}>
                   <span className="program-badge">Training program</span>
 
-                  <h3>{program.name}</h3>
+                  <h3>{program.title}</h3>
 
                   <p>{program.description}</p>
 
                   <div className="program-price">
                     <strong>
-                      {formatCurrency(program.promoPrice)}
+                      {formatCurrency(program.promotionalPrice)}
                     </strong>
 
                     <del>{formatCurrency(program.originalPrice)}</del>

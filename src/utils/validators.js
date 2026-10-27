@@ -17,3 +17,5 @@ export function validatePassword(password) {
 export function validateRequired(value) {
   return String(value ?? "").trim().length > 0;
 }
+function isRequired(){}
+export default isRequired
