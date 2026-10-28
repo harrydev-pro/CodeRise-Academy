@@ -10,7 +10,7 @@ export const initialPrograms = [
     duration: "2 months",
 
     originalPrice: 150000,
-    promotionalPrice: 25000,
+    // promotionalPrice: 25000,
 
     level: "Beginner",
 
@@ -38,7 +38,7 @@ export const initialPrograms = [
     duration: "4 months",
 
     originalPrice: 350000,
-    promotionalPrice: 35000,
+    // promotionalPrice: 35000,
 
     level: "Beginner to Intermediate",
 
@@ -68,7 +68,7 @@ export const initialPrograms = [
     duration: "4 months",
 
     originalPrice: 400000,
-    promotionalPrice: 35000,
+    // promotionalPrice: 35000,
 
     level: "Beginner to Intermediate",
 
