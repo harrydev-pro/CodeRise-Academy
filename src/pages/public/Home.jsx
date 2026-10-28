@@ -277,7 +277,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Button as={Link} to="/register" variant="primary">
+          <Button as={Link} to="/register" variant="outline">
             Get Started <ArrowRight size={18} />
           </Button>
         </div>

@@ -174,7 +174,7 @@ export default function About() {
             </p>
           </div>
 
-          <Button as={Link} to="/programs" variant="light">
+          <Button as={Link} to="/programs" variant="outline">
             Explore Programs <ArrowRight size={18} />
           </Button>
         </div>
