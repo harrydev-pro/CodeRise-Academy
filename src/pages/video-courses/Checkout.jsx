@@ -51,7 +51,7 @@ export default function Checkout() {
           action={
             <Link
               to="/login"
-              state={{ from: `/video-courses/${courseId}/checkout` }}
+              state={{ from: `/checkout/${courseId}` }}
               className="btn btn-primary"
             >
               Sign in

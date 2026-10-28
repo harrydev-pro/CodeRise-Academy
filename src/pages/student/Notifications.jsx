@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Bell, CheckCircle2, Info } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
@@ -9,9 +10,8 @@ import { formatDate } from "../../utils/formatDate";
 export default function Notifications() {
   const { user } = useAuth();
 
-  const allNotifications = readStore(
-    STORAGE_KEYS.notifications,
-    []
+  const [allNotifications, setAllNotifications] = useState(() =>
+    readStore(STORAGE_KEYS.notifications, [])
   );
 
   const notifications = allNotifications
@@ -29,10 +29,7 @@ export default function Notifications() {
     );
 
     writeStore(STORAGE_KEYS.notifications, updated);
-
-    // Reloading is not required by React, but this demo page has no
-    // notification context yet. Refresh the page to see persisted changes.
-    window.location.reload();
+    setAllNotifications(updated);
   }
 
   if (notifications.length === 0) {

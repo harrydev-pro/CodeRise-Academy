@@ -1,19 +1,29 @@
-# React + Vite
+# CodeRise Academy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CodeRise Academy is a React frontend built with Vite and React Router. The UI is organized into public, authentication, student, and administration routes; frontend API requests are centralized in `src/services/api/client.js`.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```sh
+npm install
+npm run dev
+```
 
-## React Compiler
+## Validate
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+```sh
+npm run lint
+npm run build
+```
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+## Backend API
 
-## Expanding the ESLint configuration
+Set `VITE_API_URL` in a local `.env` file to configure the backend base URL. If it is not set, requests use `http://localhost:5000/api`.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Route groups
+
+- Public: `/`, `/about`, `/contact`, `/programs`, `/video-courses`
+- Authentication: `/login`, `/register`, `/verify-email`, `/forgot-password`, `/reset-password`
+- Student: `/dashboard`, `/profile`, `/my-learning`, `/my-applications`, `/my-submissions`, `/my-results`, `/my-purchases`, `/notifications`
+- Learning and course details use parameterized paths under `/free-learning/:trackId` and `/video-courses/:courseId`.
+- Administration pages are under `/admin`.

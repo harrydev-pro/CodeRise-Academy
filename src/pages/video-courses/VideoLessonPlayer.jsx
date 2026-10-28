@@ -59,7 +59,7 @@ export default function VideoLessonPlayer() {
           action={
             <Link
               to="/login"
-              state={{ from: `/video-courses/${courseId}/learn` }}
+              state={{ from: `/video-courses/${courseId}/lessons/${lessonId || ""}` }}
               className="btn btn-primary"
             >
               Sign in
@@ -78,7 +78,7 @@ export default function VideoLessonPlayer() {
           description="A completed purchase record is required before opening this course."
           action={
             <Link
-              to={`/video-courses/${courseId}/checkout`}
+              to={`/checkout/${courseId}`}
               className="btn btn-primary"
             >
               Continue to checkout
@@ -202,7 +202,7 @@ export default function VideoLessonPlayer() {
             return (
               <Link
                 key={lesson.id || index}
-                to={`/video-courses/${courseId}/learn/${lesson.id}`}
+                to={`/video-courses/${courseId}/lessons/${lesson.id}`}
                 className={`video-playlist-item ${
                   isActive ? "active" : ""
                 }`}

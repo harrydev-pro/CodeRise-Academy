@@ -109,12 +109,18 @@ export default function VideoCourseDetails() {
             <Link
               to={
                 price === 0
-                  ? user
-                    ? `/video-courses/${course.id}/learn`
-                    : "/login"
-                  : `/video-courses/${course.id}/checkout`
+                  ? user && lessons[0]
+                    ? `/video-courses/${course.id}/lessons/${lessons[0].id}`
+                    : user
+                      ? `/video-courses/${course.id}`
+                      : "/login"
+                  : `/checkout/${course.id}`
               }
-              state={{ from: `/video-courses/${course.id}/learn` }}
+              state={{
+                from: lessons[0]
+                  ? `/video-courses/${course.id}/lessons/${lessons[0].id}`
+                  : `/video-courses/${course.id}`,
+              }}
               className="btn btn-primary full-width"
             >
               {price === 0 ? "Start course" : "Purchase course"}

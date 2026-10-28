@@ -8,7 +8,7 @@ import {
 
 
 export default function QuizResults() {
-  const { trackId } = useParams();
+  const { trackId, quizId } = useParams();
   const location = useLocation();
 
   const result = location.state?.result;
@@ -23,7 +23,7 @@ export default function QuizResults() {
           </p>
 
           <Link
-            to={`/free-learning/${trackId}/quiz`}
+            to={`/free-learning/${trackId}/quizzes/${quizId}`}
             className="btn btn-primary"
           >
             Start quiz
@@ -80,7 +80,7 @@ export default function QuizResults() {
 
         <div className="result-actions">
           <Link
-            to={`/free-learning/${trackId}/quiz`}
+            to={`/free-learning/${trackId}/quizzes/${result.quizId || quizId}`}
             className="btn btn-primary"
           >
             <RotateCcw size={17} />

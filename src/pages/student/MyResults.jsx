@@ -81,7 +81,7 @@ export default function MyResults() {
                 <div className="record-meta">
                   <span>
                     <CalendarDays size={15} />
-                    {formatDate(result.createdAt)}
+                    {formatDate(result.completedAt || result.createdAt)}
                   </span>
 
                   <span>{percentage}%</span>

@@ -1,7 +1,7 @@
 import { Suspense } from "react";
-import Loader from "../components/common/Loader";
-import AppRoutes from "./routes";
-import AppErrorBoundary from "./AppErrorBoundary";
+import Loader from "./src/components/common/Loader";
+import AppRoutes from "./src/app/routes";
+import AppErrorBoundary from "./src/AppErrorBoundary";
 
 export default function App() {
   return (

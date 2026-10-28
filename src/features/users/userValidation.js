@@ -1,16 +1,12 @@
 import {
   validateEmail,
   validatePhone,
-  validatePassword,
-  validateRequired,
 } from "../../utils/validators";
-
-
 
 export function validateRegistration(form) {
   const errors = {};
 
-  if (!validateRequired(form.fullName)) {
+  if (!String(form.fullName ?? '').trim()) {
     errors.fullName = "Enter your full name.";
   }
 
@@ -22,9 +18,8 @@ export function validateRegistration(form) {
     errors.phone = "Enter a valid phone number.";
   }
 
-  if (!validatePassword(form.password ?? "")) {
-    errors.password =
-      "Your password must contain at least 8 characters.";
+  if (!String(form.password ?? '').trim() || String(form.password).length < 8) {
+    errors.password = "Your password must contain at least 8 characters.";
   }
 
   if (form.password !== form.confirmPassword) {
@@ -32,8 +27,7 @@ export function validateRegistration(form) {
   }
 
   if (!form.acceptTerms) {
-    errors.acceptTerms =
-      "You must accept the terms before registering.";
+    errors.acceptTerms = "You must accept the terms before registering.";
   }
 
   return errors;
@@ -46,7 +40,7 @@ export function validateLogin(form) {
     errors.email = "Enter a valid email address.";
   }
 
-  if (!validateRequired(form.password)) {
+  if (!String(form.password ?? '').trim()) {
     errors.password = "Enter your password.";
   }
 

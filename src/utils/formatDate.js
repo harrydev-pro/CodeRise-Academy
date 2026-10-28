@@ -1,30 +1,15 @@
-export function formatDate(date) {
-  if (!date) return "Not available";
+export function formatDate(value) {
+  if (!value) return '—';
 
-  const parsedDate = new Date(date);
+  const date = value instanceof Date ? value : new Date(value);
 
-  if (Number.isNaN(parsedDate.getTime())) {
-    return "Invalid date";
+  if (Number.isNaN(date.getTime())) {
+    return '—';
   }
 
-  return new Intl.DateTimeFormat("en-NG", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(parsedDate);
-}
-
-export function formatDateTime(date) {
-  if (!date) return "Not available";
-
-  const parsedDate = new Date(date);
-
-  if (Number.isNaN(parsedDate.getTime())) {
-    return "Invalid date";
-  }
-
-  return new Intl.DateTimeFormat("en-NG", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(parsedDate);
+  return new Intl.DateTimeFormat('en-NG', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
 }

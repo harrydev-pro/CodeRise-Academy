@@ -1,50 +1,25 @@
+const store = new Map();
+
 export function readStore(key, fallback = null) {
-  try {
-    const value = localStorage.getItem(key);
-
-    if (value === null) {
-      return fallback;
-    }
-
-    return JSON.parse(value);
-  } catch (error) {
-    console.error(
-      `Failed to read storage key "${key}"`,
-      error
-    );
-
+  if (!store.has(key)) {
     return fallback;
   }
+
+  const value = store.get(key);
+  return typeof value === 'undefined' ? fallback : value;
 }
 
 export function writeStore(key, value) {
-  try {
-    localStorage.setItem(
-      key,
-      JSON.stringify(value)
-    );
-
-    return true;
-  } catch (error) {
-    console.error(
-      `Failed to save storage key "${key}"`,
-      error
-    );
-
-    return false;
-  }
+  store.set(key, value);
+  return true;
 }
 
-export function removeStore(key) {
-  try {
-    localStorage.removeItem(key);
-    return true;
-  } catch (error) {
-    console.error(
-      `Failed to remove storage key "${key}"`,
-      error
-    );
+export function clearStore(key) {
+  store.delete(key);
+  return true;
+}
 
-    return false;
-  }
+export function resetStore() {
+  store.clear();
+  return true;
 }

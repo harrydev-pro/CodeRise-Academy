@@ -5,12 +5,12 @@ import { BrowserRouter } from 'react-router-dom'
 
 
 import App from './App.jsx'
-import { AppProvider } from './providers.jsx'
+import { AppProvider } from './src/store/providers.jsx'
 
-import "../styles/global.css"
-import "../styles/variables.css"
-import "../styles/components.css"
-import "../styles/responsive.css"
+import "./src/styles/global.css"
+import "./src/styles/variables.css"
+import "./src/styles/components.css"
+import "./src/styles/responsive.css"
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

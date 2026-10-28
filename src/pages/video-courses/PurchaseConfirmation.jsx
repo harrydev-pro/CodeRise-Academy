@@ -10,10 +10,11 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
 export default function PurchaseConfirmation() {
-  const { courseId } = useParams();
+  const { courseId: routeCourseId } = useParams();
   const location = useLocation();
 
   const purchase = location.state?.purchase;
+  const courseId = routeCourseId || purchase?.courseId;
   const courseTitle =
     location.state?.courseTitle || purchase?.courseTitle || "Video course";
 
@@ -79,7 +80,7 @@ export default function PurchaseConfirmation() {
 
         <div className="purchase-confirmation-actions">
           <Link
-            to={`/video-courses/${courseId}/learn`}
+            to={courseId ? `/video-courses/${courseId}` : "/video-courses"}
             className="btn btn-primary"
           >
             <GraduationCap size={18} />

@@ -1,7 +1,4 @@
-export function generateId(prefix = "cr") {
-  const randomPart =
-    globalThis.crypto?.randomUUID?.() ??
-    `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-
-  return `${prefix}-${randomPart}`;
+export function generateId(prefix = 'item') {
+  const random = Math.random().toString(16).slice(2, 10);
+  return `${prefix}-${Date.now()}-${random}`;
 }

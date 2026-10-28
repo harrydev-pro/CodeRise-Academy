@@ -9,22 +9,28 @@ import {
 } from "lucide-react";
 
 import { getTrackById } from "../../features/free-learning/trackService";
-import { getQuizzesByTrack } from "../../features/assessments/quizService";
+import {
+  getQuizzesByTrack,
+  getQuizById,
+} from "../../features/assessments/quizService";
+import { readStore, writeStore } from "../../services/storage/storageAdapter";
+import { STORAGE_KEYS } from "../../services/storage/storageKeys";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../../components/common/Button";
 import EmptyState from "../../components/common/EmptyState";
 
 export default function QuizPage() {
-  const { trackId } = useParams();
+  const { trackId, quizId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
 
   const track = getTrackById(trackId);
   const quizzes = getQuizzesByTrack(trackId);
+  const quiz = getQuizById(quizId) ?? quizzes[0];
 
   const questions = useMemo(() => {
-    return quizzes.flatMap((quiz) => quiz.questions || []);
-  }, [quizzes]);
+    return quiz?.questions ?? [];
+  }, [quiz]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -109,9 +115,11 @@ export default function QuizPage() {
 
     const result = {
       id: `quiz-${Date.now()}`,
+      quizId: quiz.id,
       userId: user?.id,
       trackId,
       trackTitle: track.title,
+      quizTitle: quiz.title,
       score,
       totalQuestions: questions.length,
       percentage: Math.round((score / questions.length) * 100),
@@ -119,7 +127,13 @@ export default function QuizPage() {
       completedAt: new Date().toISOString(),
     };
 
-    navigate(`/free-learning/${trackId}/quiz/results`, {
+    const savedResults = readStore(STORAGE_KEYS.quizResults, []);
+    writeStore(STORAGE_KEYS.quizResults, [
+      { ...result, createdAt: result.completedAt },
+      ...savedResults,
+    ]);
+
+    navigate(`/free-learning/${trackId}/quizzes/${quiz.id}/results`, {
       state: { result },
     });
   }
