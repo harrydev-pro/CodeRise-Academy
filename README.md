@@ -18,7 +18,7 @@ npm run build
 
 ## Backend API
 
-Set `VITE_API_URL` in a local `.env` file to configure the backend base URL. If it is not set, requests use `http://localhost:5000/api`.
+Set `VITE_API_URL` in a local `.env` file to configure the backend base URL. If it is not set, requests use `http://localhost:3000`. The authentication flow uses `POST /auth/register`, `POST /auth/login`, and `GET /auth/me`; the current-user endpoint is called with the bearer token returned by login.
 
 ## Route groups
 

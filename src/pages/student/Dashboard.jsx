@@ -29,6 +29,7 @@ export default function Dashboard() {
   const purchases = readStore(STORAGE_KEYS.purchases, []);
 
   const userId = user?.id;
+  const studentName = user?.name || user?.fullName || user?.full_name;
 
   const myApplications = applications.filter(
     (item) => item.userId === userId
@@ -82,7 +83,7 @@ export default function Dashboard() {
           <span className="eyebrow">STUDENT DASHBOARD</span>
 
           <h1>
-            Welcome back, {user?.fullName?.split(" ")[0] || "Student"}!
+            Welcome back, {studentName?.trim().split(/\s+/)[0] || "Student"}!
           </h1>
 
           <p>
