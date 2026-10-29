@@ -1,7 +1,7 @@
 const DEFAULT_API_URL = 'http://localhost:3000';
 
 export const API_BASE_URL =
-  import.meta.env.VITE_API_URL || DEFAULT_API_URL;
+  import.meta.env.DEV ? '' : import.meta.env.VITE_API_URL || DEFAULT_API_URL;
 
 export async function apiClient(endpoint, options = {}) {
   const url = /^https?:\/\//i.test(endpoint)
