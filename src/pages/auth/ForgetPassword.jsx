@@ -71,7 +71,7 @@ export default function ForgotPassword() {
           required
         />
 
-        <Button type="submit" fullWidth loading={loading}>
+        <Button className="mt-5" type="submit" fullWidth loading={loading}>
           Request password reset
         </Button>
       </form>
