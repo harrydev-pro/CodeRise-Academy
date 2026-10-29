@@ -49,9 +49,9 @@ export default function VideoCourseCatalog() {
   });
 
   return (
-    <main className="page-container">
-      <section className="video-catalog-hero">
-        <div className="video-catalog-hero-content flex flex-col gap-4 tracking-normal w-full">
+    <main className="">
+      <section className="page-hero">
+        <div className="container page-hero-content ">
           <span className="eyebrow">CODERISE VIDEO ACADEMY</span>
 
           <h1 className="text-xl font-medium">
@@ -63,13 +63,13 @@ export default function VideoCourseCatalog() {
             build your skills with CodeRise Academy.
           </p>
 
-          <a href="#video-course-list" className="btn btn-primary w-2xl mt-4">
+          <a href="#video-course-list" className="btn btn-primary w-[16rem] mt-4">
             Explore courses <ArrowRight size={17} />
           </a>
         </div>
 
         <div
-          className="video-hero-illustration flex gap-4 mt-4 items-center"
+          className="container video-hero-illustration flex gap-4 mt-4 items-center"
           aria-hidden="true"
         >
           <div className="video-illustration-card ">
@@ -85,7 +85,7 @@ export default function VideoCourseCatalog() {
       </section>
 
       <section className="section-block" id="video-course-list">
-        <div className="section-heading">
+        <div className="container section-heading">
           <div>
             <span className="eyebrow">COURSE LIBRARY</span>
             <h2>Explore video courses</h2>
@@ -95,11 +95,11 @@ export default function VideoCourseCatalog() {
           <span className="count-badge">{filteredCourses.length} courses</span>
         </div>
 
-        <div className="course-filter-ba flex justify-between items-center mb-4">
-          <div className="course-search relative items-center">
+        <div className="container course-filter-bar ">
+          <div className=" course-search relative items-center">
             <Search
               size={19}
-              className="absolute left-3 top-1/3 transform -translate-y-1/2 text-muted-foreground"
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
             />
 
             <input
@@ -108,7 +108,7 @@ export default function VideoCourseCatalog() {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               aria-label="Search video courses"
-              className="course-search-input placeholder:pointer-events-none placeholder:pl-10 p-2 px-2 w-62.5 mb-4 placeholder:items-center"
+              className="course-search-input "
             />
           </div>
 
@@ -116,7 +116,7 @@ export default function VideoCourseCatalog() {
             value={category}
             onChange={(event) => setCategory(event.target.value)}
             aria-label="Filter courses by category"
-            className="course-category-select p-2 px-2 w-50 mb-4"
+            className="course-category-select "
           >
             {categories.map((item) => (
               <option key={item} value={item}>
@@ -132,13 +132,13 @@ export default function VideoCourseCatalog() {
             description="Try another search term or choose a different category."
           />
         ) : (
-          <div className="video-course-grid flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
+          <div className="container video-course-grid  ">
             {filteredCourses.map((course) => (
               <article
-                className="video-course-card flex flex-col gap-4 shadow-sm p-4 rounded-lg bg-white"
+                className="video-course-card "
                 key={course.id}
               >
-                <div className="video-course-cover flex flex-col gap-2 relative">
+                <div className="video-course-cover ">
                   {course.thumbnail ? (
                     <img
                       src={course.thumbnail}
@@ -152,24 +152,24 @@ export default function VideoCourseCatalog() {
                     </div>
                   )}
 
-                  <span className="video-course-badge bg-blue-400 w-22.5 items-center text-center border-none rounded p-1 text-white">
+                  <span className="video-course-badge ">
                     {course.level || "All levels"}
                   </span>
                 </div>
 
-                <div className="video-course-body flex flex-col gap-2">
-                  <span className="course-category text-xl font-medium">
+                <div className="video-course-body">
+                  <span className="course-category ">
                     {course.category || course.track || "Technology"}
                   </span>
 
                   <h3 className="text-2xl font-bold">{course.title}</h3>
 
-                  <p className="text-gray-600 text-[16px] leading-6">
+                  <p className="">
                     {course.description ||
                       "Learn essential concepts through guided video lessons."}
                   </p>
 
-                  <div className="video-course-meta flex flex-col gap-2">
+                  <div className="video-course-meta ">
                     <span className="flex items-center gap-1 text-[16px] text-muted-foreground">
                       <GraduationCap size={20} />
                       {course.instructor || "CodeRise Academy"}
@@ -177,7 +177,7 @@ export default function VideoCourseCatalog() {
 
                     {course.duration && (
                       <div className="flex items-center gap-4 justify-between">
-                        <div className="course-price font-bold text-[20px]">
+                        <div className="course-price ">
                           {Number(course.price) === 0
                             ? "Free"
                             : formatCurrency(course.price)}
@@ -210,7 +210,7 @@ export default function VideoCourseCatalog() {
 
       <section className="learning-callout flex flex-col gap-2 justify-center items-center mt-4">
         <div className="flex flex-col leading-6 gap-4 p-2 items-center">
-          <h2 className="bg-gray-300 p-2 rounded-full shadow px-4 font-medium">Ready for structured learning?</h2>
+          <h2 className=" p-2  px-4 font-medium">Ready for structured learning?</h2>
           <p className="text-center">
             Explore the full academy programs if you want a longer, structured
             learning experience.

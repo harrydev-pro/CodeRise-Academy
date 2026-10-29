@@ -41,6 +41,11 @@ export const initialTracks = [
       "frontend-lesson-1",
       "frontend-lesson-2",
       "frontend-lesson-3",
+      "frontend-lesson-4",
+      "frontend-lesson-5",
+      "frontend-lesson-6",
+      "frontend-lesson-7",
+      "frontend-lesson-8",
     ],
   },
 

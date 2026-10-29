@@ -111,7 +111,7 @@ export default function ResetPassword() {
           required
         />
 
-        <Button type="submit" fullWidth>
+        <Button className="mt-5" type="submit" fullWidth>
           Reset password
         </Button>
       </form>
