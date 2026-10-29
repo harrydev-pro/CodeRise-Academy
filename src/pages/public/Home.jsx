@@ -120,7 +120,7 @@ export default function Home() {
 
       <section className="learning-section section-padding">
         <div className="container">
-          <div className="section-heading">
+          {/* <div className="section-heading">
             <span className="eyebrow">EXPLORE YOUR OPTIONS</span>
 
             <h2>
@@ -131,7 +131,7 @@ export default function Home() {
               Choose a learning path that matches your interests and
               career goals.
             </p>
-          </div>
+          </div> */}
 
           <div className="learning-grid">
             {learningAreas.map((area) => {
