@@ -4,7 +4,6 @@ import {
   ArrowLeft,
   CheckCircle2,
   CirclePlay,
-  LockKeyhole,
   PlayCircle,
 } from "lucide-react";
 
@@ -213,7 +212,7 @@ export default function VideoLessonPlayer() {
                   ) : isActive ? (
                     <CirclePlay size={19} />
                   ) : (
-                    <LockKeyhole size={17} />
+                    <PlayCircle size={17} />
                   )}
                 </div>
 

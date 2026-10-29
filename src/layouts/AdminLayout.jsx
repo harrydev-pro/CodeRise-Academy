@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
 import AdminSidebar from "../components/layout/AdminSidebar";
 import AdminHeader from "../components/layout/AdminHeader";
+import { adminNavigation } from "../config/navigation";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { pathname } = useLocation();
+  const pageTitle = adminNavigation.find((item) => item.path === pathname)?.label || "Administration";
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="admin-layout min-h-screen bg-surface">
       <AdminSidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -16,7 +20,7 @@ export default function AdminLayout() {
 
       <div className="min-h-screen lg:pl-72">
         <AdminHeader
-          title="CodeRise Administration"
+          title={pageTitle}
           onMenuClick={() => setSidebarOpen(true)}
         />
 
