@@ -49,8 +49,8 @@ export default function VideoCourseCatalog() {
   });
 
   return (
-    <main className="">
-      <section className="page-hero">
+    <main className="video-catalog-page">
+      <section className="page-hero video-catalog-hero">
         <div className="container page-hero-content ">
           <span className="eyebrow">CODERISE VIDEO ACADEMY</span>
 
@@ -84,7 +84,7 @@ export default function VideoCourseCatalog() {
         </div>
       </section>
 
-      <section className="section-block" id="video-course-list">
+      <section className="section-block video-catalog-list" id="video-course-list">
         <div className="container section-heading">
           <div>
             <span className="eyebrow">COURSE LIBRARY</span>
@@ -95,7 +95,7 @@ export default function VideoCourseCatalog() {
           <span className="count-badge">{filteredCourses.length} courses</span>
         </div>
 
-        <div className="container course-filter-bar ">
+        <div className="container course-filter-bar video-course-filters">
           <div className=" course-search relative items-center">
             <Search
               size={19}
@@ -175,22 +175,15 @@ export default function VideoCourseCatalog() {
                       {course.instructor || "CodeRise Academy"}
                     </span>
 
-                    {course.duration && (
-                      <div className="flex items-center gap-4 justify-between">
-                        <div className="course-price ">
-                          {Number(course.price) === 0
-                            ? "Free"
-                            : formatCurrency(course.price)}
-                        </div>
-                        <span className="flex items-center gap-1 text-[16px] text-muted-foreground">
-                          <Clock3
-                            size={20}
-                            className="text-gray-500 text-[16px]"
-                          />
-                          {course.duration}
-                        </span>
+                    <div className="video-course-facts">
+                      <div className="course-price">
+                        {Number(course.price) === 0 ? "Free" : formatCurrency(course.price)}
                       </div>
-                    )}
+                      {course.duration && <span className="video-course-duration">
+                        <Clock3 size={20} aria-hidden="true" />
+                        {course.duration}
+                      </span>}
+                    </div>
                   </div>
 
                   <div className="video-course-footer">
@@ -198,7 +191,7 @@ export default function VideoCourseCatalog() {
                       to={`/video-courses/${course.id}`}
                       className="text-link  flex text-center items-center "
                     >
-                     <span className=" font-bold text-[20px] ">View Courses</span> <ArrowRight size={20} />
+                     <span>Explore course</span> <ArrowRight size={18} />
                     </Link>
                   </div>
                 </div>
