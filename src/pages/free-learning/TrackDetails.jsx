@@ -28,7 +28,7 @@ export default function TrackDetails() {
 
   if (!track) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <EmptyState
           title="Learning track not found"
           description="This track may have been removed or its address may be incorrect."
@@ -58,7 +58,7 @@ export default function TrackDetails() {
     : 0;
 
   return (
-    <main className="page-container">
+    <main className="page-container free-learning-shell">
       <Link to="/free-learning" className="back-link">
         <ArrowLeft size={17} />
         All learning tracks

@@ -33,7 +33,7 @@ export default function FreeLearning() {
   const tracks = getTracks().filter((track) => track.published !== false);
 
   return (
-    <main className="page-container">
+    <main className="page-container free-learning-shell">
       <section className="learning-hero">
         <span className="eyebrow">CODERISE ACADEMY</span>
 
