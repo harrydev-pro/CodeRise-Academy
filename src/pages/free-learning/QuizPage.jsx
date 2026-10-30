@@ -45,8 +45,8 @@ export default function QuizPage() {
     if (phase === "active" && secondsLeft === 0) finishQuizRef.current?.();
   }, [secondsLeft, phase]);
 
-  if (!track) return <main className="page-container"><EmptyState title="Learning track not found" description="Return to free learning and choose a track." action={<Link className="btn btn-primary" to="/free-learning">Browse tracks</Link>} /></main>;
-  if (!quiz || !allQuestions.length) return <main className="page-container"><EmptyState title={quiz ? "Quiz being prepared" : "Quiz coming soon"} description={quiz ? "This lesson’s quiz is published, but its questions have not been added yet." : "This lesson does not have a published quiz yet."} action={<Link className="btn btn-primary" to={lesson ? `/free-learning/${trackId}/lessons/${lesson.id}` : `/free-learning/${trackId}`}>Return to lesson</Link>} /></main>;
+  if (!track) return <main className="page-container free-learning-shell"><EmptyState title="Learning track not found" description="Return to free learning and choose a track." action={<Link className="btn btn-primary" to="/free-learning">Browse tracks</Link>} /></main>;
+  if (!quiz || !allQuestions.length) return <main className="page-container free-learning-shell"><EmptyState title={quiz ? "Quiz being prepared" : "Quiz coming soon"} description={quiz ? "This lesson’s quiz is published, but its questions have not been added yet." : "This lesson does not have a published quiz yet."} action={<Link className="btn btn-primary" to={lesson ? `/free-learning/${trackId}/lessons/${lesson.id}` : `/free-learning/${trackId}`}>Return to lesson</Link>} /></main>;
 
   const question = questions[currentIndex];
   const instructions = Array.isArray(quiz.instructions)
@@ -102,7 +102,7 @@ export default function QuizPage() {
   const timeLabel = `${Math.floor(secondsLeft / 60).toString().padStart(2, "0")}:${(secondsLeft % 60).toString().padStart(2, "0")}`;
 
   if (phase === "setup") return (
-    <main className="page-container quiz-page">
+    <main className="page-container quiz-page free-learning-shell">
       <Link to={lesson ? `/free-learning/${trackId}/lessons/${lesson.id}` : `/free-learning/${trackId}`} className="back-link"><ArrowLeft size={17}/> Back to {lesson?.title || track.title}</Link>
       <section className="quiz-setup-card">
         <div className="quiz-setup-icon"><ClipboardCheck size={25}/></div>
@@ -119,9 +119,9 @@ export default function QuizPage() {
     </main>
   );
 
-  if (phase === "review") return <main className="page-container quiz-page"><section className="quiz-summary-card"><div className="quiz-summary-icon"><ClipboardCheck size={30}/></div><h1>Ready to submit?</h1><p>You answered {Object.keys(answers).length} of {questions.length} questions. Unanswered questions count as incorrect.</p><div className="quiz-summary-actions"><Button onClick={finishQuiz}>Submit quiz <ArrowRight size={17}/></Button><Button variant="outline" onClick={() => setPhase("active")}>Review answers</Button></div></section></main>;
+  if (phase === "review") return <main className="page-container quiz-page free-learning-shell"><section className="quiz-summary-card"><div className="quiz-summary-icon"><ClipboardCheck size={30}/></div><h1>Ready to submit?</h1><p>You answered {Object.keys(answers).length} of {questions.length} questions. Unanswered questions count as incorrect.</p><div className="quiz-summary-actions"><Button onClick={finishQuiz}>Submit quiz <ArrowRight size={17}/></Button><Button variant="outline" onClick={() => setPhase("active")}>Review answers</Button></div></section></main>;
 
-  return <main className="page-container quiz-page">
+  return <main className="page-container quiz-page free-learning-shell">
     <div className="quiz-active-top"><Link to={lesson ? `/free-learning/${trackId}/lessons/${lesson.id}` : `/free-learning/${trackId}`} className="back-link"><ArrowLeft size={17}/> Exit quiz</Link><span className={`quiz-timer ${secondsLeft < 60 ? "urgent" : ""}`}><Clock3 size={17}/>{timeLabel}</span></div>
     <section className="quiz-card">
       <div className="quiz-header"><div><span className="eyebrow">{lesson?.title || track.title}</span><h1>{quiz.title || "Lesson quiz"}</h1></div><span className="quiz-counter">{currentIndex + 1} / {questions.length}</span></div>

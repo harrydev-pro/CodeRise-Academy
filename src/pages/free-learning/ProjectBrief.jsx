@@ -23,7 +23,7 @@ export default function ProjectBrief() {
 
   if (!track || !project) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <EmptyState
           title="Project not found"
           description="Choose a project from the learning track."
@@ -46,7 +46,7 @@ export default function ProjectBrief() {
   const rubric = project.rubric || [];
 
   return (
-    <main className="page-container project-brief-page">
+    <main className="page-container project-brief-page free-learning-shell">
       <Link
         to={`/free-learning/${trackId}/projects`}
         className="back-link"

@@ -12,7 +12,7 @@ export default function QuizResults() {
 
   if (!result) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <section className="empty-state">
           <h1>No quiz result found</h1>
           <p>Complete a quiz first to view your result.</p>
@@ -27,7 +27,7 @@ export default function QuizResults() {
   const retakeUrl = `/free-learning/${trackId}/quizzes/${result.quizId || quizId}`;
 
   return (
-    <main className="page-container quiz-results-page">
+    <main className="page-container quiz-results-page free-learning-shell">
       <section className="quiz-result-card">
         <div className={`result-icon ${passed ? "passed" : "needs-work"}`}>
           {passed ? <Trophy size={34} /> : <CheckCircle2 size={34} />}

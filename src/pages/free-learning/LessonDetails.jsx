@@ -51,7 +51,7 @@ export default function LessonDetails() {
 
   if (!track || !lesson || lesson.trackId !== trackId) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <EmptyState
           title="Lesson not found"
           description="This lesson could not be found in the selected learning track."
@@ -134,7 +134,7 @@ export default function LessonDetails() {
   }
 
   return (
-    <main className="page-container lesson-page">
+    <main className="page-container lesson-page free-learning-shell">
       <Link
         to={`/free-learning/${trackId}`}
         className="back-link"

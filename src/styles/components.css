@@ -2818,3 +2818,133 @@ footer.bg-ink {
   .purchase-confirmation-details strong { text-align: left; }
   .purchase-confirmation-actions > a { width: 100%; }
 }
+
+/* Free learning pages: shared widths, card rhythm, and responsive layouts */
+.free-learning-shell { width: min(calc(100% - 40px), 1180px); min-width: 0; margin-inline: auto; }
+.free-learning-shell *, .free-learning-shell *::before, .free-learning-shell *::after { min-width: 0; }
+.free-learning-shell .learning-hero { margin: 10px 0 38px; padding: clamp(28px, 5vw, 58px); border-radius: 24px; }
+.free-learning-shell .learning-hero h1 { max-width: 760px; font-size: clamp(2rem, 4.6vw, 3.45rem); }
+.free-learning-shell .learning-hero > p { max-width: 700px; margin-bottom: 0; }
+.free-learning-shell .learning-hero-stats { row-gap: 12px; column-gap: clamp(16px, 3vw, 26px); }
+.free-learning-shell .section-block { margin: 34px 0; }
+.free-learning-shell .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; width: 100%; max-width: none; padding: 0; text-align: left; }
+.free-learning-shell .section-heading > div { min-width: 0; }
+.free-learning-shell .section-heading h2 { overflow-wrap: anywhere; }
+.free-learning-shell .track-grid, .free-learning-shell .project-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.free-learning-shell .track-card, .free-learning-shell .project-card { min-width: 0; padding: clamp(18px, 2.4vw, 25px); }
+.free-learning-shell .track-card h3, .free-learning-shell .project-card h3 { overflow-wrap: anywhere; line-height: 1.35; }
+.free-learning-shell .track-card > p, .free-learning-shell .project-card > p { overflow-wrap: anywhere; }
+.free-learning-shell .track-card-footer { align-items: flex-start; flex-wrap: wrap; }
+.free-learning-shell .track-card-footer .text-link { min-height: 38px; }
+.free-learning-shell .learning-callout { min-width: 0; }
+.free-learning-shell .track-detail-hero, .free-learning-shell .project-hero, .free-learning-shell .project-brief-hero { padding: clamp(22px, 4vw, 36px); border-radius: 21px; }
+.free-learning-shell .track-detail-hero > p, .free-learning-shell .project-hero > p, .free-learning-shell .project-brief-hero > p { margin-bottom: 0; overflow-wrap: anywhere; }
+.free-learning-shell .track-detail-meta { row-gap: 8px; }
+.free-learning-shell .track-detail-meta > span, .free-learning-shell .project-brief-meta > span { display: inline-flex; align-items: center; gap: 7px; }
+.free-learning-shell .progress-summary { max-width: 600px; margin: 24px 0 0; }
+.free-learning-shell .lesson-list-item { min-width: 0; }
+.free-learning-shell .lesson-list-content { overflow-wrap: anywhere; }
+.free-learning-shell .lesson-list-meta { align-items: center; }
+.free-learning-shell .lesson-list-meta > span { display: inline-flex; align-items: center; gap: 5px; }
+.free-learning-shell .lesson-open-link { width: 42px; height: 42px; justify-content: center; border-radius: 11px; }
+.free-learning-shell .lesson-open-link:hover { background: #eff6ff; }
+.free-learning-shell .lesson-page-grid { grid-template-columns: minmax(0, 1fr) 285px; gap: 22px; }
+.free-learning-shell .lesson-reading { min-width: 0; padding: clamp(20px, 3.4vw, 38px); }
+.free-learning-shell .lesson-reading-header > p { color: #64748b; line-height: 1.75; }
+.free-learning-shell .lesson-content { min-width: 0; overflow-wrap: anywhere; }
+.free-learning-shell .lesson-content pre, .free-learning-shell .lesson-code { max-width: 100%; white-space: pre; tab-size: 2; }
+.free-learning-shell .lesson-content table { display: block; max-width: 100%; overflow-x: auto; border-collapse: collapse; }
+.free-learning-shell .lesson-content img, .free-learning-shell .lesson-content video { max-width: 100%; height: auto; }
+.free-learning-shell .lesson-completion-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.free-learning-shell .lesson-completion-card > div { min-width: 0; }
+.free-learning-shell .lesson-completion-card h3 { margin: 0 0 6px; }
+.free-learning-shell .lesson-completion-card p { margin: 0; }
+.free-learning-shell .lesson-sidebar { min-width: 0; }
+.free-learning-shell .lesson-sidebar-card { overflow-wrap: anywhere; }
+.free-learning-shell .lesson-pagination { align-items: stretch; }
+.free-learning-shell .lesson-pagination-link { min-width: 0; overflow-wrap: anywhere; }
+.free-learning-shell .lesson-pagination-link span { min-width: 0; }
+.free-learning-shell .project-brief-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; }
+.free-learning-shell .project-brief-content, .free-learning-shell .project-submit-panel { min-width: 0; padding: clamp(19px, 3vw, 26px); }
+.free-learning-shell .project-submit-panel { position: sticky; top: 96px; }
+.free-learning-shell .brief-section h2 { display: flex; align-items: center; gap: 8px; overflow-wrap: anywhere; }
+.free-learning-shell .brief-section li { overflow-wrap: anywhere; }
+.free-learning-shell .project-score-box { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.free-learning-shell .submission-header { margin-bottom: 22px; }
+.free-learning-shell .submission-header h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); line-height: 1.15; }
+.free-learning-shell .submission-header p { overflow-wrap: anywhere; }
+.free-learning-shell .submission-form { width: min(100%, 860px); margin-inline: auto; padding: clamp(18px, 3vw, 30px); }
+.free-learning-shell .submission-form input[type="file"] { width: 100%; max-width: 100%; }
+.free-learning-shell .selected-file span { min-width: 0; overflow-wrap: anywhere; }
+.free-learning-shell .quiz-page { width: min(100%, 900px); }
+.free-learning-shell .quiz-results-page { width: min(100%, 900px); }
+.free-learning-shell :focus-visible { outline: 3px solid rgb(37 99 235 / 45%); outline-offset: 3px; }
+
+@media (max-width: 1050px) {
+  .free-learning-shell .track-grid, .free-learning-shell .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .free-learning-shell .lesson-page-grid { grid-template-columns: minmax(0, 1fr) 260px; gap: 18px; }
+  .free-learning-shell .project-brief-layout { grid-template-columns: minmax(0, 1fr) 270px; }
+}
+@media (max-width: 860px) {
+  .free-learning-shell .lesson-page-grid, .free-learning-shell .project-brief-layout { grid-template-columns: minmax(0, 1fr); }
+  .free-learning-shell .lesson-sidebar { position: static; }
+  .free-learning-shell .project-submit-panel { position: static; }
+  .free-learning-shell .lesson-sidebar-card { margin-top: 0; }
+}
+@media (max-width: 680px) {
+  .free-learning-shell { width: min(calc(100% - 28px), 1180px); }
+  .free-learning-shell .learning-hero { margin: 6px 0 28px; padding: 24px 20px; border-radius: 19px; }
+  .free-learning-shell .learning-hero h1 { font-size: clamp(1.85rem, 8vw, 2.55rem); line-height: 1.12; }
+  .free-learning-shell .learning-hero > p { font-size: .95rem; line-height: 1.7; }
+  .free-learning-shell .learning-hero-stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+  .free-learning-shell .learning-hero-stats > div { align-items: flex-start; font-size: .78rem; line-height: 1.45; }
+  .free-learning-shell .learning-hero-stats svg { width: 18px; height: 18px; flex: 0 0 auto; }
+  .free-learning-shell .section-block { margin: 28px 0; }
+  .free-learning-shell .section-heading { align-items: flex-start; flex-direction: column; gap: 10px; margin-bottom: 17px; }
+  .free-learning-shell .section-heading h2 { font-size: clamp(1.35rem, 6vw, 1.8rem); line-height: 1.25; }
+  .free-learning-shell .section-heading p { font-size: .9rem; }
+  .free-learning-shell .track-grid, .free-learning-shell .project-grid { grid-template-columns: minmax(0, 1fr); gap: 13px; }
+  .free-learning-shell .track-card, .free-learning-shell .project-card { padding: 19px; border-radius: 15px; }
+  .free-learning-shell .track-card-footer, .free-learning-shell .project-card-meta { gap: 9px; }
+  .free-learning-shell .learning-callout { align-items: flex-start; flex-direction: column; gap: 14px; margin: 26px 0 12px; padding: 21px; border-radius: 16px; }
+  .free-learning-shell .learning-callout h2 { font-size: 1.18rem; line-height: 1.35; }
+  .free-learning-shell .learning-callout .btn { width: 100%; }
+  .free-learning-shell .track-detail-hero, .free-learning-shell .project-hero, .free-learning-shell .project-brief-hero { padding: 22px 19px; border-radius: 17px; }
+  .free-learning-shell .track-detail-hero h1, .free-learning-shell .project-hero h1, .free-learning-shell .project-brief-hero h1 { font-size: clamp(1.65rem, 7vw, 2.25rem); line-height: 1.15; }
+  .free-learning-shell .progress-summary { margin-top: 20px; padding: 16px; }
+  .free-learning-shell .lesson-list-item { display: grid; grid-template-columns: 38px minmax(0, 1fr) 38px; align-items: start; gap: 11px; padding: 13px; border-radius: 13px; }
+  .free-learning-shell .lesson-number { width: 38px; height: 38px; border-radius: 11px; font-size: .8rem; }
+  .free-learning-shell .lesson-list-content h3 { font-size: .92rem; line-height: 1.4; }
+  .free-learning-shell .lesson-list-content p { font-size: .81rem; }
+  .free-learning-shell .lesson-list-meta { gap: 8px; margin: 0 0 7px; font-size: .71rem; }
+  .free-learning-shell .lesson-open-link { width: 38px; height: 38px; }
+  .free-learning-shell .lesson-page-grid { gap: 14px; }
+  .free-learning-shell .lesson-reading { padding: 19px 16px; border-radius: 16px; }
+  .free-learning-shell .lesson-reading-header { padding-bottom: 16px; }
+  .free-learning-shell .lesson-reading-header h1 { font-size: clamp(1.55rem, 7vw, 2.1rem); line-height: 1.16; overflow-wrap: anywhere; }
+  .free-learning-shell .lesson-reading-header > p { font-size: .9rem; }
+  .free-learning-shell .lesson-content { font-size: .93rem; line-height: 1.78; }
+  .free-learning-shell .lesson-content pre, .free-learning-shell .lesson-code { padding: 14px; font-size: .78rem; }
+  .free-learning-shell .takeaways-card, .free-learning-shell .lesson-completion-card, .free-learning-shell .lesson-sidebar-card { padding: 17px; border-radius: 15px; }
+  .free-learning-shell .lesson-completion-card { align-items: stretch; flex-direction: column; gap: 12px; }
+  .free-learning-shell .lesson-completion-card .btn { width: 100%; }
+  .free-learning-shell .lesson-pagination { flex-direction: column; gap: 9px; }
+  .free-learning-shell .lesson-pagination-link { max-width: 100%; width: 100%; }
+  .free-learning-shell .lesson-pagination-link.next { justify-content: flex-end; }
+  .free-learning-shell .project-brief-layout { gap: 13px; }
+  .free-learning-shell .project-brief-content, .free-learning-shell .project-submit-panel { padding: 18px 16px; border-radius: 15px; }
+  .free-learning-shell .project-submit-panel .btn { width: 100%; }
+  .free-learning-shell .submission-header { margin-bottom: 17px; }
+  .free-learning-shell .submission-form { gap: 17px; padding: 19px 16px; border-radius: 16px; }
+  .free-learning-shell .submission-form-footer { flex-direction: column-reverse; }
+  .free-learning-shell .submission-form-footer > * { width: 100%; }
+  .free-learning-shell .quiz-page, .free-learning-shell .quiz-results-page { padding-top: 20px; padding-bottom: 40px; }
+}
+@media (max-width: 400px) {
+  .free-learning-shell { width: min(calc(100% - 22px), 1180px); }
+  .free-learning-shell .learning-hero-stats { grid-template-columns: minmax(0, 1fr); }
+  .free-learning-shell .lesson-list-item { grid-template-columns: 34px minmax(0, 1fr) 34px; gap: 8px; padding: 11px; }
+  .free-learning-shell .lesson-number, .free-learning-shell .lesson-open-link { width: 34px; height: 34px; }
+  .free-learning-shell .lesson-list-content p { display: none; }
+  .free-learning-shell .project-card-meta { align-items: flex-start; flex-direction: column; }
+}
