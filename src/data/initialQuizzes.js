@@ -1,9 +1,12 @@
 export const initialQuizzes = [
+
+  // frontend-quiz-1
+  // Frontend Fundamentals
   {
     id: "frontend-quiz-1",
     lessonId: "frontend-lesson-1",
 
-    title: "Frontend Fundamentals",
+    title: "introduction to frontend development",
 
     passMark: 60,
 
@@ -106,4 +109,541 @@ export const initialQuizzes = [
       },
     ],
   },
+
+
+    // frontend-quiz-2
+  // HTML Fundamentals
+  {
+    id: "frontend-quiz-2",
+    lessonId: "frontend-lesson-2",
+    title: "HTML Fundamentals",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+
+  // frontend-quiz-3
+  // CSS Fundamentals
+  {
+    id:"frontend-quiz-3",
+    lessonId:"frontend-lesson-3",
+    title:"CSS Fundamentals",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+
+  // frontend-quiz-4
+  // CSS Styling and Layout Practice
+  {
+    id:"frontend-quiz-4",
+    lessonId:"frontend-lesson-4",
+    title:"CSS Styling and Layout Practice",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+
+  // frontend-quiz-5
+  // CSS Positioning and Navigation Bars
+  {
+    id:"frontend-quiz-5",
+    lessonId:"frontend-lesson-5",
+    title:"CSS Positioning and Navigation Bars",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+  // frontend-quiz-6
+  // CSS Flexbox and Grid
+  {
+    id:"frontend-quiz-6",
+    lessonId:"frontend-lesson-6",
+    title:"CSS Flexbox and Grid",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+
+  // frontend-quiz-7
+  // introduction to JavaScript
+  {
+    id:"frontend-quiz-7",
+    lessonId:"frontend-lesson-7",
+    title:"Introduction to JavaScript",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+  {
+    id:"frontend-quiz-2",
+    lessonId:"frontend-lesson-2",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+  {
+    id:"frontend-quiz-2",
+    lessonId:"frontend-lesson-2",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+  {
+    id:"frontend-quiz-2",
+    lessonId:"frontend-lesson-2",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+  {
+    id:"frontend-quiz-3",
+    lessonId:"frontend-lesson-3",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+  {
+    id:"frontend-quiz-4",
+    lessonId:"frontend-lesson-4",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+  {
+    id:"frontend-quiz-5",
+    lessonId:"frontend-lesson-5",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+  {
+    id:"frontend-quiz-6",
+    lessonId:"frontend-lesson-6",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+  {
+    id:"frontend-quiz-7",
+    lessonId:"frontend-lesson-7",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  },
+
+  {
+    id:"frontend-quiz-8",
+    lessonId:"frontend-lesson-8",
+    title:"",
+    passMark: 60,
+
+    published: true,
+
+    questions:[
+      {
+         id: "q1",
+
+        question:
+          "",
+
+        options: [
+          "",
+          "",
+          "",
+          "",
+        ],
+
+        correctAnswer: 0,
+
+        explanation:
+          "",
+      }
+      
+    ]
+    
+
+
+
+  }
 ];
