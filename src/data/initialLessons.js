@@ -10,8 +10,7 @@ export const initialLessons = [
 
     title: "Introduction to Product Design",
 
-    description:
-      "Learn what product design means and how it helps solve real problems.",
+    description:"Learn what product design means and how it helps solve real problems.",
 
     type: "lesson",
 
@@ -20,35 +19,138 @@ export const initialLessons = [
     published: true,
 
     content: `
-# What is Product Design?
 
-Product design is the process of understanding a problem and creating a useful solution.
 
-Digital product designers work on products such as websites, mobile applications, and digital services.
+1. What Is Product Design?
 
-## Why is product design important?
+Product Design is the process of researching, planning, and creating products that solve people’s problems and meet their needs.
 
-A product should help people complete tasks easily.
+In the digital world, Product Design focuses on creating useful and easy-to-use products such as websites, mobile applications, and software platforms.
 
-For example, a school website should help students find information without confusion.
+A good product should not only look attractive but should also be easy to understand, navigate, and use.
 
-## Important concepts
+Example: When designing a banking application, a Product Designer considers how users can check their account balance, transfer money, and view transactions without difficulty.
 
-1. Users are the people who use a product.
-2. User research helps us understand their needs.
-3. Wireframes show the basic structure of a screen.
-4. Prototypes demonstrate how a design may work.
-5. Usability testing helps identify problems.
+2. Who Is a Product Designer?
 
-## Practical activity
+A Product Designer is a professional responsible for understanding users’ problems and designing solutions that provide a positive experience.
 
-Choose an application you use regularly.
+Their responsibilities include:
 
-Write down:
-- What problem does it solve?
-- Who uses it?
-- What is easy to use?
-- What would you improve?
+* Researching users and understanding their needs.
+* Identifying problems that need solutions.
+* Planning how a product should work.
+* Designing layouts and interfaces.
+* Creating interactive prototypes.
+* Testing designs and improving them based on feedback.
+
+A Product Designer combines creativity, research, technology, and problem-solving skills.
+
+3. Understanding UI, UX, and Product Design
+
+These three terms are closely related but have different meanings.
+
+UI (User Interface)
+
+UI refers to the visual elements of a digital product that users interact with.
+
+Examples include:
+
+* Buttons and icons.
+* Colours and typography.
+* Images and illustrations.
+* Navigation menus.
+* Page layouts.
+
+UX (User Experience)
+
+UX focuses on how users feel when interacting with a product and how easily they can complete their tasks.
+
+For example, a shopping application should allow users to search for products, add items to their cart, and complete payments without confusion.
+
+Product Design
+
+Product Design brings together UI, UX, user research, and problem-solving to create products that meet users’ needs and business goals.
+
+4. Understanding Digital Products
+
+A digital product is a product or service that people access and use through electronic devices such as computers, tablets, and smartphones.
+
+Examples include:
+
+* Social Media: Instagram, Facebook, and TikTok.
+* Banking Applications: Mobile banking and payment platforms.
+* Learning Platforms: Online learning and educational applications.
+* E-commerce: Online shopping websites and applications.
+* Entertainment: Music and video streaming platforms.
+
+Product Designers help make these products functional, accessible, and enjoyable to use.
+
+5. Introduction to Design Thinking
+
+Design Thinking is a problem-solving approach that places users at the centre of the design process.
+
+Instead of immediately creating a design, Product Designers first try to understand the problem and the people experiencing it.
+
+Design Thinking has five major stages:
+
+1. Empathise: Understand users, their needs, and their challenges.
+2. Define: Clearly identify the problem that needs to be solved.
+3. Ideate: Generate different ideas and possible solutions.
+4. Prototype: Create an early version of the proposed solution.
+5. Test: Allow users to interact with the prototype and provide feedback.
+
+These stages help designers develop solutions that are based on real user needs.
+
+6. The Product Design Process
+
+The Product Design process involves several activities that help transform an idea into a usable product.
+
+1. Research: Gather information about users, their needs, and existing solutions.
+
+2. Planning: Define the product’s purpose, objectives, and required features.
+
+3. Wireframing: Create a basic visual structure showing where different elements will appear on a screen.
+
+4. UI Design: Develop the visual appearance of the product, including colours, typography, buttons, and layouts.
+
+5. Prototyping: Create an interactive version of the design to demonstrate how the product will work.
+
+6. Testing: Evaluate the design with users, identify problems, and make improvements.
+
+These stages may sometimes overlap or be repeated as the product develops.
+
+7. Important Qualities of a Good Product Design
+
+A well-designed digital product should have the following qualities:
+
+* Usability: It should be easy to understand and use.
+* Accessibility: Different people should be able to use it, including people with disabilities.
+* Consistency: Design elements should maintain a similar appearance and behaviour.
+* Functionality: Features should work as expected.
+* Visual Appeal: The product should have an attractive and organised appearance.
+
+EXPLANATORY NOTE
+
+Product Design goes beyond creating beautiful screens. It involves understanding people’s problems, identifying opportunities, and developing solutions that make their lives easier.
+
+For example, when designing a food delivery application, a Product Designer must consider how customers will find restaurants, select meals, place orders, make payments, and track deliveries.
+
+Every design decision should make the experience easier and more convenient for the user.
+
+Remember: A good Product Designer does not design only for appearance; they design to solve problems.
+
+LESSON SUMMARY
+
+In this lesson, we have learned that:
+
+* Product Design involves creating solutions to users’ problems.
+* UI focuses on the visual appearance of a product.
+* UX focuses on the user’s overall experience.
+* Design Thinking helps designers understand and solve problems.
+* The Product Design process involves research, planning, wireframing, UI design, prototyping, and testing.
+
+
 `,
   },
 
@@ -59,7 +161,7 @@ Write down:
     id: "design-lesson-2",
     trackId: "track-product-design",
 
-    title: "Understanding Users",
+    title: "fundamentals of UI design",
 
     description:
       "Learn why designers need to understand the people using their products.",
@@ -71,36 +173,197 @@ Write down:
     published: true,
 
     content: `
-# Understanding Users
 
-Good design starts with understanding people.
 
-Before designing a product, ask:
+1. What is User Interface (UI) Design?
 
-- Who will use it?
-- What problem are they facing?
-- What do they need to accomplish?
-- What difficulties might they experience?
+User Interface Design is the process of designing the visual parts of a digital product that people interact with.
 
-## Example
+These include buttons, colours, images, icons, text, menus and layouts.
 
-Imagine designing a school attendance application.
+For example, when you open a mobile banking application, the login button, account balance, navigation menu and transaction icons are all parts of its user interface.
 
-Teachers may need to record attendance quickly.
+A good UI design should:
 
-School administrators may need reports.
+* Be attractive and organised.
+* Be easy to understand.
+* Use readable text.
+* Have clear buttons and navigation.
+* Make it easy for users to interact with the product.
 
-Students may need to see their attendance records.
+2. Introduction to Colour Theory
 
-These users have different needs.
+Colour theory is the study of how colours work together and how they affect the appearance of a design.
 
-## Practical activity
+Colours help designers communicate feelings, create visual interest and establish a product’s identity.
 
-Imagine you are designing an online registration form.
+Common colour groups:
 
-List three problems a student might encounter when completing it.
+* Primary colours: Red, blue and yellow.
+* Secondary colours: Green, orange and purple.
+* Neutral colours: Black, white, grey and beige.
 
-Then suggest one improvement for each problem.
+Examples of colour meanings:
+
+* Blue: Often represents trust and professionalism.
+* Red: Can represent urgency, excitement or danger.
+* Green: Often represents growth, nature or success.
+* Yellow: Can represent happiness and energy.
+* Purple: Often represents creativity and luxury.
+
+Important colour combinations:
+
+* Complementary colours: Colours opposite each other on the colour wheel.
+* Analogous colours: Colours that appear close to each other on the colour wheel.
+
+Example: A banking application may use blue and white to communicate trust, simplicity and professionalism.
+
+3. Understanding Typography
+
+Typography is the art of arranging text to make it clear, readable and attractive.
+
+In UI Design, typography helps users understand information and know what is important on a screen.
+
+For example, a heading should usually look different from the paragraph underneath it.
+
+Common font categories:
+
+* Serif: Fonts with small decorative strokes at the ends of letters.
+* Sans-serif: Fonts without decorative strokes. They are commonly used in modern digital interfaces.
+* Display fonts: Decorative fonts used mainly for titles and special designs.
+
+Examples of fonts include Arial, Roboto, Poppins and Inter.
+
+Good typography should:
+
+* Be easy to read.
+* Use suitable font sizes.
+* Maintain consistency.
+* Avoid using too many different fonts.
+
+4. Font Sizes and Font Weights
+
+Font size refers to how large or small text appears on a screen.
+
+Font weight refers to how thick or thin the letters appear.
+
+Designers use different sizes and weights to separate headings, subheadings and normal text.
+
+Examples of font sizes:
+
+* Main heading: 32px
+* Subheading: 24px
+* Body text: 16px
+* Small text: 12px
+
+These are example values, not fixed rules.
+
+Common font weights:
+
+* Light: Thin-looking text.
+* Regular: Normal text.
+* Medium: Slightly thicker text.
+* Bold: Thick text.
+
+Example:
+
+When designing a login page:
+
+* “Welcome Back” can be bold and large.
+* “Enter your details to continue” can be regular and smaller.
+* “Forgot Password?” can be smaller but still readable.
+
+This helps users understand which information is most important.
+
+5. Spacing, Padding and Margins
+
+Spacing is the empty area between elements in a design. It helps prevent a screen from looking crowded.
+
+Two important spacing concepts are padding and margin.
+
+Padding: The space inside an element, between its content and its border.
+
+Margin: The space outside an element, separating it from other elements.
+
+Example:
+
+Imagine a button containing the word “Sign Up”.
+
+* Padding creates space between the words and the edges of the button.
+* Margin creates space between the button and other elements around it.
+
+Good spacing makes a design look clean, organised and easier to use.
+
+6. Alignment and Visual Hierarchy
+
+Alignment means arranging design elements so that they line up properly.
+
+For example, text, buttons and images can be aligned to the left, right or centre.
+
+Proper alignment makes a design look organised and professional.
+
+Visual hierarchy is the arrangement of elements according to their importance.
+
+It helps users understand what to look at first, second and third.
+
+Designers create visual hierarchy using:
+
+* Font sizes.
+* Font weights.
+* Colours.
+* Spacing.
+* Positioning.
+* Images and shapes.
+
+Example:
+
+On a login page:
+
+1. The heading “Welcome Back” attracts attention first.
+2. The email and password fields come next.
+3. The login button guides the user to take action.
+4. The forgotten password link provides additional assistance.
+
+This arrangement helps users understand the page without confusion.
+
+7. Introduction to Accessibility
+
+Accessibility in UI Design means making digital products usable by people with different abilities.
+
+A good design should consider people who may have difficulties seeing, hearing, reading or interacting with digital devices.
+
+Examples of accessible design:
+
+* Use readable font sizes.
+* Provide enough contrast between text and background colours.
+* Add alternative text to meaningful images.
+* Make buttons large enough to interact with.
+* Do not use colour alone to communicate important information.
+* Make sure users can navigate with a keyboard where appropriate.
+
+Example:
+
+If a website uses light grey text on a white background, some users may struggle to read it. Using darker text improves readability.
+
+⸻
+
+Summary
+
+UI Design focuses on the visual parts of a digital product and how users interact with them.
+
+To create a good user interface, designers should understand:
+
+1. User Interface Design.
+2. Colour Theory.
+3. Typography.
+4. Font Sizes and Font Weights.
+5. Spacing, Padding and Margins.
+6. Alignment and Visual Hierarchy.
+7. Accessibility.
+
+These principles help designers create interfaces that are attractive, organised, readable and easy to use.
+
+
 `,
   },
 

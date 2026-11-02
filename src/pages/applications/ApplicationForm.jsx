@@ -293,18 +293,18 @@ export default function ApplicationForm() {
                 </div>
 
                 <div className="selected-program-price">
-                  <strong>
-                    {formatCurrency(
-                      selectedProgram.promoPrice ??
-                        selectedProgram.price ??
-                        0
-                    )}
-                  </strong>
+                  {/* <strong> */}
+                    {/* {formatCurrency( */}
+                      {/* selectedProgram.promoPrice ?? */}
+                        {/* selectedProgram.price ?? */}
+                        {/* 0 */}
+                    {/* )} */}
+                  {/* </strong> */}
 
                   {selectedProgram.originalPrice != null && (
-                    <del>
+                    <strong>
                       {formatCurrency(selectedProgram.originalPrice)}
-                    </del>
+                    </strong>
                   )}
                 </div>
               </div>

@@ -2059,4 +2059,268 @@ export const initialQuizzes = [
       },
     ],
   },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "design-quiz-1",
+    lessonId: "design-lesson-1",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
+  {
+    id: "frontend-quiz-8",
+    lessonId: "frontend-lesson-8",
+    title: "",
+    passMark: 60,
+
+    published: true,
+
+    questions: [
+      {
+        id: "q1",
+
+        question: "",
+
+        options: ["", "", "", ""],
+
+        correctAnswer: 0,
+
+        explanation: "",
+      },
+    ],
+  },
 ];
