@@ -1,8 +1,7 @@
 export const initialLessons = [
+  // Product Design Lessons
 
-// Product Design Lessons
-
-// product design-lesson-1
+  // product design-lesson-1
 
   {
     id: "design-lesson-1",
@@ -10,7 +9,8 @@ export const initialLessons = [
 
     title: "Introduction to Product Design",
 
-    description:"Learn what product design means and how it helps solve real problems.",
+    description:
+      "Learn what product design means and how it helps solve real problems.",
 
     type: "lesson",
 
@@ -153,7 +153,6 @@ In this lesson, we have learned that:
 
 `,
   },
-
 
   // product design-lesson-2
 
@@ -367,7 +366,68 @@ These principles help designers create interfaces that are attractive, organised
 `,
   },
 
+  {
+    id:"design-lesson-3",
+    trackId: "track-product-design",
+    title: "introduction from figma",
+    description: "",
 
+    type: "lesson",
+
+    duration: "10 minutes",
+
+    published: true,
+
+    content: `
+   
+1. WHAT IS FIGMA?
+Figma is a free, cloud-based design tool used by Product Designers to create user interfaces for websites and mobile apps. It works in your browser, saves automatically online, allows many people to design together at the same time, and lets you design, prototype and share work with developers in one place. Example: If you want to design a banking app login page, you will do it inside Figma.
+
+2. CREATING A FIGMA ACCOUNT
+Go to www.figma.com, click "Get started for free", sign up with your email or Google account, select Student/Design when asked what you will use Figma for, and from your Dashboard click "New Design File" to start.
+
+3. UNDERSTANDING THE FIGMA WORKSPACE
+The workspace has 4 main parts:
+a) Toolbar (Top): Your toolbox. Contains Move tool, Frame tool, Shape tools, Pen tool, Text tool.
+b) Layers Panel (Left): A list of everything you have added. The top layer is in front, bottom is behind. If you can't find an element, check here.
+c) Canvas (Center): Your main table where you place all your designs. You can zoom and move around.
+d) Properties Panel (Right): Controls how things look. When you select an element, it shows its colour, size, font, spacing, etc.
+
+4. FRAMES AND LAYERS
+Frame: A container/boundary that represents the screen you are designing for. Example: iPhone 14 Frame (390 x 844), Desktop Frame (1440 x 1024). You must start with a Frame. Press A to see frame presets.
+Layers: Every element you add is a layer. Text is a layer, button is a layer, image is a layer. You can rename layers (double-click), group layers (Ctrl+G or Cmd+G), hide/lock layers, and drag to reorder. Think of it this way: Frame = House, Layers = Furniture inside the house.
+
+5. SHAPES AND TEXT TOOLS
+Shapes: Your building blocks. Rectangle (R) for cards, buttons, backgrounds. Ellipse (O) for profile pictures, dots. Line (L) for dividers. You can change corner radius in the right panel to turn a rectangle into a rounded button.
+Text Tool (T): Press T and click anywhere to add text for headings, paragraphs, button labels. In the right panel you can change Font Family (e.g., Inter, Roboto), Font Size (16px is common for body text), Font Weight (Bold for headings), and Line Height for readability.
+
+6. ADDING COLOURS AND IMAGES
+Colour has two properties:
+- Fill: The colour inside an element (e.g., blue button background)
+- Stroke: The border line around an element (e.g., grey border around input field)
+You can use Solid colours, Gradients, and save colours as Styles to reuse.
+Images: Drag and drop an image from your computer into Figma. If you drop it inside a shape, the shape will be filled with the image. Under Fill settings you can set the image to Fill, Fit, Crop, or Tile.
+
+7. ALIGNMENT AND POSITIONING
+Good UI is always neat.
+- Alignment: Select 2 or more elements to see alignment buttons (Align Left, Center, Right, Top, Middle, Bottom). Use this to center a logo on a login screen.
+- Smart Guides: Pink lines that appear when you move elements to help you align.
+- X, Y, W, H: On the right panel you can type exact position and size. Example: X:0, Y:0 means top-left corner.
+- Spacing: Use the Tidy up and distribution tools to make equal space between cards or menu items.
+
+8. INTRODUCTION TO AUTO LAYOUT
+Auto Layout makes elements arrange themselves automatically. Without it, if you add more text to a button, you must manually increase the button size. With it, the button grows by itself.
+What it does: Adds automatic padding inside an element, adds automatic gap between elements, and makes your design responsive.
+How to use it: Design a button - Add text "Login", select the text and press Shift+A. Figma will add Auto Layout around it. In the right panel you can set Direction (Horizontal or Vertical), Padding (e.g., 12px top/bottom, 24px left/right), and Gap (e.g., 8px between icon and text).
+Use it for: Buttons, navigation bars, cards, lists.
+
+SUMMARY: Figma is where UI ideas become visible. Always start with a Frame, use Shapes and Text to build, use Alignment to keep it neat, use Colours and Images to make it beautiful, and use Auto Layout to make it smart and responsive.
+
+CLASS EXERCISE: Create an iPhone 14 Frame, add big text "Welcome Back", add two rectangles as email and password input fields, create a Login button using Auto Layout, and align everything to the center.
+    
+    
+    `,
+  },
 
   // Frontend Development Lessons
 
@@ -779,8 +839,6 @@ Learning outcome: By completing this activity, you should understand the differe
 `,
   },
 
-
-
   // frontend-lesson-2
   // HTML Fundamentals
 
@@ -790,8 +848,7 @@ Learning outcome: By completing this activity, you should understand the differe
 
     title: "HTML Fundamentals",
 
-    description:
-      "Learn the basic structure of an HTML document.",
+    description: "Learn the basic structure of an HTML document.",
 
     type: "lesson",
 
@@ -1267,7 +1324,6 @@ Next Lesson: CSS Fundamentals — Learn How to Style Your HTML Webpages.
 `,
   },
 
-
   // frontend-lesson-3
   // CSS Fundamentals
 
@@ -1277,8 +1333,7 @@ Next Lesson: CSS Fundamentals — Learn How to Style Your HTML Webpages.
 
     title: "CSS Fundamentals",
 
-    description:
-      "Learn how CSS styles the structure created with HTML.",
+    description: "Learn how CSS styles the structure created with HTML.",
 
     type: "lesson",
 
@@ -1807,15 +1862,14 @@ Next Lesson: CSS Styling and Layout Practice — you will practise combining CSS
 `,
   },
 
-
-
   // frontend-lesson-4
   // CSS Styling and Layout Practice
   {
     id: "frontend-lesson-4",
     trackId: "track-frontend",
-    title:" CSS Styling and Layout Practice",
-    description: "Practice combining CSS properties to create attractive webpages and organise content into professional layouts.",
+    title: " CSS Styling and Layout Practice",
+    description:
+      "Practice combining CSS properties to create attractive webpages and organise content into professional layouts.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -2320,10 +2374,8 @@ You practised:
 You also built a responsive course listing page using HTML and CSS.
 
 
-    `
-
+    `,
   },
-
 
   // frontend-lesson-5
   // CSS Positioning and Navigation Bars
@@ -2331,7 +2383,8 @@ You also built a responsive course listing page using HTML and CSS.
     id: "frontend-lesson-5",
     trackId: "track-frontend",
     title: "css positioning and navigation bars",
-    description: "Learn how to position elements on a webpage and create navigation bars.",
+    description:
+      "Learn how to position elements on a webpage and create navigation bars.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -2931,19 +2984,17 @@ You have now covered the essential HTML and CSS foundations needed to begin lear
 
 Next Module: Introduction to JavaScript
 
-    `
-
-
+    `,
   },
-
 
   // frontend-lesson-6
   // introduction to javascript
-{
+  {
     id: "frontend-lesson-6",
     trackId: "track-frontend",
     title: "Introduction to JavaScript",
-    description: "Learn the basics of JavaScript, a programming language that adds interactivity to websites.",
+    description:
+      "Learn the basics of JavaScript, a programming language that adds interactivity to websites.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -3445,23 +3496,22 @@ Next Lesson: JavaScript Variables, Data Types, and Operators
 
 In the next lesson, students will study these concepts in greater detail and practise using them to solve simple programming problems.
     
-    `
+    `,
+  },
 
-},
+  // frontend-lesson-7
+  // JavaScript Variables, Data Types, and Operators
 
-
-// frontend-lesson-7
-// JavaScript Variables, Data Types, and Operators
-
-{
-  id: "frontend-lesson-7",
-  trackId: "track-frontend",
-  title: "JavaScript Variables, Data Types, and Operators",
-  description: "Learn how to use variables, data types, and operators in JavaScript to store and manipulate information.",
-  type: "lesson",
-  duration: "15 minutes",
-  published: true,
-  content: `
+  {
+    id: "frontend-lesson-7",
+    trackId: "track-frontend",
+    title: "JavaScript Variables, Data Types, and Operators",
+    description:
+      "Learn how to use variables, data types, and operators in JavaScript to store and manipulate information.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
   JavaScript Variables, Data Types, and Operators
 
 
@@ -4271,24 +4321,21 @@ Variables allow JavaScript to store information. Data types describe the kind of
 
 Understanding these concepts will help you write more useful JavaScript programs and prepare you for the next topics in your frontend development journey.
   
-  `
+  `,
+  },
 
-},
-
-
-
-
-// frontend-lesson-8
-// JavaScript condition, loops and functions
-{
-  id: "frontend-lesson-8",
-  trackId: "track-frontend",
-  title: "JavaScript condition, loops and functions",
-  description: "Learn how to use conditionals, loops, and functions in JavaScript to control the flow of your programs and create reusable code.",
-  type: "lesson",
-  duration: "15 minutes",
-  published: true,
-  content: `
+  // frontend-lesson-8
+  // JavaScript condition, loops and functions
+  {
+    id: "frontend-lesson-8",
+    trackId: "track-frontend",
+    title: "JavaScript condition, loops and functions",
+    description:
+      "Learn how to use conditionals, loops, and functions in JavaScript to control the flow of your programs and create reusable code.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
   JavaScript Conditions, Loops, and Functions
 
 CodeRise Academy — Beginner Level
@@ -5230,12 +5277,11 @@ You have now covered the three foundational JavaScript lessons in this beginner 
 3. Conditions, Loops, and Functions.
 
 Recommended next step: Practise these concepts by building small projects before moving to DOM manipulation, which allows JavaScript to interact with HTML elements and change webpage content.
-  `
+  `,
+  },
 
-},
-
-// backend-lesson-1
-// Introduction to Backend Development
+  // backend-lesson-1
+  // Introduction to Backend Development
   {
     id: "backend-lesson-1",
     trackId: "track-backend",

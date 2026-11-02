@@ -2216,46 +2216,740 @@ export const initialQuizzes = [
   {
     id: "design-quiz-1",
     lessonId: "design-lesson-1",
-    title: "",
+    title: "introduction to product design",
     passMark: 60,
 
     published: true,
 
     questions: [
-      {
-        id: "q1",
-
-        question: "",
-
-        options: ["", "", "", ""],
-
-        correctAnswer: 0,
-
-        explanation: "",
-      },
+  {
+    id: "q1",
+    question: "What is the main purpose of Product Design?",
+    options: [
+      "To advertise digital products",
+      "To create products that solve people’s problems",
+      "To make websites colourful",
+      "To write computer programs"
     ],
+    correctAnswer: 1,
+    explanation: "Product Design focuses on creating useful products that solve real problems and meet users’ needs."
   },
   {
-    id: "frontend-quiz-8",
-    lessonId: "frontend-lesson-8",
+    id: "q2",
+    question: "Who is a Product Designer?",
+    options: [
+      "Someone who repairs computers",
+      "Someone who sells mobile phones",
+      "Someone who plans and designs products to meet users’ needs",
+      "Someone who only writes code"
+    ],
+    correctAnswer: 2,
+    explanation: "A Product Designer understands users’ problems and helps create products that are useful, easy to use and visually appealing."
+  },
+  {
+    id: "q3",
+    question: "What does UI stand for?",
+    options: [
+      "User Information",
+      "User Interface",
+      "Universal Internet",
+      "User Interaction"
+    ],
+    correctAnswer: 1,
+    explanation: "UI means User Interface. It refers to the visual parts of a digital product, such as buttons, colours, icons and layouts."
+  },
+  {
+    id: "q4",
+    question: "What does UX focus on?",
+    options: [
+      "The overall experience a person has when using a product",
+      "The colour of a computer",
+      "The price of a mobile phone",
+      "The size of a website’s logo"
+    ],
+    correctAnswer: 0,
+    explanation: "UX means User Experience. It focuses on making products easy, comfortable and enjoyable to use."
+  },
+  {
+    id: "q5",
+    question: "Which of these is an example of a digital product?",
+    options: [
+      "Plastic chair",
+      "Wooden table",
+      "Mobile banking application",
+      "School bag"
+    ],
+    correctAnswer: 2,
+    explanation: "A mobile banking application is a digital product because people use software to perform banking activities."
+  },
+  {
+    id: "q6",
+    question: "What is the difference between UI and UX?",
+    options: [
+      "They mean exactly the same thing",
+      "UI focuses on appearance and interaction, while UX focuses on the overall experience",
+      "UX focuses only on colours",
+      "UI is used only for games"
+    ],
+    correctAnswer: 1,
+    explanation: "UI deals with the interface users interact with, while UX considers the entire experience of using the product."
+  },
+  {
+    id: "q7",
+    question: "What is the first stage of Design Thinking?",
+    options: [
+      "Testing",
+      "Prototyping",
+      "Empathise",
+      "Ideate"
+    ],
+    correctAnswer: 2,
+    explanation: "Empathise means understanding users, their needs, feelings and problems before creating a solution."
+  },
+  {
+    id: "q8",
+    question: "What happens during the Define stage of Design Thinking?",
+    options: [
+      "The designer identifies and clearly explains the problem",
+      "The designer publishes the product",
+      "The designer chooses a website colour",
+      "The designer starts advertising"
+    ],
+    correctAnswer: 0,
+    explanation: "The Define stage helps designers understand and clearly state the main problem they want to solve."
+  },
+  {
+    id: "q9",
+    question: "What is the purpose of the Ideate stage?",
+    options: [
+      "To delete the product",
+      "To generate possible solutions and ideas",
+      "To sell the product",
+      "To write a report about the product"
+    ],
+    correctAnswer: 1,
+    explanation: "Ideate is the stage where designers brainstorm and explore different ways to solve a problem."
+  },
+  {
+    id: "q10",
+    question: "What is a prototype?",
+    options: [
+      "The final product ready for sale",
+      "An advertisement",
+      "An early model of a product used to test an idea",
+      "A computer virus"
+    ],
+    correctAnswer: 2,
+    explanation: "A prototype is an early version of a product that allows designers to test how an idea might work before final development."
+  },
+  {
+    id: "q11",
+    question: "Why do Product Designers test their designs?",
+    options: [
+      "To make the product more expensive",
+      "To identify problems and improve the design",
+      "To change the product’s name",
+      "To avoid understanding users"
+    ],
+    correctAnswer: 1,
+    explanation: "Testing helps designers discover what works, what does not work and what needs improvement."
+  },
+  {
+    id: "q12",
+    question: "What is a wireframe?",
+    options: [
+      "A basic layout showing the structure of a digital product",
+      "A finished website",
+      "A programming language",
+      "A computer component"
+    ],
+    correctAnswer: 0,
+    explanation: "A wireframe is a simple visual guide that shows where elements such as buttons, images and text will appear on a screen."
+  },
+  {
+    id: "q13",
+    question: "Which of these is mainly part of UI Design?",
+    options: [
+      "Interviewing customers",
+      "Choosing colours, typography, buttons and layouts",
+      "Managing company accounts",
+      "Repairing computers"
+    ],
+    correctAnswer: 1,
+    explanation: "UI Design focuses on the visual appearance and interactive elements of a digital product."
+  },
+  {
+    id: "q14",
+    question: "What does accessibility mean in Product Design?",
+    options: [
+      "Making products available only to designers",
+      "Making products usable by people with different abilities",
+      "Making products difficult to understand",
+      "Making products available only on computers"
+    ],
+    correctAnswer: 1,
+    explanation: "Accessibility ensures that people with different abilities can use and interact with a product."
+  },
+  {
+    id: "q15",
+    question: "What does consistency mean in Product Design?",
+    options: [
+      "Using different designs on every page without a reason",
+      "Making buttons and design elements behave and look familiar throughout a product",
+      "Removing all colours from a design",
+      "Using only large fonts"
+    ],
+    correctAnswer: 1,
+    explanation: "Consistency makes a product easier to understand because similar elements look and behave in similar ways."
+  },
+  {
+    id: "q16",
+    question: "Before designing a food delivery application, what should a Product Designer do first?",
+    options: [
+      "Start choosing random colours",
+      "Research and understand the needs of potential users",
+      "Immediately publish the application",
+      "Start advertising the application"
+    ],
+    correctAnswer: 1,
+    explanation: "Research helps designers understand what users need and the problems they face when ordering food."
+  },
+  {
+    id: "q17",
+    question: "How can a designer know whether a shopping application is easy to use?",
+    options: [
+      "By checking only its colours",
+      "By testing whether users can complete shopping tasks easily",
+      "By counting the number of images",
+      "By changing the application name"
+    ],
+    correctAnswer: 1,
+    explanation: "Usability testing helps designers understand whether users can complete tasks without confusion or unnecessary difficulty."
+  },
+  {
+    id: "q18",
+    question: "Which of the following are responsibilities of a Product Designer? Select all correct answers.",
+    options: [
+      "Researching users’ needs",
+      "Creating wireframes and prototypes",
+      "Testing designs and making improvements",
+      "Repairing computer hardware"
+    ],
+    correctAnswer: [0, 1, 2],
+    explanation: "Product Designers research users, plan designs, create prototypes and test their work. Repairing computer hardware is not a normal Product Design responsibility."
+  },
+  {
+    id: "q19",
+    question: "Digital products include mobile applications and online learning platforms.",
+    options: [
+      "True",
+      "False"
+    ],
+    correctAnswer: 0,
+    explanation: "Mobile applications and online learning platforms are examples of digital products because they are accessed and used through digital devices."
+  },
+  {
+    id: "q20",
+    question: "Testing happens before creating a prototype in the Design Thinking process.",
+    options: [
+      "True",
+      "False"
+    ],
+    correctAnswer: 1,
+    explanation: "In the common Design Thinking process, designers create a prototype before testing it with users."
+  },
+  {
+    id: "q21",
+    question: "Which of these is an important goal of Product Design?",
+    options: [
+      "Making products difficult to use",
+      "Solving users’ problems effectively",
+      "Adding unnecessary features",
+      "Making every product look identical"
+    ],
+    correctAnswer: 1,
+    explanation: "Good Product Design focuses on solving problems and making products useful to the people who need them."
+  },
+  {
+    id: "q22",
+    question: "Why is user research important in Product Design?",
+    options: [
+      "It helps designers understand users’ needs and challenges",
+      "It helps designers avoid users",
+      "It makes products more confusing",
+      "It replaces the need for testing"
+    ],
+    correctAnswer: 0,
+    explanation: "User research gives designers useful information about their target audience, helping them make better design decisions."
+  },
+  {
+    id: "q23",
+    question: "What is the purpose of a design brief?",
+    options: [
+      "To explain the goals, requirements and problem a design project should address",
+      "To advertise a finished product",
+      "To list computer passwords",
+      "To explain how to repair a computer"
+    ],
+    correctAnswer: 0,
+    explanation: "A design brief provides direction for a project by explaining what needs to be designed, why it is needed and what the expected goals are."
+  },
+  {
+    id: "q24",
+    question: "Which of these is an example of good functionality in a mobile application?",
+    options: [
+      "A login button that does nothing",
+      "A search feature that helps users find information",
+      "A page that keeps displaying errors",
+      "A button that takes users to the wrong page"
+    ],
+    correctAnswer: 1,
+    explanation: "Functionality refers to how well a product’s features work. A working search feature helps users complete tasks."
+  },
+  {
+    id: "q25",
+    question: "What does it mean for a product to be user-friendly?",
+    options: [
+      "It is easy to understand and use",
+      "It has as many buttons as possible",
+      "It requires users to guess what to do",
+      "It works only for experienced users"
+    ],
+    correctAnswer: 0,
+    explanation: "A user-friendly product is simple to understand, navigate and use without unnecessary difficulty."
+  },
+  {
+    id: "q26",
+    question: "What should a designer do when users complain that an application is difficult to navigate?",
+    options: [
+      "Ignore their complaints",
+      "Remove all the application features",
+      "Study their feedback and improve the navigation",
+      "Stop working on the application"
+    ],
+    correctAnswer: 2,
+    explanation: "User feedback helps designers identify problems and make improvements that create a better experience."
+  },
+  {
+    id: "q27",
+    question: "What is the purpose of a call-to-action (CTA) button?",
+    options: [
+      "To guide users to take a specific action",
+      "To decorate a website",
+      "To display random information",
+      "To slow down an application"
+    ],
+    correctAnswer: 0,
+    explanation: "A CTA button encourages users to perform an action, such as signing up, buying a product or submitting a form."
+  },
+  {
+    id: "q28",
+    question: "Why should a Product Designer consider the needs of the business as well as the users?",
+    options: [
+      "To make the product useful for users and valuable to the business",
+      "To focus only on making money",
+      "To ignore the product’s purpose",
+      "To make the product more complicated"
+    ],
+    correctAnswer: 0,
+    explanation: "A successful product should solve users’ problems while also helping the business achieve its goals."
+  },
+  {
+    id: "q29",
+    question: "What should happen after a designer receives feedback from users during testing?",
+    options: [
+      "The designer should ignore the feedback",
+      "The designer should review the feedback and make necessary improvements",
+      "The designer should delete the prototype",
+      "The designer should stop testing permanently"
+    ],
+    correctAnswer: 1,
+    explanation: "Feedback helps designers understand what needs to change. They can improve the prototype and test it again."
+  },
+  {
+    id: "q30",
+    question: "Which statement best describes a successful digital product?",
+    options: [
+      "A product with many colours and animations",
+      "A product that is expensive to develop",
+      "A product that solves users’ problems and is easy to use",
+      "A product with many unnecessary features"
+    ],
+    correctAnswer: 2,
+    explanation: "A successful digital product provides value, solves a real problem and gives users a good experience."
+  }
+]
+  },
+  {
+    id: "design-quiz-2",
+    lessonId: "design-lesson-2",
     title: "",
     passMark: 60,
 
     published: true,
 
     questions: [
-      {
-        id: "q1",
-
-        question: "",
-
-        options: ["", "", "", ""],
-
-        correctAnswer: 0,
-
-        explanation: "",
-      },
+  {
+    id: "q1",
+    question: "What does UI stand for?",
+    options: [
+      "User Information",
+      "User Interface",
+      "Universal Internet",
+      "User Interaction"
     ],
+    correctAnswer: 1,
+    explanation: "UI stands for User Interface. It refers to the visual parts of a digital product that users interact with, such as buttons, images, menus and text."
+  },
+  {
+    id: "q2",
+    question: "What is the main purpose of UI Design?",
+    options: [
+      "To make digital products attractive and easy to interact with",
+      "To repair computer hardware",
+      "To write server-side code",
+      "To manage business accounts"
+    ],
+    correctAnswer: 0,
+    explanation: "UI Design focuses on creating attractive, organised and easy-to-use interfaces for digital products."
+  },
+  {
+    id: "q3",
+    question: "Which of the following is an example of a UI element?",
+    options: [
+      "Computer processor",
+      "Database server",
+      "Login button",
+      "Internet cable"
+    ],
+    correctAnswer: 2,
+    explanation: "A login button is a UI element because users interact with it when using an application or website."
+  },
+  {
+    id: "q4",
+    question: "What is colour theory?",
+    options: [
+      "The process of writing computer programs",
+      "The study of how colours work together and affect designs",
+      "The process of creating animations",
+      "The study of computer hardware"
+    ],
+    correctAnswer: 1,
+    explanation: "Colour theory helps designers understand how colours combine and how they influence the appearance and feeling of a design."
+  },
+  {
+    id: "q5",
+    question: "Which of these is a primary colour?",
+    options: [
+      "Green",
+      "Purple",
+      "Orange",
+      "Blue"
+    ],
+    correctAnswer: 3,
+    explanation: "The traditional primary colours are red, blue and yellow."
+  },
+  {
+    id: "q6",
+    question: "Which of these is a secondary colour?",
+    options: [
+      "Red",
+      "Yellow",
+      "Purple",
+      "Blue"
+    ],
+    correctAnswer: 2,
+    explanation: "Secondary colours are created by mixing two primary colours. Purple is created by mixing red and blue."
+  },
+  {
+    id: "q7",
+    question: "Which group contains only neutral colours?",
+    options: [
+      "Red, blue and yellow",
+      "Black, white and grey",
+      "Green, orange and purple",
+      "Blue, green and yellow"
+    ],
+    correctAnswer: 1,
+    explanation: "Black, white and grey are examples of neutral colours. They are commonly used in backgrounds, text and interface layouts."
+  },
+  {
+    id: "q8",
+    question: "What does blue commonly communicate in UI Design?",
+    options: [
+      "Trust and professionalism",
+      "Danger and warning only",
+      "Confusion and disorder",
+      "Hunger and excitement only"
+    ],
+    correctAnswer: 0,
+    explanation: "Blue is often associated with trust, reliability and professionalism, which makes it popular in banking and business applications."
+  },
+  {
+    id: "q9",
+    question: "What is typography?",
+    options: [
+      "The process of selecting computer hardware",
+      "The arrangement of text to make it readable and attractive",
+      "The process of creating website animations",
+      "The arrangement of images only"
+    ],
+    correctAnswer: 1,
+    explanation: "Typography involves selecting and arranging fonts, sizes, spacing and weights to make text clear and visually appealing."
+  },
+  {
+    id: "q10",
+    question: "Which of these is an example of a sans-serif font?",
+    options: [
+      "Roboto",
+      "Times New Roman",
+      "Georgia",
+      "Garamond"
+    ],
+    correctAnswer: 0,
+    explanation: "Roboto is a sans-serif font. Sans-serif fonts do not have decorative strokes at the ends of letters and are commonly used in digital interfaces."
+  },
+  {
+    id: "q11",
+    question: "What is the difference between font size and font weight?",
+    options: [
+      "They both describe the colour of text",
+      "Font size describes text height, while font weight describes how thick or thin it looks",
+      "Font size describes spacing, while font weight describes alignment",
+      "They both describe the font family"
+    ],
+    correctAnswer: 1,
+    explanation: "Font size determines how large or small text appears, while font weight determines how thick or thin the letters look."
+  },
+  {
+    id: "q12",
+    question: "Which font weight makes text appear thicker and darker?",
+    options: [
+      "Light",
+      "Thin",
+      "Bold",
+      "Regular"
+    ],
+    correctAnswer: 2,
+    explanation: "Bold font weight makes text thicker and helps important information stand out."
+  },
+  {
+    id: "q13",
+    question: "Which font size would commonly be suitable for normal paragraph text on a mobile screen?",
+    options: [
+      "5px",
+      "16px",
+      "60px",
+      "100px"
+    ],
+    correctAnswer: 1,
+    explanation: "A font size around 16px is commonly used for body text because it provides comfortable readability on many screens."
+  },
+  {
+    id: "q14",
+    question: "What is spacing in UI Design?",
+    options: [
+      "The empty area between design elements",
+      "The colour of a button",
+      "The thickness of a font",
+      "The size of an image"
+    ],
+    correctAnswer: 0,
+    explanation: "Spacing refers to the empty areas between elements. It prevents designs from looking crowded and helps organise content."
+  },
+  {
+    id: "q15",
+    question: "What is padding?",
+    options: [
+      "Space outside an element",
+      "Space inside an element, between its content and border",
+      "The colour surrounding a button",
+      "The distance between two pages"
+    ],
+    correctAnswer: 1,
+    explanation: "Padding creates space inside an element. For example, it separates the text inside a button from the button’s edges."
+  },
+  {
+    id: "q16",
+    question: "What is margin?",
+    options: [
+      "Space outside an element that separates it from other elements",
+      "Space inside a text box",
+      "The thickness of a border",
+      "The size of a heading"
+    ],
+    correctAnswer: 0,
+    explanation: "Margin creates space outside an element. For example, it separates a login button from the input field above it."
+  },
+  {
+    id: "q17",
+    question: "A designer places text too close to the edges of a button. Which property can help solve this problem?",
+    options: [
+      "Margin",
+      "Padding",
+      "Font family",
+      "Background colour"
+    ],
+    correctAnswer: 1,
+    explanation: "Increasing the padding creates more space between the button’s text and its edges."
+  },
+  {
+    id: "q18",
+    question: "What is alignment in UI Design?",
+    options: [
+      "Arranging elements so they line up properly",
+      "Changing the colour of text",
+      "Increasing the size of images",
+      "Adding animations to buttons"
+    ],
+    correctAnswer: 0,
+    explanation: "Alignment helps designers arrange text, images and other elements neatly, making an interface look organised."
+  },
+  {
+    id: "q19",
+    question: "What is visual hierarchy?",
+    options: [
+      "Making every element the same size",
+      "Arranging elements according to their importance",
+      "Using only black and white colours",
+      "Removing all headings from a page"
+    ],
+    correctAnswer: 1,
+    explanation: "Visual hierarchy helps users identify the most important information first through size, colour, position, weight and spacing."
+  },
+  {
+    id: "q20",
+    question: "On a login page, which element should usually attract attention as the main action?",
+    options: [
+      "A decorative background image",
+      "The footer",
+      "The Login button",
+      "A small copyright notice"
+    ],
+    correctAnswer: 2,
+    explanation: "The login button is the main action users need to take, so it should be visually clear and easy to identify."
+  },
+  {
+    id: "q21",
+    question: "What does accessibility mean in UI Design?",
+    options: [
+      "Making applications available only to designers",
+      "Making digital products usable by people with different abilities",
+      "Making websites more expensive",
+      "Making applications difficult to navigate"
+    ],
+    correctAnswer: 1,
+    explanation: "Accessibility ensures that people with different abilities can access and use digital products."
+  },
+  {
+    id: "q22",
+    question: "Why is colour contrast important in UI Design?",
+    options: [
+      "It makes text easier to distinguish from its background",
+      "It makes applications load faster",
+      "It reduces the number of website pages",
+      "It changes the font family automatically"
+    ],
+    correctAnswer: 0,
+    explanation: "Good colour contrast makes text and interface elements easier to see and read, especially for people with visual difficulties."
+  },
+  {
+    id: "q23",
+    question: "What is alternative text (alt text) used for?",
+    options: [
+      "To change the background colour of an image",
+      "To describe an image for people who may not be able to see it",
+      "To increase the size of an image",
+      "To animate an image"
+    ],
+    correctAnswer: 1,
+    explanation: "Alt text describes meaningful images so that screen readers can communicate their information to people with visual impairments."
+  },
+  {
+    id: "q24",
+    question: "Which of these is an example of poor UI Design?",
+    options: [
+      "Clear navigation menus",
+      "Readable text",
+      "Buttons with confusing labels",
+      "Proper spacing between elements"
+    ],
+    correctAnswer: 2,
+    explanation: "Confusing button labels make it difficult for users to understand what action they are expected to take."
+  },
+  {
+    id: "q25",
+    question: "Why should designers avoid using too many different fonts in one interface?",
+    options: [
+      "It can make the design look inconsistent and difficult to read",
+      "It automatically deletes website content",
+      "It prevents users from opening the application",
+      "It makes every image blurry"
+    ],
+    correctAnswer: 0,
+    explanation: "Using too many fonts can make an interface look disorganised. A consistent font system creates a cleaner design."
+  },
+  {
+    id: "q26",
+    question: "A designer uses light grey text on a white background. What is the main problem?",
+    options: [
+      "The text may be difficult to read because of poor contrast",
+      "The website will stop working",
+      "The font will automatically become bold",
+      "The images will disappear"
+    ],
+    correctAnswer: 0,
+    explanation: "Light grey text on white has low contrast, making it difficult for some users to read."
+  },
+  {
+    id: "q27",
+    question: "Which of these is the best example of good visual hierarchy?",
+    options: [
+      "Every text element has the same size",
+      "The main heading is larger than the paragraph text",
+      "All buttons are hidden",
+      "Every element uses a different font"
+    ],
+    correctAnswer: 1,
+    explanation: "A larger heading helps users identify the main topic before reading smaller supporting information."
+  },
+  {
+    id: "q28",
+    question: "A designer wants to create a professional banking application. Which colour combination would be a suitable starting point?",
+    options: [
+      "Blue and white",
+      "Bright red and neon green",
+      "Yellow and orange only",
+      "Pink and bright yellow"
+    ],
+    correctAnswer: 0,
+    explanation: "Blue and white are commonly used in banking interfaces because they can communicate trust, clarity and professionalism. The final choice should still consider the brand and user needs."
+  },
+  {
+    id: "q29",
+    question: "What should a designer consider when creating buttons for a mobile application?",
+    options: [
+      "Buttons should be too small to notice",
+      "Buttons should be clear and large enough to interact with comfortably",
+      "Buttons should have no labels",
+      "Buttons should always be hidden"
+    ],
+    correctAnswer: 1,
+    explanation: "Mobile buttons should be easy to identify and tap. This improves usability, especially for people using touchscreens."
+  },
+  {
+    id: "q30",
+    question: "Which statement best describes a good user interface?",
+    options: [
+      "It should contain as many colours as possible",
+      "It should focus only on appearance",
+      "It should be attractive, organised, readable and easy to interact with",
+      "It should contain many unnecessary elements"
+    ],
+    correctAnswer: 2,
+    explanation: "A good user interface combines visual appeal with usability. Users should be able to understand and interact with it without confusion."
+  }
+]
   },
   {
     id: "frontend-quiz-8",
