@@ -5236,29 +5236,24 @@ Recommended next step: Practise these concepts by building small projects before
 
 // backend-lesson-1
 // Introduction to Backend Development
+  
   {
     id: "backend-lesson-1",
     trackId: "track-backend",
-
     title: "Introduction to Backend Development",
-
     description:
       "Understand what happens behind the scenes when an application works.",
-
     type: "lesson",
-
     duration: "12 minutes",
-
     published: true,
-
     content: `
-# Introduction to Backend Development
+Introduction to Backend Development
 
 Backend development focuses on the server-side systems that support applications.
 
 When a user signs in to a website, backend systems can check their credentials and retrieve account information.
 
-## Common backend responsibilities
+Common backend responsibilities
 
 - Processing requests.
 - Validating data.
@@ -5267,17 +5262,653 @@ When a user signs in to a website, backend systems can check their credentials a
 - Providing APIs.
 - Supporting authentication.
 
-## What is a database?
+What is a database?
 
 A database stores information in an organized way.
 
 For example, a school system may store student profiles, courses, and examination results.
 
-## Practical activity
+Practical activity
 
 Think about a school management application.
 
 List five types of information the application might need to store.
+`,
+  },
+  {
+    id: "backend-lesson-2",
+    trackId: "track-backend",
+    title: "How the Web Works",
+    description:
+      "Learn how browsers, servers, and HTTP work together to deliver web applications.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+How the Web Works
+
+A web application usually involves a client and a server.
+
+The client
+
+- Usually a web browser or mobile application.
+- Sends requests to a server.
+- Displays the response to the user.
+
+The server
+
+- Receives client requests.
+- Processes application logic.
+- May communicate with a database.
+- Sends responses back to the client.
+
+Request and response cycle
+
+1. A user performs an action in the browser.
+2. The browser sends an HTTP request.
+3. The server processes the request.
+4. The server may retrieve or update database information.
+5. The server returns an HTTP response.
+6. The browser displays the result.
+
+What is HTTP?
+
+HTTP is a protocol used for communication between clients and servers.
+
+Practical activity
+
+Describe what happens when you open a website and submit a login form.
+`,
+  },
+  {
+    id: "backend-lesson-3",
+    trackId: "track-backend",
+    title: "Introduction to Node.js",
+    description:
+      "Understand how JavaScript can run outside the browser using Node.js.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+Introduction to Node.js
+
+Node.js is a runtime environment that allows JavaScript to run outside the browser.
+
+Backend developers use Node.js to build servers, APIs, and command-line tools.
+
+Why use Node.js?
+
+- Use JavaScript on the frontend and backend.
+- Build web servers and APIs.
+- Work with files and databases.
+- Use packages from the npm ecosystem.
+
+Your first Node.js program
+
+Create a file named app.js.
+
+Add this code:
+
+console.log("Hello from Node.js!");
+
+Run it in the terminal:
+
+node app.js
+
+Practical activity
+
+Create a JavaScript file that prints your name and a message about what you want to build with backend development.
+`,
+  },
+  {
+    id: "backend-lesson-4",
+    trackId: "track-backend",
+    title: "Getting Started with Express.js",
+    description:
+      "Build a simple web server using the Express framework.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Getting Started with Express.js
+
+Express.js is a web framework for Node.js.
+
+It helps developers create servers, define routes, and handle HTTP requests.
+
+Create a project
+
+1. Create a project folder.
+2. Open the folder in your terminal.
+3. Run npm init -y.
+4. Install Express with npm install express.
+
+Create a file named server.js.
+
+Example server
+
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Welcome to my backend server!");
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+
+What is a route?
+
+A route defines how the server responds to a request for a particular path and HTTP method.
+
+Practical activity
+
+Add a route at /about that returns a message describing your application.
+`,
+  },
+  {
+    id: "backend-lesson-5",
+    trackId: "track-backend",
+    title: "HTTP Methods and Status Codes",
+    description:
+      "Learn common HTTP methods and response status codes used in APIs.",
+    type: "lesson",
+    duration: "18 minutes",
+    published: true,
+    content: `
+HTTP Methods and Status Codes
+
+HTTP methods describe the action a client wants to perform.
+
+Common HTTP methods
+
+- GET: Retrieve information.
+- POST: Create or submit information.
+- PUT: Replace an existing resource.
+- PATCH: Update part of a resource.
+- DELETE: Remove a resource.
+
+HTTP status codes
+
+- 200 OK: The request succeeded.
+- 201 Created: A resource was created.
+- 400 Bad Request: The request contains invalid data.
+- 401 Unauthorized: Authentication is required or invalid.
+- 403 Forbidden: The client is not allowed to perform the action.
+- 404 Not Found: The requested resource does not exist.
+- 500 Internal Server Error: The server encountered an unexpected problem.
+
+Practical activity
+
+For a student management API, decide which HTTP method you would use to:
+
+1. Retrieve all students.
+2. Add a new student.
+3. Update a student's email.
+4. Delete a student.
+`,
+  },
+  {
+    id: "backend-lesson-6",
+    trackId: "track-backend",
+    title: "Introduction to REST APIs",
+    description:
+      "Understand how APIs allow frontend applications to communicate with backend services.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Introduction to REST APIs
+
+An API is an interface that allows software systems to communicate.
+
+A REST API commonly exposes resources through URLs and uses HTTP methods to interact with them.
+
+Example student API endpoints
+
+- GET /api/students
+- GET /api/students/1
+- POST /api/students
+- PATCH /api/students/1
+- DELETE /api/students/1
+
+What is JSON?
+
+JSON is a common format for exchanging data between clients and servers.
+
+Example:
+
+{
+  "id": 1,
+  "name": "Ada",
+  "course": "Frontend Development"
+}
+
+Practical activity
+
+Design three API endpoints for a school application and describe what each endpoint does.
+`,
+  },
+  {
+    id: "backend-lesson-7",
+    trackId: "track-backend",
+    title: "Working with Request Data",
+    description:
+      "Learn how to read route parameters, query parameters, and request bodies in Express.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Working with Request Data
+
+Backend applications receive data from clients in different ways.
+
+Route parameters
+
+Route parameters identify a specific resource.
+
+Example:
+
+app.get("/students/:id", (req, res) => {
+  res.send(req.params.id);
+});
+
+For /students/5, the id parameter is "5".
+
+Query parameters
+
+Query parameters are often used for filtering or searching.
+
+Example URL:
+
+/students?course=physics
+
+Access query parameters with req.query.
+
+Request body
+
+POST and PATCH requests often send data in the request body.
+
+Enable JSON parsing:
+
+app.use(express.json());
+
+Then access submitted data using req.body.
+
+Practical activity
+
+Create a route that accepts a student's name in a JSON request body and returns a greeting containing that name.
+`,
+  },
+  {
+    id: "backend-lesson-8",
+    trackId: "track-backend",
+    title: "Databases and Data Modeling",
+    description:
+      "Learn what databases do and how to organize application data.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Databases and Data Modeling
+
+A database stores and organizes information so an application can retrieve and update it.
+
+Relational databases
+
+Relational databases store data in tables made up of rows and columns.
+
+Example students table
+
+- id
+- name
+- email
+- course_id
+
+Example courses table
+
+- id
+- title
+- duration
+
+Primary key
+
+A primary key uniquely identifies each row in a table.
+
+Foreign key
+
+A foreign key connects a row in one table to a row in another table.
+
+Why model data?
+
+- Reduce unnecessary duplication.
+- Keep information organized.
+- Represent relationships.
+- Support reliable queries.
+
+Practical activity
+
+Design a simple database for a school application with students and courses. List the fields for each table and identify their relationship.
+`,
+  },
+  {
+    id: "backend-lesson-9",
+    trackId: "track-backend",
+    title: "Introduction to PostgreSQL",
+    description:
+      "Learn the basics of PostgreSQL and how to create and query tables.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Introduction to PostgreSQL
+
+PostgreSQL is an open-source relational database management system.
+
+It stores structured data in tables and supports SQL for querying and managing data.
+
+Common SQL commands
+
+Create a table:
+
+CREATE TABLE students (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) UNIQUE
+);
+
+Insert a record:
+
+INSERT INTO students (name, email)
+VALUES ('Ada', 'ada@example.com');
+
+Retrieve records:
+
+SELECT * FROM students;
+
+Update a record:
+
+UPDATE students
+SET name = 'Ada Lovelace'
+WHERE id = 1;
+
+Delete a record:
+
+DELETE FROM students
+WHERE id = 1;
+
+Practical activity
+
+Create a students table and insert two sample student records. Use SELECT to retrieve them.
+`,
+  },
+  {
+    id: "backend-lesson-10",
+    trackId: "track-backend",
+    title: "Connecting Node.js to PostgreSQL",
+    description:
+      "Understand how a Node.js backend connects to a PostgreSQL database.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Connecting Node.js to PostgreSQL
+
+A backend server can connect to PostgreSQL to store and retrieve application data.
+
+The pg package
+
+The Node.js pg package provides a PostgreSQL client.
+
+Install it:
+
+npm install pg
+
+Connection configuration
+
+Database connection details commonly include:
+
+- Host
+- Port
+- Database name
+- Username
+- Password
+
+Keep database credentials in environment variables rather than frontend code.
+
+Example connection
+
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+
+A query
+
+const result = await pool.query(
+  "SELECT * FROM students"
+);
+
+console.log(result.rows);
+
+Important security practice
+
+Use parameterized queries when inserting or searching for user-provided data. Avoid building SQL queries by concatenating raw user input.
+
+Practical activity
+
+Connect your Express application to a local PostgreSQL database and retrieve a list of students.
+`,
+  },
+  {
+    id: "backend-lesson-11",
+    trackId: "track-backend",
+    title: "Input Validation and Error Handling",
+    description:
+      "Learn how to validate incoming data and respond safely to errors.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Input Validation and Error Handling
+
+Input validation checks whether incoming data meets the application's requirements.
+
+Examples of validation
+
+- A name must not be empty.
+- An email must have a valid format.
+- A password must meet minimum requirements.
+- A course ID must refer to an existing course.
+
+Why validate input?
+
+- Prevent invalid records.
+- Improve user experience.
+- Protect application logic.
+- Reduce unexpected errors.
+
+Error handling
+
+A backend should handle errors and return appropriate responses instead of crashing unexpectedly.
+
+Example:
+
+app.get("/students", async (req, res) => {
+  try {
+    // Retrieve students here
+    res.json([]);
+  } catch (error) {
+    res.status(500).json({
+      message: "An unexpected error occurred."
+    });
+  }
+});
+
+Practical activity
+
+Add validation to a student creation route so that it rejects requests with a missing name.
+`,
+  },
+  {
+    id: "backend-lesson-12",
+    trackId: "track-backend",
+    title: "Authentication and Authorization",
+    description:
+      "Understand how applications verify users and control access to resources.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Authentication and Authorization
+
+Authentication verifies who a user is.
+
+Authorization determines what an authenticated user is allowed to do.
+
+Authentication examples
+
+- Signing in with an email and password.
+- Verifying a session.
+- Validating an access token.
+
+Authorization examples
+
+- A student can view their own profile.
+- An instructor can manage assigned courses.
+- An administrator can manage users.
+
+Password security
+
+Passwords should never be stored as plain text.
+
+Use a suitable password-hashing algorithm and verify passwords securely.
+
+Practical activity
+
+For a school management application, list three user roles and describe what each role should be allowed to do.
+`,
+  },
+  {
+    id: "backend-lesson-13",
+    trackId: "track-backend",
+    title: "Environment Variables and Configuration",
+    description:
+      "Learn how to manage configuration and keep sensitive credentials out of source code.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+Environment Variables and Configuration
+
+Applications need configuration such as database URLs, API keys, and server ports.
+
+Environment variables allow configuration to be supplied outside the source code.
+
+Using a .env file
+
+A local .env file may contain:
+
+PORT=3000
+DATABASE_URL=your_database_connection_string
+
+Load environment variables with a suitable package such as dotenv.
+
+Security practices
+
+- Do not commit .env files containing secrets.
+- Add .env to .gitignore.
+- Keep secrets on the backend.
+- Use separate configuration for development and production.
+
+Practical activity
+
+Create a .env file for your local backend and read the PORT value in your server.
+`,
+  },
+  {
+    id: "backend-lesson-14",
+    trackId: "track-backend",
+    title: "Testing Backend APIs",
+    description:
+      "Learn how to test API endpoints and verify expected responses.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Testing Backend APIs
+
+API testing checks whether backend endpoints behave as expected.
+
+What to test
+
+- Successful requests.
+- Missing or invalid input.
+- Unauthorized requests.
+- Resources that do not exist.
+- Database or server errors.
+
+Manual testing
+
+Tools such as Postman or an HTTP client can send requests to your API.
+
+For each endpoint, check:
+
+- HTTP status code.
+- Response body.
+- Data correctness.
+- Error behavior.
+
+Practical activity
+
+Test your student creation endpoint with valid data and with a missing name. Compare the responses.
+`,
+  },
+  {
+    id: "backend-lesson-15",
+    trackId: "track-backend",
+    title: "Building a Student Management API",
+    description:
+      "Combine Express, REST APIs, and PostgreSQL to build a simple backend project.",
+    type: "lesson",
+    duration: "30 minutes",
+    published: true,
+    content: `
+Building a Student Management API
+
+In this project, you will build a backend API for managing students.
+
+Core features
+
+- Retrieve all students.
+- Retrieve a student by ID.
+- Create a student.
+- Update a student's information.
+- Delete a student.
+
+Suggested endpoints
+
+- GET /api/students
+- GET /api/students/:id
+- POST /api/students
+- PATCH /api/students/:id
+- DELETE /api/students/:id
+
+Project steps
+
+1. Create an Express server.
+2. Connect the server to PostgreSQL.
+3. Create a students table.
+4. Implement the API endpoints.
+5. Validate incoming data.
+6. Handle errors.
+7. Test each endpoint.
+
+Practical activity
+
+Build and test the API. Then describe how your frontend could use each endpoint.
 `,
   },
 ];
