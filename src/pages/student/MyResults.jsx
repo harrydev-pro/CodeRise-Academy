@@ -1,23 +1,16 @@
 import { Trophy, CalendarDays } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
-import { useAuth } from "../../hooks/useAuth";
-import { readStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { formatDate } from "../../utils/formatDate";
 
 export default function MyResults() {
-  const { user } = useAuth();
+  const { data: results, loading, error, reload } = useApiResource("/learning/attempts", "attempts");
 
-  const results = readStore(
-    STORAGE_KEYS.quizResults,
-    []
-  )
-    .filter((result) => result.userId === user?.id)
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-    );
+  if (loading) return <div className="student-page"><Loader label="Loading your results…" /></div>;
+  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
 
   if (results.length === 0) {
     return (

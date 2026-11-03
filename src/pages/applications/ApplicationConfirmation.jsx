@@ -9,15 +9,18 @@ import {
 import { formatCurrency } from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 
-import { getApplicationById } from "../../features/applications/applicationService";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function ApplicationConfirmation() {
   const { applicationId } = useParams();
   const location = useLocation();
+  const applicationResource = useApiResource("/applications/me", "applications", undefined, Boolean(applicationId && !location.state?.application));
+  const application = location.state?.application || applicationResource.data.find((item) => item.id === applicationId);
 
-  const application =
-    location.state?.application ||
-    getApplicationById(applicationId);
+  if (applicationResource.loading) return <main className="page-container"><Loader label="Loading application…" /></main>;
+  if (applicationResource.error) return <main className="page-container"><ErrorMessage message={applicationResource.error} onRetry={applicationResource.reload} /></main>;
 
   if (!application) {
     return (
@@ -26,8 +29,7 @@ export default function ApplicationConfirmation() {
           <h1>Application not found</h1>
 
           <p>
-            We couldn't find the application in this browser. It may have
-            been submitted in a different browser or session.
+            We couldn't find this application in your account. It may have been removed.
           </p>
 
           <Link to="/programs" className="btn btn-primary">
@@ -50,7 +52,7 @@ export default function ApplicationConfirmation() {
         <h1>Thank you for applying!</h1>
 
         <p>
-          Your application has been recorded in this browser demonstration.
+          Your application has been saved to your account.
           Its current status is <strong>{application.status || "Pending"}</strong>.
         </p>
 
@@ -99,9 +101,7 @@ export default function ApplicationConfirmation() {
             <strong>What happens next?</strong>
 
             <p>
-              In a live system, the academy team would review your application
-              and contact you using your preferred contact method. This
-              demonstration does not send notifications or messages.
+              The academy team will review your application. Status updates will appear in your notifications.
             </p>
           </div>
         </div>

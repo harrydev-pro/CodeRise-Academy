@@ -1,62 +1,14 @@
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { requestData } from "../../services/api/dataClient";
 
-import {
-  readStore,
-  writeStore,
-} from "../../services/storage/storageAdapter";
-
-import { initialQuizzes } from "../../data/initialQuizzes";
-import { getLessonsByTrack } from "../free-learning/lessonService";
-
-export function getQuizzes() {
-  return readStore(
-    STORAGE_KEYS.quizzes,
-    initialQuizzes
-  );
-}
-
-export function getPublishedQuizzes() {
-  return getQuizzes().filter(
-    (quiz) => quiz.published
-  );
-}
-
-export function getQuizById(id) {
-  return getQuizzes().find(
-    (quiz) => quiz.id === id
-  );
-}
-
-export function getQuizByLesson(lessonId) {
-  return getQuizzes().find(
-    (quiz) =>
-      quiz.lessonId === lessonId &&
-      quiz.published
-  );
-}
-
-export function getQuizzesByTrack(trackId) {
-  const lessonIds = new Set(getLessonsByTrack(trackId).map((lesson) => lesson.id));
-  return getQuizzes().filter((quiz) => quiz.trackId === trackId || lessonIds.has(quiz.lessonId));
-}
-
-export function saveQuizzes(quizzes) {
-  return writeStore(
-    STORAGE_KEYS.quizzes,
-    quizzes
-  );
-}
-
-export function updateQuiz(id, updates) {
-  const quizzes = getQuizzes();
-
-  const updatedQuizzes = quizzes.map((quiz) =>
-    quiz.id === id
-      ? { ...quiz, ...updates }
-      : quiz
-  );
-
-  saveQuizzes(updatedQuizzes);
-
-  return updatedQuizzes;
-}
+export const getQuizzesByTrack = (trackId) => requestData(`/learning/tracks/${encodeURIComponent(trackId)}/quizzes`, "quizzes");
+export const getQuizById = (quizId) => requestData(`/learning/quizzes/${encodeURIComponent(quizId)}`, "quiz");
+export const getPublishedQuizzes = async () => {
+  const tracks = await requestData("/learning/tracks", "tracks");
+  const quizzes = await Promise.all(tracks.map((track) => getQuizzesByTrack(track.id)));
+  return quizzes.flat();
+};
+export const getQuizByLesson = async (lessonId) => {
+  const quizzes = await getPublishedQuizzes();
+  const quiz = quizzes.find((item) => item.lessonId === lessonId);
+  return quiz ? getQuizById(quiz.id) : null;
+};

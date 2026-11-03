@@ -1,71 +1,9 @@
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
-import {
-  readStore,
-  writeStore,
-} from "../../services/storage/storageAdapter";
+import { requestData } from "../../services/api/dataClient";
 
-import { initialLessons } from "../../data/initialLessons";
-
-export function getLessons() {
-  return readStore(
-    STORAGE_KEYS.lessons,
-    initialLessons
-  );
-}
-
-export function getPublishedLessons() {
-  return getLessons().filter(
-    (lesson) => lesson.published
-  );
-}
-
-export function getLessonById(id) {
-  return getLessons().find(
-    (lesson) => lesson.id === id
-  );
-}
-
-export function getLessonsByTrack(trackId) {
-  return getLessons().filter(
-    (lesson) => lesson.trackId === trackId
-  );
-}
-
-export function saveLessons(lessons) {
-  return writeStore(
-    STORAGE_KEYS.lessons,
-    lessons
-  );
-}
-
-export function updateLesson(id, updates) {
-  const lessons = getLessons();
-
-  const updatedLessons = lessons.map((lesson) =>
-    lesson.id === id
-      ? { ...lesson, ...updates }
-      : lesson
-  );
-
-  saveLessons(updatedLessons);
-
-  return updatedLessons;
-}
-
-export function addLesson(lesson) {
-  const lessons = getLessons();
-
-  const updatedLessons = [
-    ...lessons,
-    {
-      ...lesson,
-      id:
-        lesson.id ??
-        `lesson-${Date.now()}`,
-    },
-  ];
-
-  saveLessons(updatedLessons);
-
-  return updatedLessons;
-}
+export const getLessonsByTrack = (trackId) => requestData(`/learning/tracks/${encodeURIComponent(trackId)}/lessons`, "lessons");
+export const getLessonById = (lessonId) => requestData(`/learning/lessons/${encodeURIComponent(lessonId)}`, "lesson");
+export const getPublishedLessons = async () => {
+  const tracks = await requestData("/learning/tracks", "tracks");
+  const lessons = await Promise.all(tracks.map((track) => getLessonsByTrack(track.id)));
+  return lessons.flat();
+};

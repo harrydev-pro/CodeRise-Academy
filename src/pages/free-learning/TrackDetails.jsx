@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -9,22 +8,29 @@ import {
   GraduationCap,
 } from "lucide-react";
 
-import { getTrackById } from "../../features/free-learning/trackService";
-import { getLessonsByTrack } from "../../features/free-learning/lessonService";
-import { getUserProgress } from "../../features/free-learning/progressService";
 import { useAuth } from "../../hooks/useAuth";
+import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function TrackDetails() {
   const { trackId } = useParams();
   const { user } = useAuth();
 
-  const track = getTrackById(trackId);
-  const lessons = getLessonsByTrack(trackId);
+  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
+  const lessonResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/lessons`, "lessons");
+  const progressResource = useApiResource("/learning/progress", "progress", undefined, Boolean(user));
+  const track = trackResource.data;
+  const lessons = lessonResource.data;
+  const progress = progressResource.data;
 
-  const progress = useMemo(() => {
-    return user ? getUserProgress(user.id) : [];
-  }, [user]);
+  if (trackResource.loading || lessonResource.loading || progressResource.loading) {
+    return <main className="page-container"><Loader label="Loading this learning track…" /></main>;
+  }
+  if (trackResource.error || lessonResource.error || progressResource.error) {
+    return <main className="page-container"><ErrorMessage message={trackResource.error || lessonResource.error || progressResource.error} onRetry={() => { trackResource.reload(); lessonResource.reload(); progressResource.reload(); }} /></main>;
+  }
 
   if (!track) {
     return (

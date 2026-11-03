@@ -23,7 +23,6 @@ import MyLearning from "../pages/student/MyLearning";
 import MyApplications from "../pages/student/MyApplications";
 import MySubmissions from "../pages/student/MySubmissions";
 import MyResults from "../pages/student/MyResults";
-import MyPurchases from "../pages/student/MyPurchases";
 import Notifications from "../pages/student/Notifications";
 
 import FreeLearning from "../pages/free-learning/FreeLearning";
@@ -38,11 +37,12 @@ import ProjectSubmission from "../pages/free-learning/ProjectSubmissions";
 import VideoCourseCatalog from "../pages/video-courses/VideoCourseCatalog";
 import VideoCourseDetails from "../pages/video-courses/VideoCourseDetails";
 import VideoLessonPlayer from "../pages/video-courses/VideoLessonPlayer";
-import Checkout from "../pages/video-courses/Checkout";
-import PurchaseConfirmation from "../pages/video-courses/PurchaseConfirmation";
 
 import ApplicationForm from "../pages/applications/ApplicationForm";
 import ApplicationConfirmation from "../pages/applications/ApplicationConfirmation";
+import AdminOverview from "../pages/admin/AdminOverview";
+import ReviewSubmissions from "../pages/admin/ReviewSubmissions";
+import ReviewApplications from "../pages/admin/ReviewApplications";
 
 export default function AppRoutes() {
   return (
@@ -74,7 +74,6 @@ export default function AppRoutes() {
         <Route path="/my-applications" element={<MyApplications />} />
         <Route path="/my-submissions" element={<MySubmissions />} />
         <Route path="/my-results" element={<MyResults />} />
-        <Route path="/my-purchases" element={<MyPurchases />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/free-learning" element={<FreeLearning />} />
         <Route path="/free-learning/:trackId" element={<TrackDetails />} />
@@ -85,24 +84,12 @@ export default function AppRoutes() {
         <Route path="/free-learning/:trackId/projects/:projectId" element={<ProjectBrief />} />
         <Route path="/free-learning/:trackId/projects/:projectId/submit" element={<ProjectSubmission />} />
         <Route path="/video-courses/:courseId/lessons/:lessonId" element={<VideoLessonPlayer />} />
-        <Route path="/checkout/:courseId" element={<Checkout />} />
-        <Route path="/video-courses/:courseId/confirmation" element={<PurchaseConfirmation />} />
-        <Route path="/purchase-confirmation" element={<PurchaseConfirmation />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<div>Admin dashboard placeholder</div>} />
-        <Route path="users" element={<div>Admin users</div>} />
-        <Route path="activity" element={<div>Admin activity</div>} />
-        <Route path="courses" element={<div>Admin courses</div>} />
-        <Route path="lessons" element={<div>Admin lessons</div>} />
-        <Route path="video-management" element={<div>Admin videos</div>} />
-        <Route path="programs" element={<div>Admin programs</div>} />
-        <Route path="pricing" element={<div>Admin pricing</div>} />
-        <Route path="quizzes" element={<div>Admin quizzes</div>} />
-        <Route path="submissions" element={<div>Admin submissions</div>} />
-        <Route path="applications" element={<div>Admin applications</div>} />
-        <Route path="settings" element={<div>Admin settings</div>} />
+        <Route index element={<AdminOverview />} />
+        <Route path="submissions" element={<ReviewSubmissions />} />
+        <Route path="applications" element={<ReviewApplications />} />
       </Route>
 
       <Route path="/student" element={<Navigate to="/dashboard" replace />} />

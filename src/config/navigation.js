@@ -4,14 +4,9 @@ import {
   GraduationCap,
   FileText,
   ClipboardCheck,
-  ShoppingBag,
   UserRound,
   Bell,
-  Users,
-  Activity,
   Video,
-  CircleDollarSign,
-  Settings,
 } from "lucide-react";
 
 export const publicNavigation = [
@@ -74,11 +69,6 @@ export const studentNavigation = [
     icon: GraduationCap,
   },
   {
-    label: "My Purchases",
-    path: "/my-purchases",
-    icon: ShoppingBag,
-  },
-  {
     label: "Notifications",
     path: "/notifications",
     icon: Bell,
@@ -97,46 +87,6 @@ export const adminNavigation = [
     icon: LayoutDashboard,
   },
   {
-    label: "Users",
-    path: "/admin/users",
-    icon: Users,
-  },
-  {
-    label: "Activity Logs",
-    path: "/admin/activity",
-    icon: Activity,
-  },
-  {
-    label: "Courses",
-    path: "/admin/courses",
-    icon: BookOpen,
-  },
-  {
-    label: "Lessons",
-    path: "/admin/lessons",
-    icon: GraduationCap,
-  },
-  {
-    label: "Video Management",
-    path: "/admin/video-management",
-    icon: Video,
-  },
-  {
-    label: "Programs",
-    path: "/admin/programs",
-    icon: FileText,
-  },
-  {
-    label: "Pricing",
-    path: "/admin/pricing",
-    icon: CircleDollarSign,
-  },
-  {
-    label: "Quiz Management",
-    path: "/admin/quizzes",
-    icon: ClipboardCheck,
-  },
-  {
     label: "Submissions",
     path: "/admin/submissions",
     icon: FileText,
@@ -145,10 +95,5 @@ export const adminNavigation = [
     label: "Applications",
     path: "/admin/applications",
     icon: Users,
-  },
-  {
-    label: "Settings",
-    path: "/admin/settings",
-    icon: Settings,
   },
 ];

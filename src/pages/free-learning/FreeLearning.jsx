@@ -8,9 +8,11 @@ import {
   Server,
 } from "lucide-react";
 
-import { getTracks } from "../../features/free-learning/trackService";
 import { useAuth } from "../../hooks/useAuth";
+import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 const trackIcons = {
   "Product Design": Palette,
@@ -30,7 +32,7 @@ const trackDescriptions = {
 export default function FreeLearning() {
   const { user } = useAuth();
 
-  const tracks = getTracks().filter((track) => track.published !== false);
+  const { data: tracks, loading, error, reload } = useApiResource("/learning/tracks", "tracks");
 
   return (
     <main className="page-container">
@@ -75,7 +77,7 @@ export default function FreeLearning() {
           </span>
         </div>
 
-        {tracks.length === 0 ? (
+        {loading ? <Loader label="Loading learning tracks…" /> : error ? <ErrorMessage message={error} onRetry={reload} /> : tracks.length === 0 ? (
           <EmptyState
             title="No learning tracks available"
             description="Learning tracks will appear here when they are published."

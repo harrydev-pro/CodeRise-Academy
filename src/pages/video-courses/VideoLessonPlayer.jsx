@@ -1,36 +1,28 @@
-import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
-  CheckCircle2,
   CirclePlay,
-  LockKeyhole,
   PlayCircle,
 } from "lucide-react";
 
 import { useAuth } from "../../hooks/useAuth";
-import {
-  getVideoCourseById,
-} from "../../features/video-courses/videoCourseService";
-import {
-  hasPurchasedCourse,
-} from "../../features/video-courses/purchaseService";
-
+import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function VideoLessonPlayer() {
   const { courseId, lessonId } = useParams();
   const { user } = useAuth();
 
-  const course = getVideoCourseById(courseId);
+  const { data: course, loading, error, reload } = useApiResource(`/catalog/video-courses/${encodeURIComponent(courseId)}`, "course", null);
 
   const lessons = Array.isArray(course?.lessons)
     ? course.lessons
     : [];
 
-  const [completedIds, setCompletedIds] = useState([]);
-
-  const purchased = Boolean(user && course && hasPurchasedCourse(user.id, course.id));
+  if (loading) return <main className="page-container"><Loader label="Loading course lesson…" /></main>;
+  if (error) return <main className="page-container"><ErrorMessage message={error} onRetry={reload} /></main>;
 
   if (!course || course.published === false) {
     return (
@@ -70,20 +62,12 @@ export default function VideoLessonPlayer() {
     );
   }
 
-  if (!isFree && !purchased) {
+  if (!isFree) {
     return (
       <main className="page-container">
         <EmptyState
           title="Course access required"
-          description="A completed purchase record is required before opening this course."
-          action={
-            <Link
-              to={`/checkout/${courseId}`}
-              className="btn btn-primary"
-            >
-              Continue to checkout
-            </Link>
-          }
+          description="Paid course access is unavailable until secure payment processing is configured."
         />
       </main>
     );
@@ -108,14 +92,6 @@ export default function VideoLessonPlayer() {
           }
         />
       </main>
-    );
-  }
-
-  function toggleCompleted(id) {
-    setCompletedIds((previous) =>
-      previous.includes(id)
-        ? previous.filter((item) => item !== id)
-        : [...previous, id]
     );
   }
 
@@ -171,21 +147,6 @@ export default function VideoLessonPlayer() {
               </div>
             )}
 
-            <button
-              type="button"
-              className={`btn ${
-                completedIds.includes(activeLesson.id)
-                  ? "btn-outline"
-                  : "btn-primary"
-              }`}
-              onClick={() => toggleCompleted(activeLesson.id)}
-            >
-              <CheckCircle2 size={18} />
-
-              {completedIds.includes(activeLesson.id)
-                ? "Mark as incomplete"
-                : "Mark lesson as complete"}
-            </button>
           </div>
         </section>
 
@@ -197,8 +158,6 @@ export default function VideoLessonPlayer() {
 
           {lessons.map((lesson, index) => {
             const isActive = lesson.id === activeLesson.id;
-            const isCompleted = completedIds.includes(lesson.id);
-
             return (
               <Link
                 key={lesson.id || index}
@@ -208,12 +167,10 @@ export default function VideoLessonPlayer() {
                 }`}
               >
                 <div className="video-playlist-icon">
-                  {isCompleted ? (
-                    <CheckCircle2 size={19} />
-                  ) : isActive ? (
+                  {isActive ? (
                     <CirclePlay size={19} />
                   ) : (
-                    <LockKeyhole size={17} />
+                    <PlayCircle size={17} />
                   )}
                 </div>
 

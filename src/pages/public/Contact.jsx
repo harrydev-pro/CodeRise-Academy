@@ -9,6 +9,7 @@ import {
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import { validateEmail } from "../../utils/validators";
+import { requestData } from "../../services/api/dataClient";
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -20,6 +21,8 @@ export default function Contact() {
 
   const [errors, setErrors] = useState({});
   const [success, setSuccess] = useState(false);
+  const [serviceError, setServiceError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -35,9 +38,10 @@ export default function Contact() {
     }));
 
     setSuccess(false);
+    setServiceError("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const nextErrors = {};
@@ -63,15 +67,25 @@ export default function Contact() {
 
     if (Object.keys(nextErrors).length > 0) return;
 
-    // No email or external message is sent in this prototype.
-    setSuccess(true);
-
-    setForm({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
+    setSubmitting(true);
+    setServiceError("");
+    try {
+      await requestData("/contact", null, {
+        method: "POST",
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim().toLowerCase(),
+          subject: form.subject.trim(),
+          message: form.message.trim(),
+        }),
+      });
+      setSuccess(true);
+      setForm({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      setServiceError(error.message || "We couldn't send your message. Please try again later.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -99,8 +113,7 @@ export default function Contact() {
             <h2>We would like to hear from you.</h2>
 
             <p>
-              Use the contact form to prepare your message. The current
-              prototype does not send messages to an email address.
+              Send a message to the academy team using the form.
             </p>
 
             <div className="contact-information-card">
@@ -146,8 +159,7 @@ export default function Contact() {
                 <CheckCircle2 size={18} />
 
                 <span>
-                  Your message passed validation, but it has not been sent.
-                  A backend or email service is required to deliver it.
+                  Your message has been sent. The academy team will get back to you soon.
                 </span>
               </div>
             )}
@@ -205,13 +217,11 @@ export default function Contact() {
                 )}
               </div>
 
-              <Button type="submit" fullWidth>
+              {serviceError && <div className="form-error" role="alert">{serviceError}</div>}
+
+              <Button type="submit" fullWidth loading={submitting}>
                 Submit Message <Send size={17} />
               </Button>
-
-              <p className="form-demo-note">
-                Demonstration form: no message is sent or stored remotely.
-              </p>
             </form>
           </div>
         </div>
