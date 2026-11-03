@@ -4,6 +4,7 @@ import { Save, UserRound } from "lucide-react";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import { useAuth } from "../../hooks/useAuth";
+import { validatePhone } from "../../utils/validators";
 
 export default function Profile() {
   const { user, updateProfile } = useAuth();
@@ -43,8 +44,8 @@ export default function Profile() {
       nextErrors.fullName = "Full name is required.";
     }
 
-    if (!/^\d{10}$/.test(form.phone)) {
-      nextErrors.phone = "Enter a valid 10-digit phone number.";
+    if (!validatePhone(form.phone)) {
+      nextErrors.phone = "Enter a valid Nigerian phone number.";
     }
 
     setErrors(nextErrors);
