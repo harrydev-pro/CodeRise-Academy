@@ -7,6 +7,7 @@ import {
   UserRound,
   Bell,
   Video,
+  Users,
 } from "lucide-react";
 
 export const publicNavigation = [
