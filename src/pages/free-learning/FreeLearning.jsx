@@ -35,7 +35,7 @@ export default function FreeLearning() {
   const { data: tracks, loading, error, reload } = useApiResource("/learning/tracks", "tracks");
 
   return (
-    <main className="page-container">
+    <main className="page-container free-learning-shell">
       <section className="learning-hero">
         <span className="eyebrow">CODERISE ACADEMY</span>
 

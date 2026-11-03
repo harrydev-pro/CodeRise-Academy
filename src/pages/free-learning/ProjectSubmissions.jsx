@@ -41,7 +41,7 @@ export default function ProjectSubmission() {
 
   if (!track || !project || project.trackId !== trackId) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <EmptyState
           title="Project not found"
           description="The project may have been removed or its address is incorrect."
@@ -140,7 +140,7 @@ export default function ProjectSubmission() {
   }
 
   return (
-    <main className="page-container submission-page">
+    <main className="page-container submission-page free-learning-shell">
       <Link
         to={`/free-learning/${trackId}/projects/${projectId}`}
         className="back-link"

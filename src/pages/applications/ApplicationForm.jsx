@@ -56,6 +56,7 @@ export default function ApplicationForm() {
   const selectedProgram = programs.find(
     (program) => program.id === form.programId
   );
+  const currentPrice = selectedProgram?.promotionalPrice ?? selectedProgram?.originalPrice ?? 0;
 
   function updateField(event) {
     const { name, value, type, checked } = event.target;
@@ -296,15 +297,9 @@ export default function ApplicationForm() {
                 </div>
 
                 <div className="selected-program-price">
-                  <strong>
-                    {formatCurrency(
-                      selectedProgram.promoPrice ??
-                        selectedProgram.price ??
-                        0
-                    )}
-                  </strong>
+                  <strong>{formatCurrency(currentPrice)}</strong>
 
-                  {selectedProgram.originalPrice != null && (
+                  {selectedProgram.promotionalPrice != null && selectedProgram.originalPrice > selectedProgram.promotionalPrice && (
                     <del>
                       {formatCurrency(selectedProgram.originalPrice)}
                     </del>
