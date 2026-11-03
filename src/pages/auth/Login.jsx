@@ -5,6 +5,7 @@ import { Eye, EyeOff, LogIn } from "lucide-react";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import { useAuth } from "../../hooks/useAuth";
+import { apiClient } from "../../services/api/client";
 import { validateEmail } from "../../utils/validators";
 
 export default function Login() {
@@ -20,6 +21,7 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState(location.state?.message || "");
   const [loading, setLoading] = useState(false);
+  const [loadingMessage, setLoadingMessage] = useState("Signing in…");
   const [showPassword, setShowPassword] = useState(false);
 
   function handleChange(event) {
@@ -56,14 +58,40 @@ export default function Login() {
     if (Object.keys(nextErrors).length > 0) return;
 
     setLoading(true);
+    setLoadingMessage("Signing in…");
+    let sendingVerification = false;
 
     try {
+      const email = form.email.trim().toLowerCase();
       const result = await login({
-        email: form.email.trim().toLowerCase(),
+        email,
         password: form.password,
       });
 
       if (result?.success === false) {
+        if (result.status === 403) {
+          sendingVerification = true;
+          setLoadingMessage("Sending verification code…");
+          const verification = await apiClient("/auth/resend-verification", {
+            method: "POST",
+            body: JSON.stringify({ email }),
+          });
+
+          if (!verification.ok) {
+            setMessage(
+              verification.status === 429
+                ? "Too many code requests. Please wait a little before trying again."
+                : "We couldn’t send a verification code right now. Please try again later."
+            );
+            return;
+          }
+
+          navigate("/verify-email", {
+            replace: true,
+            state: { email, message: "A verification code is on its way to your email." },
+          });
+          return;
+        }
         setMessage(result.message || "Invalid email or password.");
         return;
       }
@@ -77,9 +105,12 @@ export default function Login() {
         : fallback;
       navigate(destination, { replace: true });
     } catch (error) {
-      setMessage(error.message || "Unable to sign in.");
+      setMessage(sendingVerification
+        ? "We couldn’t send a verification code right now. Please try again later."
+        : error.message || "Unable to sign in.");
     } finally {
       setLoading(false);
+      setLoadingMessage("Signing in…");
     }
   }
 
@@ -138,7 +169,7 @@ export default function Login() {
         </div>
 
         <Button type="submit" fullWidth loading={loading}>
-          Sign in
+          {loading ? loadingMessage : "Sign in"}
         </Button>
       </form>
 

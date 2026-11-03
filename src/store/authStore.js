@@ -13,7 +13,11 @@ function getUser(result) {
 }
 
 function resultFailure(result, fallback) {
-  return { success: false, message: result?.error || fallback };
+  return {
+    success: false,
+    message: result?.error || fallback,
+    status: result?.status,
+  };
 }
 
 export const useAuthStore = create((set, get) => ({
