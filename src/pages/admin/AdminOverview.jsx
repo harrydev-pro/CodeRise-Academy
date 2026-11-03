@@ -16,7 +16,7 @@ export default function AdminOverview() {
   const applications = records(STORAGE_KEYS.applications);
   const courses = records(STORAGE_KEYS.videoCourses, initialVideoCourses);
   const stats = [
-    { title: "Total Students", value: users.filter((user) => user?.role !== "admin").length, Icon: Users },
+    { title: "Total Students", value: users.filter((user) => user?.role !== "instructor").length, Icon: Users },
     { title: "Programs", value: programs.length, Icon: BookOpen },
     { title: "Applications", value: applications.length, Icon: FileText },
     { title: "Video Courses", value: courses.length, Icon: CircleDollarSign },

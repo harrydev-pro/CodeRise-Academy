@@ -17,8 +17,6 @@ export function AuthProvider({ children }) {
     register: auth.register,
     logout: auth.logout,
     initialize: auth.initialize,
-    setAuth: auth.setAuth,
-    clearAuth: auth.clearAuth,
   }), [auth]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

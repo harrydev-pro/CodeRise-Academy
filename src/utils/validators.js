@@ -3,6 +3,5 @@ export function validateEmail(value) {
 }
 
 export function validatePhone(value) {
-  const normalized = String(value || '').trim();
-  return /^[+]?[(]?[0-9]{1,4}[)]?[-\s0-9]{7,15}$/.test(normalized);
+  return /^\d{10}$/.test(String(value || '').trim());
 }

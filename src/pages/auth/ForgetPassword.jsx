@@ -5,6 +5,7 @@ import { Mail } from "lucide-react";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import { validateEmail } from "../../utils/validators";
+import { apiClient } from "../../services/api/client";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
@@ -26,12 +27,14 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      // A real password-reset request must be handled by a backend.
-      await new Promise((resolve) => setTimeout(resolve, 400));
-
-      setMessage(
-        "Demo mode: no reset email was sent. Password recovery is not connected to a backend."
-      );
+      const result = await apiClient("/auth/password-reset/request", {
+        method: "POST",
+        body: JSON.stringify({ email: email.trim().toLowerCase() }),
+      });
+      if (!result.ok) setError(result.error);
+      else setMessage(result.data?.message || "If an account matches that address, reset instructions have been sent.");
+    } catch (requestError) {
+      setError(requestError.message || "Unable to request a password reset.");
     } finally {
       setLoading(false);
     }
@@ -53,6 +56,7 @@ export default function ForgotPassword() {
       </div>
 
       {message && <div className="alert alert-info">{message}</div>}
+      {error && <div className="alert alert-error">{error}</div>}
 
       <form onSubmit={handleSubmit}>
         <Input

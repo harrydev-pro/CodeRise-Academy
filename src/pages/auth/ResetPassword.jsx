@@ -1,19 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LockKeyhole } from "lucide-react";
 
-import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
+import Button from "../../components/common/Button";
+import { apiClient } from "../../services/api/client";
 
 export default function ResetPassword() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    token: "",
+    token: new URLSearchParams(window.location.hash.slice(1)).get("token") || "",
     password: "",
     confirmPassword: "",
   });
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -31,7 +34,7 @@ export default function ResetPassword() {
     setMessage("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const nextErrors = {};
@@ -40,8 +43,8 @@ export default function ResetPassword() {
       nextErrors.token = "Enter the reset token.";
     }
 
-    if (form.password.length < 8) {
-      nextErrors.password = "Use at least 8 characters.";
+    if (form.password.length < 8 || form.password.length > 128) {
+      nextErrors.password = "Use a password between 8 and 128 characters.";
     }
 
     if (form.password !== form.confirmPassword) {
@@ -52,9 +55,19 @@ export default function ResetPassword() {
 
     if (Object.keys(nextErrors).length > 0) return;
 
-    setMessage(
-      "Password reset is not connected. No password has been changed."
-    );
+    setLoading(true);
+    try {
+      const result = await apiClient("/auth/password-reset/confirm", {
+        method: "POST",
+        body: JSON.stringify({ token: form.token.trim(), password: form.password }),
+      });
+      if (!result.ok) setMessage(result.error);
+      else navigate("/login", { replace: true, state: { message: "Your password was reset. Sign in with your new password." } });
+    } catch (requestError) {
+      setMessage(requestError.message || "Unable to reset your password.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -67,11 +80,6 @@ export default function ResetPassword() {
         <h1>Reset your password</h1>
 
         <p>Enter your reset token and choose a new password.</p>
-      </div>
-
-      <div className="alert alert-info">
-        Demo mode: a valid reset token can only be issued by a connected
-        backend. This page will not change your account password.
       </div>
 
       {message && <div className="alert alert-info">{message}</div>}
@@ -111,7 +119,7 @@ export default function ResetPassword() {
           required
         />
 
-        <Button className="mt-5" type="submit" fullWidth>
+        <Button className="mt-5" type="submit" fullWidth loading={loading}>
           Reset password
         </Button>
       </form>

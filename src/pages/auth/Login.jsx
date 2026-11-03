@@ -18,7 +18,7 @@ export default function Login() {
   });
 
   const [errors, setErrors] = useState({});
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(location.state?.message || "");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -68,13 +68,14 @@ export default function Login() {
         return;
       }
 
-      const destination =
-  location.state?.from?.pathname ||
-  (result?.user?.role === "admin" ? "/admin" : "/dashboard");
-
-const search = location.state?.from?.search || "";
-
-navigate(`${destination}${search}`, { replace: true });
+      const fallback = result?.user?.role === "instructor" ? "/admin" : "/dashboard";
+      const requestedPath = typeof location.state?.from === "string"
+        ? location.state.from
+        : `${location.state?.from?.pathname || ""}${location.state?.from?.search || ""}`;
+      const destination = requestedPath.startsWith("/") && !requestedPath.startsWith("//")
+        ? requestedPath
+        : fallback;
+      navigate(destination, { replace: true });
     } catch (error) {
       setMessage(error.message || "Unable to sign in.");
     } finally {
@@ -144,7 +145,6 @@ navigate(`${destination}${search}`, { replace: true });
       <p className="auth-switch">
         New to CodeRise Academy? <Link to="/register">Create an account</Link>
       </p>
-      <div className="demo-login-note"><strong>Admin preview</strong><span>admin@coderiseacademy.com</span><span>Admin123!</span></div>
     </div>
   );
 }

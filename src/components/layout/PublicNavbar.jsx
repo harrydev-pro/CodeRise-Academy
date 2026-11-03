@@ -9,7 +9,7 @@ import { useAuth } from "../../hooks/useAuth";
 export default function PublicNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
-  const dashboardPath = user?.role === "admin" ? "/admin" : "/dashboard";
+  const dashboardPath = user?.role === "instructor" ? "/admin" : "/dashboard";
 
   const linkClass = ({ isActive }) =>
     [
