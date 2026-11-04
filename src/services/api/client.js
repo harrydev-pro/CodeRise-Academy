@@ -1,14 +1,13 @@
-export const API_BASE_URL = import.meta.env.DEV
-  ? ''
-  : (import.meta.env.BACKEND_URL || '').replace(/\/+$/, '');
+// API calls stay same-origin in both environments: Vite proxies during local
+// development and vercel.json proxies in production. This keeps auth cookies
+// first-party in Safari and other strict browsers.
+export const API_BASE_URL = '';
 
 let csrfToken = null;
+let csrfTokenRequest = null;
 
 function makeUrl(endpoint) {
   if (/^https?:\/\//i.test(endpoint)) return endpoint;
-  if (!import.meta.env.DEV && !API_BASE_URL) {
-    throw new Error('Failed to fetch.');
-  }
   return `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 }
 
@@ -26,18 +25,25 @@ async function readPayload(response) {
   return responseBody;
 }
 
-async function getCsrfToken() {
-  const response = await fetch(makeUrl('/auth/csrf'), {
-    method: 'GET',
-    credentials: 'include',
-    headers: { Accept: 'application/json' },
-  });
-  const payload = await readPayload(response);
-  if (!response.ok || !payload?.csrfToken) {
-    throw new Error(payload?.message || 'Unable to establish a secure session.');
+function getCsrfToken() {
+  if (!csrfTokenRequest) {
+    csrfTokenRequest = (async () => {
+      const response = await fetch(makeUrl('/auth/csrf'), {
+        method: 'GET',
+        credentials: 'include',
+        headers: { Accept: 'application/json' },
+      });
+      const payload = await readPayload(response);
+      if (!response.ok || !payload?.csrfToken) {
+        throw new Error(payload?.message || 'Unable to establish a secure session.');
+      }
+      csrfToken = payload.csrfToken;
+      return csrfToken;
+    })().finally(() => {
+      csrfTokenRequest = null;
+    });
   }
-  csrfToken = payload.csrfToken;
-  return csrfToken;
+  return csrfTokenRequest;
 }
 
 export async function apiClient(endpoint, options = {}) {

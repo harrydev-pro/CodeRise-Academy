@@ -1,0 +1,32 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/auth/:path*"
+    },
+    {
+      "source": "/learning/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/learning/:path*"
+    },
+    {
+      "source": "/catalog/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/catalog/:path*"
+    },
+    {
+      "source": "/applications/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/applications/:path*"
+    },
+    {
+      "source": "/notifications/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/notifications/:path*"
+    },
+    {
+      "source": "/contact/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/contact/:path*"
+    },
+    {
+      "source": "/health/:path*",
+      "destination": "https://coderise-academy-backend667-1.onrender.com/health/:path*"
+    }
+  ]
+}
