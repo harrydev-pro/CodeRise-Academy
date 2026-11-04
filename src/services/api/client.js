@@ -1,13 +1,13 @@
 export const API_BASE_URL = import.meta.env.DEV
   ? ''
-  : (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+  : (import.meta.env.BACKEND_URL || '').replace(/\/+$/, '');
 
 let csrfToken = null;
 
 function makeUrl(endpoint) {
   if (/^https?:\/\//i.test(endpoint)) return endpoint;
   if (!import.meta.env.DEV && !API_BASE_URL) {
-    throw new Error('VITE_API_URL must be configured for the production frontend.');
+    throw new Error('Failed to fetch.');
   }
   return `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
 }
