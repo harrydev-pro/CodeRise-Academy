@@ -69,7 +69,7 @@ export default function Login() {
       });
 
       if (result?.success === false) {
-        if (result.status === 403) {
+        if (result.status === 403 && result.message === "Verify your email before logging in.") {
           sendingVerification = true;
           setLoadingMessage("Sending verification code…");
           const verification = await apiClient("/auth/resend-verification", {
