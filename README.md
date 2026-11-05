@@ -22,6 +22,7 @@ The browser always calls the API on the website's own origin under `/api` (see `
 
 - **Production (Vercel):** `vercel.json` rewrites `/api/*` to the Render backend and removes the `/api` prefix. Because the browser only ever talks to the Vercel domain, the HttpOnly session cookie and CSRF cookie are first-party. Safari on iPhone blocks third-party cookies, so do not point the frontend directly at the `onrender.com` URL. Leave `VITE_API_BASE_URL` unset in Vercel. If the backend URL changes, update the destination in `vercel.json`.
 - **Local development:** `npm run dev` checks `VITE_DEV_API_URL` (default `http://localhost:3000`) at startup. If its `/health/ready` endpoint is healthy, Vite proxies `/api/*` there; otherwise, it proxies to `VITE_PRODUCTION_API_URL` (default the Render backend). Restart Vite after starting or stopping the local backend so it can select the right target. The browser continues to call only the local site's `/api` path.
+- **Local production preview:** `npm run preview` proxies `/api/*` to `VITE_PRODUCTION_API_URL` (default the Render backend). Deployed Vercel sites use the rewrite above; Vite itself does not run in the deployment.
 
 `VITE_` settings are compiled into browser code and must contain only public configuration; database, SMTP, signing, and Redis credentials belong in the backend environment. The browser keeps no access token in local storage, and mutating requests include a CSRF token.
 

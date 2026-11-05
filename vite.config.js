@@ -22,6 +22,14 @@ export default defineConfig(async ({ mode, command }) => {
     console.info(`[vite] API proxy target: ${apiTarget}`)
   }
 
+  const proxyFor = (target) => ({
+    '/api': {
+      target,
+      changeOrigin: true,
+      rewrite: (path) => path.replace(/^\/api(?=\/|$)/, '') || '/',
+    },
+  })
+
   return {
     plugins: [
       react(),
@@ -29,15 +37,13 @@ export default defineConfig(async ({ mode, command }) => {
       babel({ presets: [reactCompilerPreset()] })
     ],
     server: {
-      proxy: {
-        // Mirrors the production rewrite in vercel.json: /api/* on the website's own
-        // origin is forwarded to the backend with the /api prefix removed.
-        '/api': {
-          target: apiTarget,
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api(?=\/|$)/, '') || '/',
-        },
-      },
+      // Local development picks the local backend when healthy, then falls back to Render.
+      proxy: proxyFor(apiTarget),
+    },
+    preview: {
+      // `vite preview` serves a production build locally, so send its API calls to Render.
+      // Actual Vercel deployments use the equivalent external rewrite in vercel.json.
+      proxy: proxyFor(productionApi),
     },
   }
 })
