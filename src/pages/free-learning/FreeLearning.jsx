@@ -1,67 +1,24 @@
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  Code2,
-  Palette,
-  Server,
-} from "lucide-react";
+import { ArrowRight, BookOpen, ClipboardCheck, FolderKanban } from "lucide-react";
 
-import { useAuth } from "../../hooks/useAuth";
-import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
 import Loader from "../../components/common/Loader";
+import TrackIcon from "../../components/common/TrackIcon";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
-
-const trackIcons = {
-  "Product Design": Palette,
-  "Frontend Development": Code2,
-  "Backend Development": Server,
-};
-
-const trackDescriptions = {
-  "Product Design":
-    "Learn design thinking, user research, wireframing, prototyping, and interface design.",
-  "Frontend Development":
-    "Learn how to build websites using HTML, CSS, JavaScript, and modern frontend concepts.",
-  "Backend Development":
-    "Understand servers, APIs, databases, authentication, and how web applications work behind the scenes.",
-};
+import { useApiResource } from "../../hooks/useApiResource";
 
 export default function FreeLearning() {
-  const { user } = useAuth();
-
-  const { data: tracks, loading, error, reload } = useApiResource("/learning/tracks", "tracks");
+  const tracksResource = useApiResource("/learning/tracks", "tracks");
+  const dashboardResource = useApiResource("/learning/dashboard", "dashboard", null);
+  const tracks = tracksResource.data;
+  const summaries = new Map((dashboardResource.data?.tracks || []).map((track) => [track.id, track]));
 
   return (
-    <main className="page-container free-learning-shell">
+    <div className="page-container free-learning-shell">
       <section className="learning-hero">
-        <span className="eyebrow">CODERISE ACADEMY</span>
-
-        <h1>Learn a new skill, one lesson at a time.</h1>
-
-        <p>
-          Explore free, text-based learning materials, complete quizzes,
-          practice with projects, and track your progress.
-        </p>
-
-        <div className="learning-hero-stats">
-          <div>
-            <BookOpen size={20} />
-            <span>Guided lessons</span>
-          </div>
-
-          <div>
-            <CheckCircle2 size={20} />
-            <span>Practice assessments</span>
-          </div>
-
-          <div>
-            <Code2 size={20} />
-            <span>Practical projects</span>
-          </div>
-        </div>
+        <span className="eyebrow">FREE LEARNING</span>
+        <h1>Learn a new skill, one topic at a time.</h1>
+        <p>Choose a track, read the notes for each topic, test yourself with quizzes, and practise with real projects. Your progress is saved automatically.</p>
       </section>
 
       <section className="section-block">
@@ -69,52 +26,44 @@ export default function FreeLearning() {
           <div>
             <span className="eyebrow">START LEARNING</span>
             <h2>Choose your learning track</h2>
-            <p>Select a track to explore its lessons and activities.</p>
           </div>
-
-          <span className="count-badge">
-            {tracks.length} {tracks.length === 1 ? "track" : "tracks"}
-          </span>
         </div>
 
-        {loading ? <Loader label="Loading learning tracks…" /> : error ? <ErrorMessage message={error} onRetry={reload} /> : tracks.length === 0 ? (
-          <EmptyState
-            title="No learning tracks available"
-            description="Learning tracks will appear here when they are published."
-          />
+        {tracksResource.loading ? <Loader label="Loading learning tracks…" /> : tracksResource.error ? <ErrorMessage message={tracksResource.error} onRetry={tracksResource.reload} /> : tracks.length === 0 ? (
+          <EmptyState title="No learning tracks yet" description="Learning tracks will appear here when they are published." />
         ) : (
-          <div className="track-grid">
+          <div className="ui-grid ui-grid-cards">
             {tracks.map((track) => {
-              const Icon = trackIcons[track.title] || BookOpen;
-
+              const summary = summaries.get(track.id);
+              const started = summary?.completedTopics > 0;
+              const continueTo = summary?.nextTopic
+                ? `/free-learning/${track.id}/lessons/${summary.nextTopic.id}`
+                : `/free-learning/${track.id}`;
               return (
-                <article className="track-card" key={track.id}>
-                  <div className="track-card-icon">
-                    <Icon size={25} />
-                  </div>
-
-                  <span className="track-level">
-                    {track.level || "Beginner friendly"}
-                  </span>
-
+                <article className="track-card learning-track-card" key={track.id}>
+                  {track.imageUrl ? <img src={track.imageUrl} alt="" className="learning-track-image" loading="lazy" /> : (
+                    <div className="track-card-icon"><TrackIcon track={track} /></div>
+                  )}
                   <h3>{track.title}</h3>
-
-                  <p>
-                    {track.description ||
-                      trackDescriptions[track.title] ||
-                      "Explore guided lessons and practical learning activities."}
-                  </p>
-
-                  <div className="track-card-footer">
-                    <span>Free learning</span>
-
-                    <Link
-                      to={`/free-learning/${track.id}`}
-                      state={{ trackTitle: track.title }}
-                      className="text-link"
-                    >
-                      Explore track <ArrowRight size={16} />
+                  <p>{track.description || "Guided topics, quizzes, and practical projects."}</p>
+                  <div className="ui-meta">
+                    <span><BookOpen size={15} aria-hidden="true" /> {track.topicCount} topics</span>
+                    <span><ClipboardCheck size={15} aria-hidden="true" /> {track.quizCount} quizzes</span>
+                    <span><FolderKanban size={15} aria-hidden="true" /> {track.projectCount} projects</span>
+                  </div>
+                  {summary && (
+                    <div className="learning-track-progress">
+                      <div className="progress-heading"><span>Your progress</span><strong>{summary.percentage}%</strong></div>
+                      <div className="ui-progress" role="progressbar" aria-label={`${track.title} progress`} aria-valuenow={summary.percentage} aria-valuemin={0} aria-valuemax={100}>
+                        <span style={{ width: `${summary.percentage}%` }} />
+                      </div>
+                    </div>
+                  )}
+                  <div className="learning-track-actions">
+                    <Link to={continueTo} className="btn btn-primary">
+                      {summary?.percentage === 100 ? "Review track" : started ? "Continue learning" : "Start learning"} <ArrowRight size={17} aria-hidden="true" />
                     </Link>
+                    <Link to={`/free-learning/${track.id}`} className="text-link">View curriculum</Link>
                   </div>
                 </article>
               );
@@ -122,22 +71,6 @@ export default function FreeLearning() {
           </div>
         )}
       </section>
-
-      <section className="learning-callout">
-        <div>
-          <h2>Your progress starts with one lesson.</h2>
-          <p>
-            Sign in to keep track of your learning activities and assessment
-            results.
-          </p>
-        </div>
-
-        {!user && (
-          <Link to="/login" className="btn btn-primary">
-            Sign in to learn
-          </Link>
-        )}
-      </section>
-    </main>
+    </div>
   );
 }

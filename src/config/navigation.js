@@ -8,6 +8,11 @@ import {
   Bell,
   Video,
   Users,
+  PlayCircle,
+  Trophy,
+  FolderKanban,
+  BarChart3,
+  History,
 } from "lucide-react";
 
 export const publicNavigation = [
@@ -55,19 +60,24 @@ export const studentNavigation = [
     icon: Video,
   },
   {
+    label: "My Video Courses",
+    path: "/my-video-courses",
+    icon: PlayCircle,
+  },
+  {
     label: "Applications",
     path: "/my-applications",
     icon: FileText,
   },
   {
-    label: "My Submissions",
+    label: "My Projects",
     path: "/my-submissions",
     icon: ClipboardCheck,
   },
   {
-    label: "My Results",
+    label: "Quiz History",
     path: "/my-results",
-    icon: GraduationCap,
+    icon: Trophy,
   },
   {
     label: "Notifications",
@@ -82,19 +92,15 @@ export const studentNavigation = [
 ];
 
 export const adminNavigation = [
-  {
-    label: "Overview",
-    path: "/admin",
-    icon: LayoutDashboard,
-  },
-  {
-    label: "Submissions",
-    path: "/admin/submissions",
-    icon: FileText,
-  },
-  {
-    label: "Applications",
-    path: "/admin/applications",
-    icon: Users,
-  },
+  { label: "Overview", path: "/admin", icon: LayoutDashboard },
+  { label: "Users", path: "/admin/users", icon: Users },
+  { label: "Applications", path: "/admin/applications", icon: FileText },
+  { label: "Programs", path: "/admin/programs", icon: GraduationCap },
+  { label: "Learning tracks", path: "/admin/learning", icon: BookOpen },
+  { label: "Projects", path: "/admin/projects", icon: FolderKanban },
+  { label: "Submissions", path: "/admin/submissions", icon: ClipboardCheck },
+  { label: "Video courses", path: "/admin/video-courses", icon: Video },
+  { label: "Reports", path: "/admin/reports", icon: BarChart3 },
+  { label: "Activity log", path: "/admin/activity", icon: History },
+  { label: "Notifications", path: "/admin/notifications", icon: Bell },
 ];

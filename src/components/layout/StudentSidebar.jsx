@@ -28,7 +28,7 @@ export default function StudentSidebar({
 
       <aside
         className={[
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-gray-100 bg-white",
+          "app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-gray-100 bg-white",
           "transition-transform duration-200 lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}
@@ -86,7 +86,7 @@ export default function StudentSidebar({
               <NavLink
                 key={item.path}
                 to={item.path}
-                end={item.path === "/student/dashboard"}
+                end={item.path === "/dashboard"}
                 onClick={onClose}
                 className={({ isActive }) =>
                   [

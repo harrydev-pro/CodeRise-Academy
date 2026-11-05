@@ -15,6 +15,7 @@ export const createApplication = (application) => requestData("/applications", "
     programId: application.programId,
     skillLevel: application.skillLevel,
     experience: application.experience,
+    learningGoals: application.learningGoals,
     reason: application.reason,
     preferredContact: application.preferredContact,
     acceptedTerms: application.acceptedTerms,

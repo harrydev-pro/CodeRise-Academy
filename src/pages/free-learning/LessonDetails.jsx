@@ -1,92 +1,42 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  ClipboardCheck,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, FolderKanban, Target } from "lucide-react";
 
-import { useAuth } from "../../hooks/useAuth";
-import { useApiResource } from "../../hooks/useApiResource";
-import { markLessonCompleted } from "../../features/free-learning/progressService";
 import Button from "../../components/common/Button";
 import EmptyState from "../../components/common/EmptyState";
 import Loader from "../../components/common/Loader";
+import NoteContent from "../../components/common/NoteContent";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
+import { useApiResource } from "../../hooks/useApiResource";
+import { markLessonCompleted } from "../../features/free-learning/progressService";
 
 export default function LessonDetails() {
   const { trackId, lessonId } = useParams();
-  const { user } = useAuth();
-
-  const [completed, setCompleted] = useState(false);
+  const lessonResource = useApiResource(`/learning/lessons/${encodeURIComponent(lessonId)}`, "lesson", null);
+  const progressResource = useApiResource("/learning/progress", "progress");
+  const [justCompleted, setJustCompleted] = useState(false);
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
-
-  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
-  const lessonResource = useApiResource(`/learning/lessons/${encodeURIComponent(lessonId)}`, "lesson", null);
-  const lessonsResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/lessons`, "lessons");
-  const progressResource = useApiResource("/learning/progress", "progress", undefined, Boolean(user));
-  const quizResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/quizzes`, "quizzes");
-  const track = trackResource.data;
   const lesson = lessonResource.data;
-  const lessons = lessonsResource.data;
-  const savedProgress = progressResource.data;
-  const quiz = quizResource.data[0];
 
-  const resources = [trackResource, lessonResource, lessonsResource, progressResource, quizResource];
-  if (resources.some((resource) => resource.loading)) return <main className="page-container"><Loader label="Loading lesson…" /></main>;
-  const resourceError = resources.find((resource) => resource.error);
-  if (resourceError) return <main className="page-container"><ErrorMessage message={resourceError.error} onRetry={() => resources.forEach((resource) => resource.reload())} /></main>;
-
-  const lessonIndex = lessons.findIndex((item) => item.id === lessonId);
-
-  const nextLesson = lessonIndex >= 0
-    ? lessons[lessonIndex + 1]
-    : null;
-
-  const previousLesson = lessonIndex > 0
-    ? lessons[lessonIndex - 1]
-    : null;
-
-  if (!track || !lesson || lesson.trackId !== trackId) {
-    return (
-      <main className="page-container">
-        <EmptyState
-          title="Lesson not found"
-          description="This lesson could not be found in the selected learning track."
-          action={
-            <Link
-              to={`/free-learning/${trackId}`}
-              className="btn btn-primary"
-            >
-              Return to track
-            </Link>
-          }
-        />
-      </main>
-    );
+  if (lessonResource.loading || progressResource.loading) return <div className="page-container"><Loader label="Loading topic…" /></div>;
+  if (lessonResource.error && !/not found/i.test(lessonResource.error)) return <div className="page-container"><ErrorMessage message={lessonResource.error} onRetry={lessonResource.reload} /></div>;
+  if (!lesson || lesson.trackId !== trackId) {
+    return <div className="page-container"><EmptyState title="Topic not found" description="This topic could not be found in the selected learning track." actionLabel="Return to track" actionHref={`/free-learning/${trackId}`} /></div>;
   }
 
-  const isCompleted =
-    completed ||
-    savedProgress.some(
-      (item) => item.lessonId === lessonId && item.completed
-    );
+  const completed = justCompleted || progressResource.data.some((item) => item.lessonId === lesson.id);
+  const objectives = Array.isArray(lesson.objectives) ? lesson.objectives : [];
+  const takeaways = Array.isArray(lesson.keyTakeaways) ? lesson.keyTakeaways : [];
+  const notes = Array.isArray(lesson.notes) ? lesson.notes : [];
 
   async function handleComplete() {
-    if (!user) {
-      setMessage("Please sign in to save your learning progress.");
-      return;
-    }
-
     setSaving(true);
+    setMessage("");
     try {
-      await markLessonCompleted(user.id, trackId, lessonId);
-      setCompleted(true);
-      setMessage("Lesson completed. Your progress has been saved.");
-      progressResource.reload();
+      await markLessonCompleted(null, trackId, lesson.id);
+      setJustCompleted(true);
+      setMessage("Topic completed. Your progress has been saved.");
     } catch (error) {
       setMessage(error.message || "We couldn't save your progress. Please try again.");
     } finally {
@@ -94,181 +44,85 @@ export default function LessonDetails() {
     }
   }
 
-  function renderContent(content) {
-    if (typeof content === "string") {
-      return content.split("\n").map((paragraph, index) =>
-        paragraph.trim() ? <p key={index}>{paragraph}</p> : null
-      );
-    }
-
-    if (Array.isArray(content)) {
-      return content.map((section, index) => {
-        if (typeof section === "string") {
-          return <p key={index}>{section}</p>;
-        }
-
-        return (
-          <section className="lesson-content-section" key={index}>
-            {section.heading && <h2>{section.heading}</h2>}
-
-            {section.body && <p>{section.body}</p>}
-
-            {Array.isArray(section.points) && (
-              <ul>
-                {section.points.map((point, pointIndex) => (
-                  <li key={pointIndex}>{point}</li>
-                ))}
-              </ul>
-            )}
-
-            {section.code && (
-              <pre className="lesson-code">
-                <code>{section.code}</code>
-              </pre>
-            )}
-
-            {section.example && (
-              <div className="lesson-example">
-                <strong>Example</strong>
-                <p>{section.example}</p>
-              </div>
-            )}
-          </section>
-        );
-      });
-    }
-
-    return <p>No lesson content is available yet.</p>;
-  }
-
   return (
-    <main className="page-container lesson-page">
-      <Link
-        to={`/free-learning/${trackId}`}
-        className="back-link"
-      >
-        <ArrowLeft size={17} />
-        Back to {track.title}
-      </Link>
+    <div className="page-container lesson-page">
+      <Link to={`/free-learning/${trackId}`} className="back-link"><ArrowLeft size={17} aria-hidden="true" /> Back to the track</Link>
 
-      <div className="lesson-page-grid">
-        <article className="lesson-reading">
-          <div className="lesson-reading-header">
-            <span className="eyebrow">{track.title}</span>
+      <article className="lesson-reading">
+        <header className="lesson-reading-header">
+          <span className="eyebrow">{lesson.level?.title || "TOPIC"}</span>
+          <h1>{lesson.title}</h1>
+          {lesson.description && <p>{lesson.description}</p>}
+          <span className={`ui-pill ${completed ? "green" : ""}`}>
+            {completed ? <><CheckCircle2 size={14} aria-hidden="true" /> Completed</> : "Not completed yet"}
+          </span>
+        </header>
 
-            <h1>{lesson.title}</h1>
+        {objectives.length > 0 && (
+          <section className="lesson-objectives">
+            <h2><Target size={19} aria-hidden="true" /> Learning objectives</h2>
+            <ul>{objectives.map((item) => <li key={item}>{item}</li>)}</ul>
+          </section>
+        )}
 
-            <p>
-              {lesson.description ||
-                "Study the lesson carefully and try the examples yourself."}
-            </p>
-          </div>
-
-          <div className="lesson-content">
-            {renderContent(lesson.content)}
-          </div>
-
-          {lesson.keyTakeaways?.length > 0 && (
-            <section className="takeaways-card">
-              <h2>
-                <CheckCircle2 size={20} />
-                Key takeaways
-              </h2>
-
-              <ul>
-                {lesson.keyTakeaways.map((item, index) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
+        <div className="lesson-content">
+          {notes.length > 0 ? notes.map((note) => (
+            <section className="lesson-content-section" key={note.id}>
+              {note.title && <h2>{note.title}</h2>}
+              <NoteContent body={note.body} />
             </section>
+          )) : lesson.content ? <NoteContent body={lesson.content} /> : (
+            <p className="muted-text">The notes for this topic have not been published yet.</p>
           )}
+        </div>
 
-          {message && (
-            <div className="inline-message" role="status">
-              {message}
-            </div>
-          )}
+        {takeaways.length > 0 && (
+          <section className="takeaways-card">
+            <h2><CheckCircle2 size={20} aria-hidden="true" /> Key takeaways</h2>
+            <ul>{takeaways.map((item) => <li key={item}>{item}</li>)}</ul>
+          </section>
+        )}
 
+        {message && <div className="inline-message" role="status">{message}</div>}
+
+        <section className="lesson-next-steps">
           <div className="lesson-completion-card">
             <div>
-              <h3>{isCompleted ? "Lesson completed" : "Finished reading?"}</h3>
-
-              <p>
-                {isCompleted
-                  ? "Great work! Continue with the next lesson."
-                  : "Mark this lesson as completed when you understand the material."}
-              </p>
+              <h3>{completed ? "Topic completed" : "Finished reading?"}</h3>
+              <p>{completed ? "Great work. Test yourself with the quiz or continue to the next topic." : "Mark this topic as complete when you understand the notes."}</p>
             </div>
-
-            <Button
-              onClick={handleComplete}
-              disabled={isCompleted || saving}
-              loading={saving}
-            >
-              {isCompleted ? "Completed" : "Mark as complete"}
+            <Button onClick={handleComplete} disabled={completed || saving} loading={saving}>
+              {completed ? "Completed" : "Mark as complete"}
             </Button>
           </div>
 
-          <div className="lesson-pagination">
-            {previousLesson ? (
-              <Link
-                to={`/free-learning/${trackId}/lessons/${previousLesson.id}`}
-                className="lesson-pagination-link"
-              >
-                <ArrowLeft size={17} />
-                <span>
-                  <small>PREVIOUS LESSON</small>
-                  <strong>{previousLesson.title}</strong>
-                </span>
-              </Link>
-            ) : (
-              <span />
-            )}
-
-            {nextLesson && (
-              <Link
-                to={`/free-learning/${trackId}/lessons/${nextLesson.id}`}
-                className="lesson-pagination-link next"
-              >
-                <span>
-                  <small>NEXT LESSON</small>
-                  <strong>{nextLesson.title}</strong>
-                </span>
-                <ArrowRight size={17} />
+          <div className="lesson-actions">
+            {lesson.quiz && (
+              <Link to={`/free-learning/${trackId}/quizzes/${lesson.quiz.id}`} className="btn btn-primary">
+                <ClipboardCheck size={18} aria-hidden="true" /> Take the quiz ({lesson.quiz.questionsServed} questions)
               </Link>
             )}
-          </div>
-        </article>
-
-        <aside className="lesson-sidebar">
-          <div className="lesson-sidebar-card">
-            <BookOpen size={23} />
-
-            <h3>Keep learning</h3>
-
-            <p>
-              Test your understanding with a quiz or practice with a practical
-              project.
-            </p>
-
-            {quiz && <Link
-              to={`/free-learning/${trackId}/quizzes/${quiz.id}`}
-              className="sidebar-action"
-            >
-              <ClipboardCheck size={17} />
-              Take a quiz
-            </Link>}
-
-            <Link
-              to={`/free-learning/${trackId}/projects`}
-              className="sidebar-action"
-            >
-              <ArrowRight size={17} />
-              View projects
+            <Link to={`/free-learning/${trackId}/projects`} className="btn btn-outline">
+              <FolderKanban size={18} aria-hidden="true" /> Practical projects
             </Link>
           </div>
-        </aside>
-      </div>
-    </main>
+        </section>
+
+        <nav className="lesson-pagination" aria-label="Topic navigation">
+          {lesson.previousTopic ? (
+            <Link to={`/free-learning/${trackId}/lessons/${lesson.previousTopic.id}`} className="lesson-pagination-link">
+              <ArrowLeft size={17} aria-hidden="true" />
+              <span><small>PREVIOUS TOPIC</small><strong>{lesson.previousTopic.title}</strong></span>
+            </Link>
+          ) : <span />}
+          {lesson.nextTopic && (
+            <Link to={`/free-learning/${trackId}/lessons/${lesson.nextTopic.id}`} className="lesson-pagination-link next">
+              <span><small>NEXT TOPIC</small><strong>{lesson.nextTopic.title}</strong></span>
+              <ArrowRight size={17} aria-hidden="true" />
+            </Link>
+          )}
+        </nav>
+      </article>
+    </div>
   );
 }

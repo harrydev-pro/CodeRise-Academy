@@ -7,6 +7,7 @@ import Input from "../../components/common/Input";
 import { useAuth } from "../../hooks/useAuth";
 import { apiClient } from "../../services/api/client";
 import { validateEmail } from "../../utils/validators";
+import { homePathFor } from "../../utils/roles";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ export default function Login() {
       });
 
       if (result?.success === false) {
-        if (result.status === 403 && result.message === "Verify your email before logging in.") {
+        if (result.status === 403 && /verify your email/i.test(result.message || "")) {
           sendingVerification = true;
           setLoadingMessage("Sending verification code…");
           const verification = await apiClient("/auth/resend-verification", {
@@ -96,7 +97,7 @@ export default function Login() {
         return;
       }
 
-      const fallback = result?.user?.role === "instructor" ? "/admin" : "/dashboard";
+      const fallback = homePathFor(result?.user);
       const requestedPath = typeof location.state?.from === "string"
         ? location.state.from
         : `${location.state?.from?.pathname || ""}${location.state?.from?.search || ""}`;

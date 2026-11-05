@@ -28,7 +28,7 @@ export default function AdminSidebar({
 
       <aside
         className={[
-          "fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-[#17152a] text-white",
+          "admin-sidebar app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col text-white",
           "transition-transform duration-200 lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}
@@ -57,7 +57,7 @@ export default function AdminSidebar({
           </button>
         </div>
 
-        <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-5">
+        <nav aria-label="Admin navigation" className="flex-1 space-y-1 overflow-y-auto px-3 py-5">
           {adminNavigation.map((item) => {
             const Icon = item.icon;
 
@@ -71,7 +71,7 @@ export default function AdminSidebar({
                   [
                     "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition",
                     isActive
-                      ? "bg-brand-600 text-white"
+                      ? "admin-nav-link-active text-white"
                       : "text-gray-300 hover:bg-white/10 hover:text-white",
                   ].join(" ")
                 }

@@ -27,6 +27,12 @@ export function validateApplication(values) {
     errors.skillLevel = "Please select your current skill level.";
   }
 
+  if (!values.learningGoals?.trim()) {
+    errors.learningGoals = "Please describe your learning goals.";
+  } else if (values.learningGoals.trim().length < 10) {
+    errors.learningGoals = "Please write at least 10 characters.";
+  }
+
   if (!values.reason?.trim()) {
     errors.reason = "Please explain why you want to join.";
   } else if (values.reason.trim().length < 20) {

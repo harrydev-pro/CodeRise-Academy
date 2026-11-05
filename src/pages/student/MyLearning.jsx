@@ -1,90 +1,55 @@
 import { Link } from "react-router-dom";
-import {
-  BookOpen,
-  Code2,
-  Palette,
-  Server,
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import Button from "../../components/common/Button";
-import { useApiResource } from "../../hooks/useApiResource";
 import Loader from "../../components/common/Loader";
+import TrackIcon from "../../components/common/TrackIcon";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
+import { PageHeader } from "../../components/ui";
+import { useApiResource } from "../../hooks/useApiResource";
 
-const icons = {
-  "Product Design": Palette,
-  "Frontend Development": Code2,
-  "Backend Development": Server,
-};
+function TrackCard({ track }) {
+  return (
+    <article className="ui-card my-learning-card">
+      <div className="dashboard-track-head">
+        <span className="student-track-icon"><TrackIcon track={track} size={22} /></span>
+        <div className="min-w-0"><h2>{track.title}</h2>{track.currentLevel && <p className="muted-text">Current level: {track.currentLevel}</p>}</div>
+      </div>
+      <div className="ui-progress" role="progressbar" aria-label={`${track.title} progress`} aria-valuenow={track.percentage} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${track.percentage}%` }} /></div>
+      <dl className="my-learning-stats">
+        <div><dt>Completed</dt><dd>{track.completedTopics}</dd></div>
+        <div><dt>Remaining</dt><dd>{track.remainingTopics}</dd></div>
+        <div><dt>Progress</dt><dd>{track.percentage}%</dd></div>
+        <div><dt>Quiz average</dt><dd>{track.averageQuizScore === null ? "—" : `${track.averageQuizScore}%`}</dd></div>
+      </dl>
+      <Link to={track.nextTopic ? `/free-learning/${track.id}/lessons/${track.nextTopic.id}` : `/free-learning/${track.id}`} className="btn btn-primary">
+        {track.nextTopic ? (track.completedTopics ? "Continue learning" : "Start learning") : "Review track"} <ArrowRight size={17} aria-hidden="true" />
+      </Link>
+    </article>
+  );
+}
 
 export default function MyLearning() {
-  const tracksResource = useApiResource("/learning/tracks", "tracks");
-  const progressResource = useApiResource("/learning/progress", "progress");
-  const tracks = tracksResource.data;
-  const progress = progressResource.data;
-
-  if (tracksResource.loading || progressResource.loading) return <div className="student-page"><Loader label="Loading your learning progress…" /></div>;
-  if (tracksResource.error || progressResource.error) return <div className="student-page"><ErrorMessage message={tracksResource.error || progressResource.error} onRetry={() => { tracksResource.reload(); progressResource.reload(); }} /></div>;
+  const { data, loading, error, reload } = useApiResource("/learning/dashboard", "dashboard", null);
+  if (loading) return <div className="student-page"><Loader label="Loading your learning progress…" /></div>;
+  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
+  const started = data.tracks.filter((track) => track.completedTopics > 0 || track.quizAttempts > 0);
+  const notStarted = data.tracks.filter((track) => !started.includes(track));
 
   return (
     <div className="student-page">
-      <div className="student-page-heading">
-        <span className="eyebrow">YOUR LEARNING JOURNEY</span>
-        <h1>My Learning</h1>
-        <p>Explore tracks and continue building your skills.</p>
-      </div>
-
-      <div className="student-track-grid">
-        {tracks.map((track) => {
-          const Icon = icons[track.title] || BookOpen;
-
-          const completed = new Set(progress.filter(
-            (item) => item.trackId === track.id && item.completed
-          ).map((item) => item.lessonId));
-          const totalLessons = track.lessonCount || 0;
-          const percentage = totalLessons ? Math.round(completed.size / totalLessons * 100) : 0;
-
-          return (
-            <article className="student-track-card" key={track.id}>
-              <span className="student-track-icon">
-                <Icon size={25} />
-              </span>
-
-              <h2>{track.title}</h2>
-
-              <p>{track.description}</p>
-
-              <div className="progress-heading">
-                <span>Your progress</span>
-                <strong>{percentage}%</strong>
-              </div>
-
-              <div
-                className="progress-track"
-                role="progressbar"
-                aria-label={`${track.title} progress`}
-                aria-valuenow={percentage}
-                aria-valuemin={0}
-                aria-valuemax={100}
-              >
-                <div
-                  className="progress-fill"
-                  style={{ width: `${percentage}%` }}
-                />
-              </div>
-
-              <Button
-                as={Link}
-                to={`/free-learning/${track.id}`}
-                fullWidth
-              >
-                Continue Learning <ArrowRight size={17} />
-              </Button>
-            </article>
-          );
-        })}
-      </div>
+      <PageHeader eyebrow="YOUR LEARNING JOURNEY" title="My Learning" description="Your progress in every learning track." />
+      {started.length > 0 && (
+        <section className="student-section">
+          <h2 className="section-title">Tracks you have started</h2>
+          <div className="ui-grid ui-grid-cards">{started.map((track) => <TrackCard track={track} key={track.id} />)}</div>
+        </section>
+      )}
+      {notStarted.length > 0 && (
+        <section className="student-section">
+          <h2 className="section-title">{started.length ? "More tracks to explore" : "Choose a track to begin"}</h2>
+          <div className="ui-grid ui-grid-cards">{notStarted.map((track) => <TrackCard track={track} key={track.id} />)}</div>
+        </section>
+      )}
     </div>
   );
 }

@@ -15,29 +15,12 @@ export default defineConfig(({ mode }) => {
     ],
     server: {
       proxy: {
-        '/auth': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
+        // Mirrors the production rewrite in vercel.json: /api/* on the website's own
+        // origin is forwarded to the backend with the /api prefix removed.
+        '/api': {
+          target: env.VITE_DEV_API_URL || 'http://localhost:3000',
           changeOrigin: true,
-        },
-        '/learning': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
-          changeOrigin: true,
-        },
-        '/catalog': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
-          changeOrigin: true,
-        },
-        '/applications': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
-          changeOrigin: true,
-        },
-        '/notifications': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
-          changeOrigin: true,
-        },
-        '/contact': {
-          target: env.VITE_API_URL || 'http://localhost:3000',
-          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api(?=\/|$)/, '') || '/',
         },
       },
     },

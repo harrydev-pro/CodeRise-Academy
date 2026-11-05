@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 
 import { formatCurrency } from "../../utils/formatCurrency";
+import { getProgramPrice } from "../../utils/programPrice";
 import { formatDate } from "../../utils/formatDate";
 
 import { useApiResource } from "../../hooks/useApiResource";
@@ -19,12 +20,12 @@ export default function ApplicationConfirmation() {
   const applicationResource = useApiResource("/applications/me", "applications", undefined, Boolean(applicationId && !location.state?.application));
   const application = location.state?.application || applicationResource.data.find((item) => item.id === applicationId);
 
-  if (applicationResource.loading) return <main className="page-container"><Loader label="Loading application…" /></main>;
-  if (applicationResource.error) return <main className="page-container"><ErrorMessage message={applicationResource.error} onRetry={applicationResource.reload} /></main>;
+  if (applicationResource.loading) return <div className="page-container"><Loader label="Loading application…" /></div>;
+  if (applicationResource.error) return <div className="page-container"><ErrorMessage message={applicationResource.error} onRetry={applicationResource.reload} /></div>;
 
   if (!application) {
     return (
-      <main className="page-container">
+      <div className="page-container">
         <section className="empty-state">
           <h1>Application not found</h1>
 
@@ -36,12 +37,12 @@ export default function ApplicationConfirmation() {
             Browse programs
           </Link>
         </section>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="page-container application-confirmation-page">
+    <div className="page-container application-confirmation-page">
       <section className="application-confirmation-card">
         <div className="application-confirmation-icon">
           <CheckCircle2 size={42} />
@@ -84,7 +85,7 @@ export default function ApplicationConfirmation() {
           <div>
             <span>Program price</span>
             <strong>
-              {formatCurrency(application.promoPrice ?? 0)}
+              {formatCurrency(getProgramPrice(application))}
             </strong>
           </div>
 
@@ -116,6 +117,6 @@ export default function ApplicationConfirmation() {
           </Link>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

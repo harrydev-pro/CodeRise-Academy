@@ -1,23 +1,15 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
-import { AuthContext } from "./authContext";
 import { useAuthStore } from "../../store/authStore";
 
+// Loads the signed-in account once when the app starts. Components read auth state
+// through the useAuth() hook, which reads the Zustand store directly.
 export function AuthProvider({ children }) {
-  const auth = useAuthStore();
-  const initialize = auth.initialize;
+  const initialize = useAuthStore((state) => state.initialize);
 
   useEffect(() => {
     initialize();
   }, [initialize]);
 
-  const value = useMemo(() => ({
-    ...auth,
-    login: auth.login,
-    register: auth.register,
-    logout: auth.logout,
-    initialize: auth.initialize,
-  }), [auth]);
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return children;
 }

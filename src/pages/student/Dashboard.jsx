@@ -1,230 +1,114 @@
 import { Link } from "react-router-dom";
-import {
-  BookOpen,
-  Code2,
-  FileText,
-  Trophy,
-  ArrowRight,
-  GraduationCap,
-  Palette,
-  Server,
-} from "lucide-react";
+import { ArrowRight, BookOpen, CheckCircle2, ClipboardCheck, FileText, FolderKanban, Gauge, Hourglass, Layers, Trophy, Video } from "lucide-react";
 
-import Button from "../../components/common/Button";
+import Loader from "../../components/common/Loader";
+import TrackIcon from "../../components/common/TrackIcon";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
+import { StatCard, StatusBadge } from "../../components/ui";
 import { useAuth } from "../../hooks/useAuth";
 import { useApiResource } from "../../hooks/useApiResource";
-import Loader from "../../components/common/Loader";
-import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function Dashboard() {
   const { user } = useAuth();
+  const summary = useApiResource("/learning/dashboard", "dashboard", null);
+  const applications = useApiResource("/applications/me", "applications");
+  const videos = useApiResource("/video/my-courses", "courses");
+  const firstName = (user?.name || user?.fullName || "").trim().split(/\s+/)[0] || "Student";
 
-  const tracksResource = useApiResource("/learning/tracks", "tracks");
-  const programsResource = useApiResource("/catalog/programs", "programs");
-  const applicationsResource = useApiResource("/applications/me", "applications");
-  const resultsResource = useApiResource("/learning/attempts", "attempts");
-  const submissionsResource = useApiResource("/learning/submissions", "submissions");
-  const tracks = tracksResource.data;
-  const programs = programsResource.data;
-  const applications = applicationsResource.data;
-  const results = resultsResource.data;
-  const submissions = submissionsResource.data;
-  const resources = [tracksResource, programsResource, applicationsResource, resultsResource, submissionsResource];
-  if (resources.some((resource) => resource.loading)) return <div className="student-page"><Loader label="Loading your dashboard…" /></div>;
-  const failedResource = resources.find((resource) => resource.error);
-  if (failedResource) return <div className="student-page"><ErrorMessage message={failedResource.error} onRetry={() => resources.forEach((resource) => resource.reload())} /></div>;
-  const studentName = user?.name || user?.fullName || user?.full_name;
-
-  const quickLinks = [
-    {
-      title: "Free Learning",
-      description: "Explore lessons and practice your skills.",
-      icon: BookOpen,
-      link: "/free-learning",
-    },
-    {
-      title: "Video Courses",
-      description: "Explore video courses available in the catalog.",
-      icon: Code2,
-      link: "/video-courses",
-    },
-    {
-      title: "My Applications",
-      description: "Track your training program applications.",
-      icon: FileText,
-      link: "/my-applications",
-    },
-    {
-      title: "My Submissions",
-      description: "Review your practical project work.",
-      icon: Trophy,
-      link: "/my-submissions",
-    },
-  ];
-
-  const trackIcons = {
-    "Product Design": Palette,
-    "Frontend Development": Code2,
-    "Backend Development": Server,
-  };
+  if (summary.loading) return <div className="student-page"><Loader label="Loading your dashboard…" /></div>;
+  if (summary.error) return <div className="student-page"><ErrorMessage message={summary.error} onRetry={summary.reload} /></div>;
+  const stats = summary.data;
+  const activeTracks = stats.tracks.filter((track) => track.completedTopics > 0 && track.percentage < 100);
+  const suggested = activeTracks.length ? activeTracks : stats.tracks.filter((track) => track.nextTopic).slice(0, 3);
 
   return (
     <div className="student-page">
       <section className="dashboard-welcome">
-        <div>
-          <span className="eyebrow">STUDENT DASHBOARD</span>
-
-          <h1>
-            Welcome back, {studentName?.trim().split(/\s+/)[0] || "Student"}!
-          </h1>
-
-          <p>
-            Continue learning, check your progress, and explore your next
-            opportunity.
-          </p>
-        </div>
-
-        <div className="dashboard-welcome-icon">
-          <GraduationCap size={38} />
+        <div className="dashboard-welcome-profile">
+          {user?.avatar_url ? <img src={user.avatar_url} alt="" className="dashboard-avatar" /> : <span className="dashboard-avatar">{firstName.charAt(0).toUpperCase()}</span>}
+          <div>
+            <span className="eyebrow">STUDENT DASHBOARD</span>
+            <h1>Welcome back, {firstName}!</h1>
+            <p>Overall progress: <strong>{stats.overallProgress}%</strong> of all published topics.</p>
+          </div>
         </div>
       </section>
 
-      <section className="student-stats-grid">
-        <article className="student-stat-card">
-          <span className="student-stat-icon purple">
-            <BookOpen size={22} />
-          </span>
-
-          <div>
-            <p>Learning Tracks</p>
-            <strong>{tracks.length}</strong>
-          </div>
-        </article>
-
-        <article className="student-stat-card">
-          <span className="student-stat-icon blue">
-            <FileText size={22} />
-          </span>
-
-          <div>
-            <p>Applications</p>
-            <strong>{applications.length}</strong>
-          </div>
-        </article>
-
-        <article className="student-stat-card">
-          <span className="student-stat-icon green">
-            <Trophy size={22} />
-          </span>
-
-          <div>
-            <p>Quiz Attempts</p>
-            <strong>{results.length}</strong>
-          </div>
-        </article>
-
-        <article className="student-stat-card">
-          <span className="student-stat-icon orange"><Trophy size={22} /></span>
-          <div><p>Project Submissions</p><strong>{submissions.length}</strong></div>
-        </article>
+      <section className="ui-grid ui-grid-stats student-section">
+        <StatCard label="Learning tracks" value={stats.totalTracks} icon={Layers} />
+        <StatCard label="Active tracks" value={stats.activeTracks} icon={BookOpen} tone="teal" />
+        <StatCard label="Topics completed" value={`${stats.completedTopics}/${stats.totalTopics}`} icon={CheckCircle2} tone="green" />
+        <StatCard label="Quizzes attempted" value={stats.quizzesAttempted} icon={ClipboardCheck} tone="purple" />
+        <StatCard label="Average quiz score" value={stats.averageQuizScore === null ? "—" : `${stats.averageQuizScore}%`} icon={Trophy} tone="amber" />
+        <StatCard label="Projects approved" value={stats.projectsCompleted} icon={FolderKanban} tone="green" />
+        <StatCard label="Pending submissions" value={stats.pendingSubmissions} icon={Hourglass} tone="amber" hint={stats.submissionsNeedingCorrections ? `${stats.submissionsNeedingCorrections} need corrections` : undefined} />
+        <StatCard label="Video courses" value={stats.videoCoursesEnrolled} icon={Video} tone="blue" />
+        <StatCard label="Overall progress" value={`${stats.overallProgress}%`} icon={Gauge} tone="teal" />
       </section>
 
       <section className="student-section">
-        <div className="student-section-heading">
-          <div>
-            <h2>Quick access</h2>
-            <p>Jump straight into the areas you need.</p>
-          </div>
-        </div>
-
-        <div className="student-quick-links">
-          {quickLinks.map((item) => {
-            const Icon = item.icon;
-
-            return (
-              <Link
-                to={item.link}
-                className="student-quick-card"
-                key={item.title}
-              >
-                <span className="student-quick-icon">
-                  <Icon size={22} />
-                </span>
-
-                <h3>{item.title}</h3>
-
-                <p>{item.description}</p>
-
-                <span className="text-link">
-                  Open <ArrowRight size={16} />
-                </span>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="student-section">
-        <div className="student-section-heading">
-          <div>
-            <h2>Explore learning tracks</h2>
-            <p>Build your knowledge step by step.</p>
-          </div>
-
-          <Link to="/free-learning" className="text-link">
-            View all <ArrowRight size={16} />
-          </Link>
-        </div>
-
-        <div className="student-track-grid">
-          {tracks.slice(0, 3).map((track) => {
-            const Icon = trackIcons[track.title] || BookOpen;
-
-            return (
-              <article className="student-track-card" key={track.id}>
-                <span className="student-track-icon">
-                  <Icon size={25} />
-                </span>
-
-                <h3>{track.title}</h3>
-
-                <p>{track.description}</p>
-
-                <Button
-                  as={Link}
-                  to={`/free-learning/${track.id}`}
-                  variant="outline"
-                  fullWidth
-                >
-                  Explore Track
-                </Button>
+        <div className="ui-card-header"><h2>{activeTracks.length ? "Continue learning" : "Start learning"}</h2><Link to="/my-learning" className="text-link">My learning <ArrowRight size={16} aria-hidden="true" /></Link></div>
+        {suggested.length === 0 ? <p className="muted-text">No learning tracks are available yet.</p> : (
+          <div className="ui-grid ui-grid-cards">
+            {suggested.map((track) => (
+              <article className="ui-card dashboard-track" key={track.id}>
+                <div className="dashboard-track-head">
+                  <span className="student-track-icon"><TrackIcon track={track} size={22} /></span>
+                  <div className="min-w-0"><h3>{track.title}</h3>{track.currentLevel && <p className="muted-text">{track.currentLevel} level</p>}</div>
+                </div>
+                <div className="ui-progress" role="progressbar" aria-label={`${track.title} progress`} aria-valuenow={track.percentage} aria-valuemin={0} aria-valuemax={100}><span style={{ width: `${track.percentage}%` }} /></div>
+                <p className="muted-text">{track.completedTopics} of {track.totalTopics} topics · {track.percentage}%</p>
+                {track.nextTopic && <Link to={`/free-learning/${track.id}/lessons/${track.nextTopic.id}`} className="btn btn-primary">Next: {track.nextTopic.title}</Link>}
               </article>
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
+
+      <div className="ui-grid ui-grid-2 student-section">
+        <section className="ui-card">
+          <div className="ui-card-header"><h2>My applications</h2><Link to="/my-applications" className="text-link">View all</Link></div>
+          {applications.data.length === 0 ? (
+            <p className="muted-text">You have not applied for a program yet. <Link to="/programs" className="text-link">Explore programs</Link></p>
+          ) : (
+            <ul className="ui-list">
+              {applications.data.slice(0, 3).map((application) => (
+                <li className="ui-list-item" key={application.id}>
+                  <div className="min-w-0"><h4>{application.programTitle}</h4><p>Reference {application.id}</p></div>
+                  <StatusBadge status={application.status} />
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        <section className="ui-card">
+          <div className="ui-card-header"><h2>My video courses</h2><Link to="/my-video-courses" className="text-link">View all</Link></div>
+          {videos.data.length === 0 ? (
+            <p className="muted-text">You are not enrolled in a video course yet. <Link to="/video-courses" className="text-link">Browse courses</Link></p>
+          ) : (
+            <ul className="ui-list">
+              {videos.data.slice(0, 3).map((item) => (
+                <li className="ui-list-item" key={item.course.id}>
+                  <div className="min-w-0"><h4>{item.course.title}</h4><p>{item.progress.completedLessons}/{item.progress.totalLessons} lessons · {item.progress.percentage}%</p></div>
+                  {item.enrollment.status === "active" && item.continueLessonId
+                    ? <Link className="btn btn-outline btn-sm" to={`/video-courses/${item.course.id}/lessons/${item.continueLessonId}`}>Continue</Link>
+                    : <StatusBadge status={item.enrollment.status === "pending" ? "Pending" : item.enrollment.status} />}
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
 
       <section className="student-section dashboard-application-banner">
         <div>
           <span className="eyebrow">READY FOR STRUCTURED TRAINING?</span>
-
           <h2>Take the next step in your learning journey.</h2>
-
-          <p>
-            Explore the available training programs and their prices.
-          </p>
+          <p>Explore our full training programs and apply when you are ready.</p>
         </div>
-
-        <Button as={Link} to="/programs">
-          Explore Programs <ArrowRight size={18} />
-        </Button>
+        <Link to="/programs" className="btn btn-primary">Explore programs <FileText size={17} aria-hidden="true" /></Link>
       </section>
-
-      {programs.length === 0 && (
-        <p className="muted-text">
-          Training programs are currently being updated.
-        </p>
-      )}
     </div>
   );
 }

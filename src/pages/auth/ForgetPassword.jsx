@@ -70,7 +70,6 @@ export default function ForgotPassword() {
             setMessage("");
           }}
           placeholder="you@example.com"
-          error={error}
           autoComplete="email"
           required
         />

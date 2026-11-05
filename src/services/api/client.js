@@ -1,14 +1,36 @@
-// API calls stay same-origin in both environments: Vite proxies during local
-// development and vercel.json proxies in production. This keeps auth cookies
-// first-party in Safari and other strict browsers.
-export const API_BASE_URL = '';
+// Keep API requests on the website's origin. Vercel and Vite forward /api to
+// the backend, keeping session and CSRF cookies first-party in Safari.
+export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/+$/, '');
 
+const RETRYABLE_STATUSES = new Set([502, 503, 504]);
+const RETRY_DELAYS_MS = [2000, 5000];
 let csrfToken = null;
 let csrfTokenRequest = null;
 
 function makeUrl(endpoint) {
   if (/^https?:\/\//i.test(endpoint)) return endpoint;
   return `${API_BASE_URL}${endpoint.startsWith('/') ? endpoint : `/${endpoint}`}`;
+}
+
+function wait(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+}
+
+// Only safe read requests are retried when Render is waking or the network blips.
+async function fetchWithWakeUpRetry(url, init, retrySafe) {
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      const response = await fetch(url, init);
+      if (!retrySafe || !RETRYABLE_STATUSES.has(response.status) || attempt >= RETRY_DELAYS_MS.length) {
+        return response;
+      }
+    } catch (error) {
+      if (!retrySafe || attempt >= RETRY_DELAYS_MS.length) {
+        throw new Error('We couldn’t reach CodeRise Academy. Check your internet connection and try again.', { cause: error });
+      }
+    }
+    await wait(RETRY_DELAYS_MS[attempt]);
+  }
 }
 
 async function readPayload(response) {
@@ -28,11 +50,11 @@ async function readPayload(response) {
 function getCsrfToken() {
   if (!csrfTokenRequest) {
     csrfTokenRequest = (async () => {
-      const response = await fetch(makeUrl('/auth/csrf'), {
+      const response = await fetchWithWakeUpRetry(makeUrl('/auth/csrf'), {
         method: 'GET',
         credentials: 'include',
         headers: { Accept: 'application/json' },
-      });
+      }, true);
       const payload = await readPayload(response);
       if (!response.ok || !payload?.csrfToken) {
         throw new Error(payload?.message || 'Unable to establish a secure session.');
@@ -49,43 +71,37 @@ function getCsrfToken() {
 export async function apiClient(endpoint, options = {}) {
   const method = (options.method || 'GET').toUpperCase();
   const mutating = !['GET', 'HEAD', 'OPTIONS'].includes(method);
+  const isForm = typeof FormData !== 'undefined' && options.body instanceof FormData;
   const headers = {
-    ...(options.body ? { 'Content-Type': 'application/json' } : {}),
+    Accept: 'application/json',
+    ...(options.body && !isForm ? { 'Content-Type': 'application/json' } : {}),
     ...(options.headers || {}),
   };
   if (mutating) headers['X-CSRF-Token'] = csrfToken || await getCsrfToken();
 
-  let response = await fetch(makeUrl(endpoint), {
-    ...options,
-    method,
-    credentials: 'include',
-    headers,
-  });
+  const requestOptions = { ...options, method, credentials: 'include', headers };
+  let response = await fetchWithWakeUpRetry(makeUrl(endpoint), requestOptions, !mutating);
   let payload = await readPayload(response);
 
-  if (mutating && response.status === 403 && payload?.message?.includes('CSRF')) {
-    csrfToken = await getCsrfToken();
-    response = await fetch(makeUrl(endpoint), {
-      ...options,
-      method,
-      credentials: 'include',
-      headers: { ...headers, 'X-CSRF-Token': csrfToken },
-    });
+  if (mutating && response.status === 403 && /csrf/i.test(payload?.message || '')) {
+    csrfToken = null;
+    const refreshedToken = await getCsrfToken();
+    response = await fetchWithWakeUpRetry(makeUrl(endpoint), {
+      ...requestOptions,
+      headers: { ...headers, 'X-CSRF-Token': refreshedToken },
+    }, false);
     payload = await readPayload(response);
   }
 
   if (!response.ok) {
     const validationErrors = Array.isArray(payload?.errors)
-      ? payload.errors
-          .map(({ field, message }) => [field, message].filter(Boolean).join(': '))
-          .filter(Boolean)
-          .join('. ')
+      ? payload.errors.map(({ field, message }) => [field, message].filter(Boolean).join(': ')).filter(Boolean).join('. ')
       : '';
-    const error = typeof payload === 'string'
-      ? payload
-      : [payload?.message || payload?.error, validationErrors]
-          .filter(Boolean)
-          .join(': ') || `Request failed (${response.status}).`;
+    const error = response.status >= 500
+      ? 'The service is temporarily unavailable. Please try again in a moment.'
+      : typeof payload === 'string'
+        ? (/<[a-z!]/i.test(payload) ? `Request failed (${response.status}).` : payload)
+        : [payload?.message || payload?.error, validationErrors].filter(Boolean).join(': ') || `Request failed (${response.status}).`;
     return { ok: false, status: response.status, error, data: payload };
   }
   return { ok: true, status: response.status, data: payload };

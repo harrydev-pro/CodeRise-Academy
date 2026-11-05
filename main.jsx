@@ -11,6 +11,7 @@ import "./src/styles/global.css"
 import "./src/styles/variables.css"
 import "./src/styles/components.css"
 import "./src/styles/responsive.css"
+import "./src/styles/app.css"
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
