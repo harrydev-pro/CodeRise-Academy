@@ -1,6 +1,8 @@
 // Keep API requests on the website's origin. Vercel and Vite forward /api to
-// the backend, keeping session and CSRF cookies first-party in Safari.
-export const API_BASE_URL = (import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000');
+// the backend, keeping session and CSRF cookies first-party in Safari. Never
+// use a VITE_ API host override here: it is public and can break cookie/CORS
+// behavior by sending browser requests directly to a cross-origin service.
+export const API_BASE_URL = '/api';
 
 const RETRYABLE_STATUSES = new Set([502, 503, 504]);
 const RETRY_DELAYS_MS = [2000, 5000];
