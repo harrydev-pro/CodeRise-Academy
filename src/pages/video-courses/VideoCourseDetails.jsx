@@ -9,16 +9,21 @@ import {
   PlayCircle,
 } from "lucide-react";
 
-import { getVideoCourseById } from "../../features/video-courses/videoCourseService";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { useAuth } from "../../hooks/useAuth";
+import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function VideoCourseDetails() {
   const { courseId } = useParams();
   const { user } = useAuth();
 
-  const course = getVideoCourseById(courseId);
+  const { data: course, loading, error, reload } = useApiResource(`/catalog/video-courses/${encodeURIComponent(courseId)}`, "course", null);
+
+  if (loading) return <main className="page-container"><Loader label="Loading course…" /></main>;
+  if (error) return <main className="page-container"><ErrorMessage message={error} onRetry={reload} /></main>;
 
   if (!course || course.published === false) {
     return (
@@ -103,34 +108,27 @@ export default function VideoCourseDetails() {
             <p>
               {price === 0
                 ? "This course is free to access."
-                : "One-time demo purchase. No real payment will be taken."}
+                : "Paid enrollment is temporarily unavailable."}
             </p>
 
-            <Link
-              to={
-                price === 0
-                  ? user && lessons[0]
-                    ? `/video-courses/${course.id}/lessons/${lessons[0].id}`
-                    : user
-                      ? `/video-courses/${course.id}`
-                      : "/login"
-                  : `/checkout/${course.id}`
-              }
-              state={{
-                from: lessons[0]
-                  ? `/video-courses/${course.id}/lessons/${lessons[0].id}`
-                  : `/video-courses/${course.id}`,
-              }}
-              className="btn btn-primary full-width"
-            >
-              {price === 0 ? "Start course" : "Purchase course"}
-              <ArrowRight size={17} />
-            </Link>
+            {price === 0 && lessons[0] ? (
+              <Link
+                to={user ? `/video-courses/${course.id}/lessons/${lessons[0].id}` : "/login"}
+                state={{ from: `/video-courses/${course.id}/lessons/${lessons[0].id}` }}
+                className="btn btn-primary full-width"
+              >
+                Start course <ArrowRight size={17} />
+              </Link>
+            ) : (
+              <button type="button" className="btn btn-primary full-width" disabled>
+                {price === 0 ? "Course content unavailable" : "Paid access unavailable"}
+              </button>
+            )}
 
             <small>
               {price === 0
                 ? "Sign in to start learning."
-                : "Secure payment processing is not connected in this demo."}
+                : "Payment processing is not configured yet."}
             </small>
           </div>
         </aside>

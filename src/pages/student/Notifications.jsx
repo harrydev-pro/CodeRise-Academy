@@ -2,35 +2,32 @@ import { useState } from "react";
 import { Bell, CheckCircle2, Info } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
-import { useAuth } from "../../hooks/useAuth";
-import { readStore, writeStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { useApiResource } from "../../hooks/useApiResource";
+import { requestData } from "../../services/api/dataClient";
 import { formatDate } from "../../utils/formatDate";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function Notifications() {
-  const { user } = useAuth();
+  const { data: notifications, loading, error, reload } = useApiResource("/notifications/me", "notifications");
+  const [markingRead, setMarkingRead] = useState(false);
+  const [actionError, setActionError] = useState("");
 
-  const [allNotifications, setAllNotifications] = useState(() =>
-    readStore(STORAGE_KEYS.notifications, [])
-  );
-
-  const notifications = allNotifications
-    .filter((item) => item.userId === user?.id)
-    .sort(
-      (a, b) =>
-        new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-    );
-
-  function markAllRead() {
-    const updated = allNotifications.map((item) =>
-      item.userId === user?.id
-        ? { ...item, read: true }
-        : item
-    );
-
-    writeStore(STORAGE_KEYS.notifications, updated);
-    setAllNotifications(updated);
+  async function markAllRead() {
+    setMarkingRead(true);
+    setActionError("");
+    try {
+      await requestData("/notifications/read-all", null, { method: "POST", body: JSON.stringify({}) });
+      reload();
+    } catch (requestError) {
+      setActionError(requestError.message || "Could not update notifications. Please try again.");
+    } finally {
+      setMarkingRead(false);
+    }
   }
+
+  if (loading) return <div className="student-page"><Loader label="Loading notifications…" /></div>;
+  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
 
   if (notifications.length === 0) {
     return (
@@ -65,12 +62,14 @@ export default function Notifications() {
           </p>
         </div>
 
+        {actionError && <ErrorMessage message={actionError} />}
         {unreadCount > 0 && (
           <button
             className="secondary-action"
             onClick={markAllRead}
+            disabled={markingRead}
           >
-            Mark all as read
+            {markingRead ? "Updating…" : "Mark all as read"}
           </button>
         )}
       </div>

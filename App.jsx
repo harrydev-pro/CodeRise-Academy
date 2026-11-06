@@ -5,16 +5,10 @@ import AppErrorBoundary from "./src/AppErrorBoundary";
 
 export default function App() {
   return (
-
-
-
-    
     <AppErrorBoundary>
       <Suspense fallback={<Loader fullScreen />}>
         <AppRoutes />
       </Suspense>
     </AppErrorBoundary>
-    
   );
-  
 }

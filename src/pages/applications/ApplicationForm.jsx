@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -10,15 +10,17 @@ import {
 
 import { useAuth } from "../../hooks/useAuth";
 
-import { getPrograms } from "../../features/programs/programService";
 import { createApplication } from "../../features/applications/applicationService";
 import { validateApplication } from "../../features/applications/applicationValidation";
+import { useApiResource } from "../../hooks/useApiResource";
 
 import { formatCurrency } from "../../utils/formatCurrency";
 
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 const initialForm = {
   fullName: "",
@@ -37,9 +39,8 @@ export default function ApplicationForm() {
   const navigate = useNavigate();
   const { programId: requestedProgramId } = useParams();
 
-  const programs = useMemo(() => {
-    return getPrograms().filter((program) => program.published !== false);
-  }, []);
+  const programsResource = useApiResource("/catalog/programs", "programs");
+  const programs = programsResource.data;
 
   const [form, setForm] = useState({
     ...initialForm,
@@ -55,6 +56,7 @@ export default function ApplicationForm() {
   const selectedProgram = programs.find(
     (program) => program.id === form.programId
   );
+  const currentPrice = selectedProgram?.promotionalPrice ?? selectedProgram?.originalPrice ?? 0;
 
   function updateField(event) {
     const { name, value, type, checked } = event.target;
@@ -72,7 +74,7 @@ export default function ApplicationForm() {
     setSubmitError("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const validationErrors = validateApplication(form);
@@ -100,18 +102,13 @@ export default function ApplicationForm() {
     setSubmitError("");
 
     try {
-      const application = createApplication({
-        userId: user.id,
+      const savedApplication = await createApplication({
         fullName: form.fullName.trim(),
         email: form.email.trim().toLowerCase(),
         phone: form.phone.trim(),
 
         programId: selectedProgram.id,
         programTitle: selectedProgram.title,
-
-        duration: selectedProgram.duration || "",
-        originalPrice: Number(selectedProgram.originalPrice) || 0,
-        promoPrice: Number(selectedProgram.promotionalPrice) || 0,
 
         skillLevel: form.skillLevel,
         experience: form.experience.trim(),
@@ -121,18 +118,25 @@ export default function ApplicationForm() {
         acceptedTerms: form.acceptedTerms,
       });
 
+      const application = {
+        ...savedApplication,
+        duration: selectedProgram.duration || "",
+        originalPrice: Number(selectedProgram.originalPrice) || 0,
+        promoPrice: Number(selectedProgram.promotionalPrice ?? selectedProgram.originalPrice) || 0,
+      };
       navigate(`/application-confirmation/${application.id}`, {
         replace: true,
         state: { application },
       });
     } catch (error) {
-      console.error("Application submission failed:", error);
-      setSubmitError(
-        "We couldn't save your application. Please try again."
-      );
+      setSubmitError(error.message || "We couldn't save your application. Please try again.");
+    } finally {
       setSubmitting(false);
     }
   }
+
+  if (programsResource.loading) return <main className="page-container"><Loader label="Loading programs…" /></main>;
+  if (programsResource.error) return <main className="page-container"><ErrorMessage message={programsResource.error} onRetry={programsResource.reload} /></main>;
 
   if (programs.length === 0) {
     return (
@@ -293,18 +297,12 @@ export default function ApplicationForm() {
                 </div>
 
                 <div className="selected-program-price">
-                  {/* <strong> */}
-                    {/* {formatCurrency( */}
-                      {/* selectedProgram.promoPrice ?? */}
-                        {/* selectedProgram.price ?? */}
-                        {/* 0 */}
-                    {/* )} */}
-                  {/* </strong> */}
+                  <strong>{formatCurrency(currentPrice)}</strong>
 
-                  {selectedProgram.originalPrice != null && (
-                    <strong>
+                  {selectedProgram.promotionalPrice != null && selectedProgram.originalPrice > selectedProgram.promotionalPrice && (
+                    <del>
                       {formatCurrency(selectedProgram.originalPrice)}
-                    </strong>
+                    </del>
                   )}
                 </div>
               </div>
@@ -416,9 +414,8 @@ export default function ApplicationForm() {
             Submit application <ArrowRight size={17} />
           </Button>
 
-          <p className="application-demo-note">
-            Demonstration: applications are stored in this browser. This
-            form does not send an email or notify an administrator.
+          <p className="muted-text">
+            Applications are saved to your account. You can review status updates in Notifications.
           </p>
         </form>
 

@@ -1,68 +1,34 @@
 import { Link, useLocation, useParams } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, CircleX, RotateCcw, Trophy } from "lucide-react";
-import { readStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { ArrowLeft, CheckCircle2, RotateCcw, Trophy } from "lucide-react";
+
+import { useApiResource } from "../../hooks/useApiResource";
+import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function QuizResults() {
   const { trackId, quizId } = useParams();
   const location = useLocation();
-  const savedResults = readStore(STORAGE_KEYS.quizResults, []);
-  const result = location.state?.result
-    ?? (Array.isArray(savedResults) ? savedResults.find((item) => item.quizId === quizId) : null);
+  const hasNavigationResult = Boolean(location.state?.result);
+  const attemptsResource = useApiResource("/learning/attempts", "attempts", undefined, !hasNavigationResult);
+  const result = location.state?.result || attemptsResource.data.find((item) => item.quizId === quizId);
 
+  if (!hasNavigationResult && attemptsResource.loading) return <main className="page-container"><Loader label="Loading quiz result…" /></main>;
+  if (!hasNavigationResult && attemptsResource.error) return <main className="page-container"><ErrorMessage message={attemptsResource.error} onRetry={attemptsResource.reload} /></main>;
   if (!result) {
-    return (
-      <main className="page-container free-learning-shell">
-        <section className="empty-state">
-          <h1>No quiz result found</h1>
-          <p>Complete a quiz first to view your result.</p>
-          <Link to={`/free-learning/${trackId}/quizzes/${quizId}`} className="btn btn-primary">Start quiz</Link>
-        </section>
-      </main>
-    );
+    return <main className="page-container"><EmptyState title="No quiz result found" description="Complete a quiz first to view your result." action={<Link to={`/free-learning/${trackId}/quizzes/${quizId}`} className="btn btn-primary">Start quiz</Link>} /></main>;
   }
 
-  const passed = result.percentage >= 70;
-  const reviewAnswers = Array.isArray(result.reviewAnswers) ? result.reviewAnswers : [];
-  const retakeUrl = `/free-learning/${trackId}/quizzes/${result.quizId || quizId}`;
-
-  return (
-    <main className="page-container quiz-results-page free-learning-shell">
-      <section className="quiz-result-card">
-        <div className={`result-icon ${passed ? "passed" : "needs-work"}`}>
-          {passed ? <Trophy size={34} /> : <CheckCircle2 size={34} />}
-        </div>
-        <span className="eyebrow">QUIZ COMPLETED</span>
-        <h1>{passed ? "Well done!" : "Keep practicing!"}</h1>
-        <p>You completed {result.quizTitle || result.trackTitle}.</p>
-        <div className="result-score"><strong>{result.percentage}%</strong><span>Final score</span></div>
-        <div className="result-breakdown">
-          <div><span>Correct answers</span><strong>{result.score}</strong></div>
-          <div><span>Total questions</span><strong>{result.totalQuestions}</strong></div>
-          <div><span>Passing score</span><strong>70%</strong></div>
-        </div>
-        <div className={`result-message ${passed ? "success" : "warning"}`}>
-          {passed ? "You achieved the passing score. Review your answers below, then keep learning." : "You have not reached the 70% target yet. Review your mistakes and explanations below, then try again."}
-        </div>
-        <div className="result-actions">
-          <Link to={retakeUrl} className="btn btn-primary"><RotateCcw size={17} /> Retake quiz</Link>
-          <Link to={`/free-learning/${trackId}`} className="btn btn-outline"><ArrowLeft size={17} /> Back to lessons</Link>
-        </div>
-      </section>
-
-      <section className="answer-review" aria-labelledby="answer-review-title">
-        <div className="answer-review-heading"><div><span className="eyebrow">LEARN FROM YOUR ANSWERS</span><h2 id="answer-review-title">Answer review</h2></div><span>{reviewAnswers.filter((item) => !item.isCorrect).length} to review</span></div>
-        {reviewAnswers.length ? <div className="answer-review-list">{reviewAnswers.map((item, index) => {
-          const selectedText = item.selectedAnswer === null ? "Skipped" : item.options?.[item.selectedAnswer] ?? "No answer";
-          const correctText = item.options?.[item.correctAnswer] ?? "Correct answer unavailable";
-          return <article className={`answer-review-item ${item.isCorrect ? "correct" : "incorrect"}`} key={`${index}-${item.question}`}>
-            <div className="answer-review-item-heading"><span>Question {index + 1}</span><strong>{item.isCorrect ? <><CheckCircle2 size={17}/> Correct</> : <><CircleX size={17}/> Review this answer</>}</strong></div>
-            <h3>{item.question}</h3>
-            <div className="answer-review-response"><div className={item.isCorrect ? "response-correct" : "response-missed"}><span>Your answer</span><strong>{selectedText}</strong></div>{!item.isCorrect && <div className="response-correct"><span>Correct answer</span><strong>{correctText}</strong></div>}</div>
-            <div className="answer-explanation"><strong>Explanation</strong><p>{item.explanation || `The correct answer is ${correctText}.`}</p></div>
-          </article>;
-        })}</div> : <div className="answer-review-empty"><p>This result was saved before answer review was available. Retake the quiz to review your answers and explanations.</p><Link to={retakeUrl} className="btn btn-primary"><RotateCcw size={17}/> Retake quiz</Link></div>}
-      </section>
-    </main>
-  );
+  const passed = result.passed ?? result.percentage >= (result.passMark || 70);
+  return <main className="page-container quiz-results-page"><section className="quiz-result-card">
+    <div className={`result-icon ${passed ? "passed" : "needs-work"}`}>{passed ? <Trophy size={34} /> : <CheckCircle2 size={34} />}</div>
+    <span className="eyebrow">QUIZ COMPLETED</span>
+    <h1>{passed ? "Well done!" : "Keep practicing!"}</h1>
+    <p>You have completed the {result.trackTitle} knowledge check.</p>
+    <div className="result-score"><strong>{result.percentage}%</strong><span>Final score</span></div>
+    <div className="result-breakdown"><div><span>Correct answers</span><strong>{result.score}</strong></div><div><span>Total questions</span><strong>{result.totalQuestions}</strong></div><div><span>Passing score</span><strong>{result.passMark || 70}%</strong></div></div>
+    <div className={`result-message ${passed ? "success" : "warning"}`}>{passed ? "You achieved the passing score. Continue learning and put your knowledge into practice." : "You haven't reached the passing score yet. Review the lessons and try again."}</div>
+    {Array.isArray(result.answers) && <details className="mt-6 text-left"><summary className="cursor-pointer font-semibold">Review your answers</summary><div className="mt-4 space-y-4">{result.answers.map((answer) => <article key={answer.questionId}><h3 className="font-semibold">{answer.question}</h3><p>{answer.isCorrect ? "Correct" : `Correct answer: ${answer.options?.[answer.correctAnswer] || answer.correctAnswer + 1}`}</p>{answer.explanation && <p>{answer.explanation}</p>}</article>)}</div></details>}
+    <div className="result-actions"><Link to={`/free-learning/${trackId}/quizzes/${result.quizId || quizId}`} className="btn btn-primary"><RotateCcw size={17} /> Try again</Link><Link to={`/free-learning/${trackId}`} className="btn btn-outline"><ArrowLeft size={17} /> Back to lessons</Link></div>
+  </section></main>;
 }

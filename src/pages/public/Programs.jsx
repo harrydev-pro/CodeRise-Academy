@@ -10,7 +10,9 @@ import {
 } from "lucide-react";
 
 import Button from "../../components/common/Button";
-import { getPrograms } from "../../features/programs/programService";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { formatCurrency } from "../../utils/formatCurrency";
 
 const programIcons = {
@@ -20,7 +22,7 @@ const programIcons = {
 };
 
 export default function Programs() {
-  const programs = getPrograms().filter((program) => program.published);
+  const { data: programs, loading, error, reload } = useApiResource("/catalog/programs", "programs");
 
   return (
     <main>
@@ -60,7 +62,7 @@ export default function Programs() {
             </div>
           </div>
 
-          {programs.length === 0 ? (
+          {loading ? <Loader label="Loading programs…" /> : error ? <ErrorMessage message={error} onRetry={reload} /> : programs.length === 0 ? (
             <div className="empty-programs">
               <BookOpen size={32} />
 

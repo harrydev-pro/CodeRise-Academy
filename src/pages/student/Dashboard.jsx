@@ -4,7 +4,6 @@ import {
   Code2,
   FileText,
   Trophy,
-  ShoppingBag,
   ArrowRight,
   GraduationCap,
   Palette,
@@ -13,35 +12,28 @@ import {
 
 import Button from "../../components/common/Button";
 import { useAuth } from "../../hooks/useAuth";
-import { getTracks } from "../../features/free-learning/trackService";
-import { getPrograms } from "../../features/programs/programService";
-import { readStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function Dashboard() {
   const { user } = useAuth();
 
-  const tracks = getTracks();
-  const programs = getPrograms();
-
-  const applications = readStore(STORAGE_KEYS.applications, []);
-  const results = readStore(STORAGE_KEYS.quizResults, []);
-  const purchases = readStore(STORAGE_KEYS.purchases, []);
-
-  const userId = user?.id;
+  const tracksResource = useApiResource("/learning/tracks", "tracks");
+  const programsResource = useApiResource("/catalog/programs", "programs");
+  const applicationsResource = useApiResource("/applications/me", "applications");
+  const resultsResource = useApiResource("/learning/attempts", "attempts");
+  const submissionsResource = useApiResource("/learning/submissions", "submissions");
+  const tracks = tracksResource.data;
+  const programs = programsResource.data;
+  const applications = applicationsResource.data;
+  const results = resultsResource.data;
+  const submissions = submissionsResource.data;
+  const resources = [tracksResource, programsResource, applicationsResource, resultsResource, submissionsResource];
+  if (resources.some((resource) => resource.loading)) return <div className="student-page"><Loader label="Loading your dashboard…" /></div>;
+  const failedResource = resources.find((resource) => resource.error);
+  if (failedResource) return <div className="student-page"><ErrorMessage message={failedResource.error} onRetry={() => resources.forEach((resource) => resource.reload())} /></div>;
   const studentName = user?.name || user?.fullName || user?.full_name;
-
-  const myApplications = applications.filter(
-    (item) => item.userId === userId
-  );
-
-  const myResults = results.filter(
-    (item) => item.userId === userId
-  );
-
-  const myPurchases = purchases.filter(
-    (item) => item.userId === userId && item.status === "completed"
-  );
 
   const quickLinks = [
     {
@@ -52,7 +44,7 @@ export default function Dashboard() {
     },
     {
       title: "Video Courses",
-      description: "Explore courses available for purchase.",
+      description: "Explore video courses available in the catalog.",
       icon: Code2,
       link: "/video-courses",
     },
@@ -63,10 +55,10 @@ export default function Dashboard() {
       link: "/my-applications",
     },
     {
-      title: "My Results",
-      description: "Review your assessment performance.",
+      title: "My Submissions",
+      description: "Review your practical project work.",
       icon: Trophy,
-      link: "/my-results",
+      link: "/my-submissions",
     },
   ];
 
@@ -116,7 +108,7 @@ export default function Dashboard() {
 
           <div>
             <p>Applications</p>
-            <strong>{myApplications.length}</strong>
+            <strong>{applications.length}</strong>
           </div>
         </article>
 
@@ -127,19 +119,13 @@ export default function Dashboard() {
 
           <div>
             <p>Quiz Attempts</p>
-            <strong>{myResults.length}</strong>
+            <strong>{results.length}</strong>
           </div>
         </article>
 
         <article className="student-stat-card">
-          <span className="student-stat-icon orange">
-            <ShoppingBag size={22} />
-          </span>
-
-          <div>
-            <p>Purchased Courses</p>
-            <strong>{myPurchases.length}</strong>
-          </div>
+          <span className="student-stat-icon orange"><Trophy size={22} /></span>
+          <div><p>Project Submissions</p><strong>{submissions.length}</strong></div>
         </article>
       </section>
 

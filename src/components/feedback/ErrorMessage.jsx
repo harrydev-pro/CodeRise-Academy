@@ -1,6 +1,6 @@
 import { AlertCircle } from "lucide-react";
 
-export default function ErrorMessage({ message }) {
+export default function ErrorMessage({ message, onRetry }) {
   if (!message) return null;
 
   return (
@@ -10,7 +10,14 @@ export default function ErrorMessage({ message }) {
     >
       <AlertCircle size={19} className="mt-0.5 shrink-0" />
 
-      <p>{message}</p>
+      <div className="min-w-0 flex-1">
+        <p>{message}</p>
+        {onRetry && (
+          <button type="button" className="mt-2 font-semibold underline" onClick={onRetry}>
+            Try again
+          </button>
+        )}
+      </div>
     </div>
   );
 }

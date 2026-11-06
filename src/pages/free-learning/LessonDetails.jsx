@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
   ArrowLeft,
@@ -8,20 +8,13 @@ import {
   ClipboardCheck,
 } from "lucide-react";
 
-import { getTrackById } from "../../features/free-learning/trackService";
-import {
-  getLessonById,
-  getLessonsByTrack,
-} from "../../features/free-learning/lessonService";
-import {
-  getUserProgress,
-  markLessonCompleted,
-} from "../../features/free-learning/progressService";
-import { getQuizByLesson } from "../../features/assessments/quizService";
-
 import { useAuth } from "../../hooks/useAuth";
+import { useApiResource } from "../../hooks/useApiResource";
+import { markLessonCompleted } from "../../features/free-learning/progressService";
 import Button from "../../components/common/Button";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function LessonDetails() {
   const { trackId, lessonId } = useParams();
@@ -29,11 +22,23 @@ export default function LessonDetails() {
 
   const [completed, setCompleted] = useState(false);
   const [message, setMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  const track = getTrackById(trackId);
-  const lesson = getLessonById(lessonId);
-  const lessons = getLessonsByTrack(trackId);
-  const quiz = getQuizByLesson(lessonId);
+  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
+  const lessonResource = useApiResource(`/learning/lessons/${encodeURIComponent(lessonId)}`, "lesson", null);
+  const lessonsResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/lessons`, "lessons");
+  const progressResource = useApiResource("/learning/progress", "progress", undefined, Boolean(user));
+  const quizResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/quizzes`, "quizzes");
+  const track = trackResource.data;
+  const lesson = lessonResource.data;
+  const lessons = lessonsResource.data;
+  const savedProgress = progressResource.data;
+  const quiz = quizResource.data[0];
+
+  const resources = [trackResource, lessonResource, lessonsResource, progressResource, quizResource];
+  if (resources.some((resource) => resource.loading)) return <main className="page-container"><Loader label="Loading lesson…" /></main>;
+  const resourceError = resources.find((resource) => resource.error);
+  if (resourceError) return <main className="page-container"><ErrorMessage message={resourceError.error} onRetry={() => resources.forEach((resource) => resource.reload())} /></main>;
 
   const lessonIndex = lessons.findIndex((item) => item.id === lessonId);
 
@@ -45,13 +50,9 @@ export default function LessonDetails() {
     ? lessons[lessonIndex - 1]
     : null;
 
-  const savedProgress = useMemo(() => {
-    return user ? getUserProgress(user.id) : [];
-  }, [user]);
-
   if (!track || !lesson || lesson.trackId !== trackId) {
     return (
-      <main className="page-container free-learning-shell">
+      <main className="page-container">
         <EmptyState
           title="Lesson not found"
           description="This lesson could not be found in the selected learning track."
@@ -74,16 +75,23 @@ export default function LessonDetails() {
       (item) => item.lessonId === lessonId && item.completed
     );
 
-  function handleComplete() {
+  async function handleComplete() {
     if (!user) {
       setMessage("Please sign in to save your learning progress.");
       return;
     }
 
-    markLessonCompleted(user.id, trackId, lessonId);
-
-    setCompleted(true);
-    setMessage("Lesson completed. Your progress has been saved.");
+    setSaving(true);
+    try {
+      await markLessonCompleted(user.id, trackId, lessonId);
+      setCompleted(true);
+      setMessage("Lesson completed. Your progress has been saved.");
+      progressResource.reload();
+    } catch (error) {
+      setMessage(error.message || "We couldn't save your progress. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   }
 
   function renderContent(content) {
@@ -134,7 +142,7 @@ export default function LessonDetails() {
   }
 
   return (
-    <main className="page-container lesson-page free-learning-shell">
+    <main className="page-container lesson-page">
       <Link
         to={`/free-learning/${trackId}`}
         className="back-link"
@@ -194,7 +202,8 @@ export default function LessonDetails() {
 
             <Button
               onClick={handleComplete}
-              disabled={isCompleted}
+              disabled={isCompleted || saving}
+              loading={saving}
             >
               {isCompleted ? "Completed" : "Mark as complete"}
             </Button>
@@ -238,19 +247,17 @@ export default function LessonDetails() {
             <h3>Keep learning</h3>
 
             <p>
-              Test what you learned in this lesson or practice with a project.
+              Test your understanding with a quiz or practice with a practical
+              project.
             </p>
 
-            {quiz ? <Link
+            {quiz && <Link
               to={`/free-learning/${trackId}/quizzes/${quiz.id}`}
               className="sidebar-action"
             >
               <ClipboardCheck size={17} />
-              Take this lesson’s quiz
-            </Link> : <button type="button" className="sidebar-action quiz-unavailable" disabled>
-              <ClipboardCheck size={17} />
-              Lesson quiz coming soon
-            </button>}
+              Take a quiz
+            </Link>}
 
             <Link
               to={`/free-learning/${trackId}/projects`}

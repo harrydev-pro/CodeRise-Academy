@@ -23,7 +23,6 @@ import MyLearning from "../pages/student/MyLearning";
 import MyApplications from "../pages/student/MyApplications";
 import MySubmissions from "../pages/student/MySubmissions";
 import MyResults from "../pages/student/MyResults";
-import MyPurchases from "../pages/student/MyPurchases";
 import Notifications from "../pages/student/Notifications";
 
 import FreeLearning from "../pages/free-learning/FreeLearning";
@@ -38,13 +37,12 @@ import ProjectSubmission from "../pages/free-learning/ProjectSubmissions";
 import VideoCourseCatalog from "../pages/video-courses/VideoCourseCatalog";
 import VideoCourseDetails from "../pages/video-courses/VideoCourseDetails";
 import VideoLessonPlayer from "../pages/video-courses/VideoLessonPlayer";
-import Checkout from "../pages/video-courses/Checkout";
-import PurchaseConfirmation from "../pages/video-courses/PurchaseConfirmation";
 
 import ApplicationForm from "../pages/applications/ApplicationForm";
 import ApplicationConfirmation from "../pages/applications/ApplicationConfirmation";
 import AdminOverview from "../pages/admin/AdminOverview";
-import AdminPage from "../pages/admin/AdminPage";
+import ReviewSubmissions from "../pages/admin/ReviewSubmissions";
+import ReviewApplications from "../pages/admin/ReviewApplications";
 
 export default function AppRoutes() {
   return (
@@ -76,7 +74,6 @@ export default function AppRoutes() {
         <Route path="/my-applications" element={<MyApplications />} />
         <Route path="/my-submissions" element={<MySubmissions />} />
         <Route path="/my-results" element={<MyResults />} />
-        <Route path="/my-purchases" element={<MyPurchases />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/free-learning" element={<FreeLearning />} />
         <Route path="/free-learning/:trackId" element={<TrackDetails />} />
@@ -87,24 +84,12 @@ export default function AppRoutes() {
         <Route path="/free-learning/:trackId/projects/:projectId" element={<ProjectBrief />} />
         <Route path="/free-learning/:trackId/projects/:projectId/submit" element={<ProjectSubmission />} />
         <Route path="/video-courses/:courseId/lessons/:lessonId" element={<VideoLessonPlayer />} />
-        <Route path="/checkout/:courseId" element={<Checkout />} />
-        <Route path="/video-courses/:courseId/confirmation" element={<PurchaseConfirmation />} />
-        <Route path="/purchase-confirmation" element={<PurchaseConfirmation />} />
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
         <Route index element={<AdminOverview />} />
-        <Route path="users" element={<AdminPage />} />
-        <Route path="activity" element={<AdminPage />} />
-        <Route path="courses" element={<AdminPage />} />
-        <Route path="lessons" element={<AdminPage />} />
-        <Route path="video-management" element={<AdminPage />} />
-        <Route path="programs" element={<AdminPage />} />
-        <Route path="pricing" element={<AdminPage />} />
-        <Route path="quizzes" element={<AdminPage />} />
-        <Route path="submissions" element={<AdminPage />} />
-        <Route path="applications" element={<AdminPage />} />
-        <Route path="settings" element={<AdminPage />} />
+        <Route path="submissions" element={<ReviewSubmissions />} />
+        <Route path="applications" element={<ReviewApplications />} />
       </Route>
 
       <Route path="/student" element={<Navigate to="/dashboard" replace />} />

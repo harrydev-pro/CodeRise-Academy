@@ -1,24 +1,16 @@
 import { FileCheck2, CalendarDays } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
-import { useAuth } from "../../hooks/useAuth";
-import { readStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { formatDate } from "../../utils/formatDate";
 
 export default function MySubmissions() {
-  const { user } = useAuth();
+  const { data: submissions, loading, error, reload } = useApiResource("/learning/submissions", "submissions");
 
-  const submissions = readStore(
-    STORAGE_KEYS.submissions,
-    []
-  )
-    .filter((submission) => submission.userId === user?.id)
-    .sort(
-      (a, b) =>
-        new Date(b.updatedAt || b.createdAt || 0) -
-        new Date(a.updatedAt || a.createdAt || 0)
-    );
+  if (loading) return <div className="student-page"><Loader label="Loading your submissions…" /></div>;
+  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
 
   if (submissions.length === 0) {
     return (

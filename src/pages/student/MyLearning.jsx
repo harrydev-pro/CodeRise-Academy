@@ -8,10 +8,9 @@ import {
 } from "lucide-react";
 
 import Button from "../../components/common/Button";
-import { getTracks } from "../../features/free-learning/trackService";
-import { getLessonsByTrack } from "../../features/free-learning/lessonService";
-import { getUserProgress } from "../../features/free-learning/progressService";
-import { useAuth } from "../../hooks/useAuth";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 const icons = {
   "Product Design": Palette,
@@ -20,10 +19,13 @@ const icons = {
 };
 
 export default function MyLearning() {
-  const { user } = useAuth();
+  const tracksResource = useApiResource("/learning/tracks", "tracks");
+  const progressResource = useApiResource("/learning/progress", "progress");
+  const tracks = tracksResource.data;
+  const progress = progressResource.data;
 
-  const tracks = getTracks();
-  const progress = getUserProgress(user?.id);
+  if (tracksResource.loading || progressResource.loading) return <div className="student-page"><Loader label="Loading your learning progress…" /></div>;
+  if (tracksResource.error || progressResource.error) return <div className="student-page"><ErrorMessage message={tracksResource.error || progressResource.error} onRetry={() => { tracksResource.reload(); progressResource.reload(); }} /></div>;
 
   return (
     <div className="student-page">
@@ -40,7 +42,7 @@ export default function MyLearning() {
           const completed = new Set(progress.filter(
             (item) => item.trackId === track.id && item.completed
           ).map((item) => item.lessonId));
-          const totalLessons = getLessonsByTrack(track.id).length;
+          const totalLessons = track.lessonCount || 0;
           const percentage = totalLessons ? Math.round(completed.size / totalLessons * 100) : 0;
 
           return (

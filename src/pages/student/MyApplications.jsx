@@ -1,41 +1,17 @@
-import { useMemo } from "react";
 import { FileText, CalendarDays } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
-import { useAuth } from "../../hooks/useAuth";
-import { readStore } from "../../services/storage/storageAdapter";
-import { STORAGE_KEYS } from "../../services/storage/storageKeys";
-import { getPrograms } from "../../features/programs/programService";
+import { useApiResource } from "../../hooks/useApiResource";
 import { formatDate } from "../../utils/formatDate";
 import { formatCurrency } from "../../utils/formatCurrency";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function MyApplications() {
-  const { user } = useAuth();
+  const { data: applications, loading, error, reload } = useApiResource("/applications/me", "applications");
 
-  const applications = useMemo(() => {
-    const allApplications = readStore(
-      STORAGE_KEYS.applications,
-      []
-    );
-
-    return allApplications
-      .filter((application) => application.userId === user?.id)
-      .sort(
-        (a, b) =>
-          new Date(b.createdAt || 0) - new Date(a.createdAt || 0)
-      );
-  }, [user?.id]);
-
-  const programs = getPrograms();
-
-  function getProgramName(application) {
-    return (
-      programs.find((program) => program.id === application.programId)
-        ?.title ||
-      application.programTitle || application.programName ||
-      "Training program"
-    );
-  }
+  if (loading) return <div className="student-page"><Loader label="Loading your applications…" /></div>;
+  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
 
   if (applications.length === 0) {
     return (
@@ -75,7 +51,7 @@ export default function MyApplications() {
             </div>
 
             <div className="student-record-content">
-              <h2>{getProgramName(application)}</h2>
+              <h2>{application.programTitle || "Training program"}</h2>
 
               <p>
                 Application reference: {application.id}
@@ -89,7 +65,7 @@ export default function MyApplications() {
 
                 <span>
                   {formatCurrency(
-                    Number(application.promoPrice ?? application.price) || 0
+                    Number(application.promotionalPrice ?? application.promoPrice ?? application.originalPrice) || 0
                   )}
                 </span>
               </div>

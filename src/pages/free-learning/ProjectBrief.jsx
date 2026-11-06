@@ -7,19 +7,21 @@ import {
   Target,
 } from "lucide-react";
 
-import { getTrackById } from "../../features/free-learning/trackService";
-import { getProjectsByTrack } from "../../features/assessments/submissionService";
-
 import EmptyState from "../../components/common/EmptyState";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function ProjectBrief() {
   const { trackId, projectId } = useParams();
 
-  const track = getTrackById(trackId);
+  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
+  const projectResource = useApiResource(`/learning/projects/${encodeURIComponent(projectId)}`, "project", null);
+  const track = trackResource.data;
+  const project = projectResource.data;
 
-  const project = getProjectsByTrack(trackId).find(
-    (item) => item.id === projectId
-  );
+  if (trackResource.loading || projectResource.loading) return <main className="page-container"><Loader label="Loading project brief…" /></main>;
+  if (trackResource.error || projectResource.error) return <main className="page-container"><ErrorMessage message={trackResource.error || projectResource.error} onRetry={() => { trackResource.reload(); projectResource.reload(); }} /></main>;
 
   if (!track || !project) {
     return (
@@ -182,7 +184,7 @@ export default function ProjectBrief() {
           </Link>
 
           <small>
-            Your submission will be stored in this browser demonstration.
+            Your submission will be saved to your account for instructor review.
           </small>
         </aside>
       </div>

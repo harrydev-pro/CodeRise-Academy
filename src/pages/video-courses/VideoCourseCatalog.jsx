@@ -9,15 +9,15 @@ import {
   Video,
 } from "lucide-react";
 
-import { getVideoCourses } from "../../features/video-courses/videoCourseService";
+import { useApiResource } from "../../hooks/useApiResource";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 import { formatCurrency } from "../../utils/formatCurrency";
 import EmptyState from "../../components/common/EmptyState";
 
 export default function VideoCourseCatalog() {
-  const courses = getVideoCourses().filter(
-    (course) => course.published !== false,
-  );
+  const { data: courses, loading, error, reload } = useApiResource("/catalog/video-courses", "courses");
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -126,7 +126,7 @@ export default function VideoCourseCatalog() {
           </select>
         </div>
 
-        {filteredCourses.length === 0 ? (
+        {loading ? <Loader label="Loading courses…" /> : error ? <ErrorMessage message={error} onRetry={reload} /> : filteredCourses.length === 0 ? (
           <EmptyState
             title="No courses found"
             description="Try another search term or choose a different category."

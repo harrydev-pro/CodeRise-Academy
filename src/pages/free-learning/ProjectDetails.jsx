@@ -7,15 +7,21 @@ import {
   Trophy,
 } from "lucide-react";
 
-import { getTrackById } from "../../features/free-learning/trackService";
-import { getProjectsByTrack } from "../../features/assessments/submissionService";
+import { useApiResource } from "../../hooks/useApiResource";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function ProjectDetails() {
   const { trackId } = useParams();
 
-  const track = getTrackById(trackId);
-  const projects = getProjectsByTrack(trackId);
+  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
+  const projectsResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}/projects`, "projects");
+  const track = trackResource.data;
+  const projects = projectsResource.data;
+
+  if (trackResource.loading || projectsResource.loading) return <main className="page-container"><Loader label="Loading projects…" /></main>;
+  if (trackResource.error || projectsResource.error) return <main className="page-container"><ErrorMessage message={trackResource.error || projectsResource.error} onRetry={() => { trackResource.reload(); projectsResource.reload(); }} /></main>;
 
   if (!track) {
     return (

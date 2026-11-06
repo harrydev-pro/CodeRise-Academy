@@ -2,30 +2,29 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   ArrowLeft,
-  CheckCircle2,
-  FileUp,
   Code2,
   Globe,
 } from "lucide-react";
 
 import { useAuth } from "../../hooks/useAuth";
-import { getTrackById } from "../../features/free-learning/trackService";
-import { getProjectsByTrack, submitProject } from "../../features/assessments/submissionService";
+import { submitProject } from "../../features/assessments/submissionService";
+import { useApiResource } from "../../hooks/useApiResource";
 
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import EmptyState from "../../components/common/EmptyState";
+import Loader from "../../components/common/Loader";
+import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 export default function ProjectSubmission() {
   const { trackId, projectId } = useParams();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const track = getTrackById(trackId);
-
-  const project = getProjectsByTrack(trackId).find(
-    (item) => item.id === projectId
-  );
+  const trackResource = useApiResource(`/learning/tracks/${encodeURIComponent(trackId)}`, "track", null);
+  const projectResource = useApiResource(`/learning/projects/${encodeURIComponent(projectId)}`, "project", null);
+  const track = trackResource.data;
+  const project = projectResource.data;
 
   const [form, setForm] = useState({
     description: "",
@@ -33,12 +32,14 @@ export default function ProjectSubmission() {
     githubUrl: "",
   });
 
-  const [selectedFile, setSelectedFile] = useState(null);
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [saving, setSaving] = useState(false);
 
-  if (!track || !project) {
+  if (trackResource.loading || projectResource.loading) return <main className="page-container"><Loader label="Loading submission form…" /></main>;
+  if (trackResource.error || projectResource.error) return <main className="page-container"><ErrorMessage message={trackResource.error || projectResource.error} onRetry={() => { trackResource.reload(); projectResource.reload(); }} /></main>;
+
+  if (!track || !project || project.trackId !== trackId) {
     return (
       <main className="page-container free-learning-shell">
         <EmptyState
@@ -83,7 +84,7 @@ export default function ProjectSubmission() {
     }
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const nextErrors = {};
@@ -93,9 +94,9 @@ export default function ProjectSubmission() {
         "Describe your work in at least 20 characters.";
     }
 
-    if (!form.liveUrl.trim() && !form.githubUrl.trim() && !selectedFile) {
+    if (!form.liveUrl.trim() && !form.githubUrl.trim()) {
       nextErrors.project =
-        "Provide a live URL, a GitHub URL, or select a file for this session.";
+        "Provide a live URL or GitHub repository URL for your project.";
     }
 
     if (!validateUrl(form.liveUrl)) {
@@ -117,20 +118,13 @@ export default function ProjectSubmission() {
     }
 
     setSaving(true);
-
+    setMessage("");
     try {
-      submitProject({
-        userId: user.id,
-        userName: user.fullName || user.name || user.email,
-        trackId,
+      await submitProject({
         projectId: project.id,
-        projectTitle: project.title,
         description: form.description.trim(),
         liveUrl: form.liveUrl.trim(),
         githubUrl: form.githubUrl.trim(),
-        selectedFileName: selectedFile?.name || "",
-        status: "Submitted",
-        submittedAt: new Date().toISOString(),
       });
 
       navigate("/my-submissions", {
@@ -139,8 +133,8 @@ export default function ProjectSubmission() {
         },
       });
     } catch (error) {
-      console.error("Project submission failed:", error);
-      setMessage("Unable to save your submission. Please try again.");
+      setMessage(error.message || "Unable to save your submission. Please try again.");
+    } finally {
       setSaving(false);
     }
   }
@@ -229,33 +223,7 @@ export default function ProjectSubmission() {
           />
         </div>
 
-        <div className="form-field">
-          <label htmlFor="projectFile">
-            <FileUp size={17} />
-            Select a project file (optional)
-          </label>
-
-          <input
-            id="projectFile"
-            type="file"
-            accept=".zip,.html,.css,.js,.jsx,.pdf,.png,.jpg,.jpeg"
-            onChange={(event) => {
-              setSelectedFile(event.target.files?.[0] || null);
-            }}
-          />
-
-          {selectedFile && (
-            <div className="selected-file">
-              <CheckCircle2 size={17} />
-              <span>{selectedFile.name}</span>
-            </div>
-          )}
-
-          <small className="field-hint">
-            Demo only: the selected file is not uploaded or permanently stored.
-            Use a live URL or GitHub repository for a shareable submission.
-          </small>
-        </div>
+        <p className="field-hint">Submit a public live URL or GitHub repository so your instructor can review the work.</p>
 
         {message && (
           <div className="inline-message" role="status">
