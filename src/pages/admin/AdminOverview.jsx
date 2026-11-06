@@ -20,7 +20,7 @@ export default function AdminOverview() {
   const lessons = records(STORAGE_KEYS.lessons, initialLessons);
   const quizzes = getQuizzes();
   const stats = [
-    { title: "Total Students", value: users.filter((user) => user?.role !== "admin").length, Icon: Users },
+    { title: "Total Students", value: users.filter((user) => user?.role !== "instructor").length, Icon: Users },
     { title: "Programs", value: programs.length, Icon: BookOpen },
     { title: "Applications", value: applications.length, Icon: FileText },
     { title: "Video Courses", value: courses.length, Icon: CircleDollarSign },

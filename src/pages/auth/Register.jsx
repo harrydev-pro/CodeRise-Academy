@@ -56,9 +56,9 @@ export default function Register() {
       nextErrors.phone = "Enter a valid phone number.";
     }
 
-    if (form.password.length < 8) {
+    if (form.password.length < 8 || form.password.length > 128) {
       nextErrors.password =
-        "Your password must contain at least 8 characters.";
+        "Use a password between 8 and 128 characters.";
     }
 
     if (form.password !== form.confirmPassword) {

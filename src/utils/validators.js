@@ -3,6 +3,18 @@ export function validateEmail(value) {
 }
 
 export function validatePhone(value) {
-  const normalized = String(value || '').trim();
-  return /^[+]?[(]?[0-9]{1,4}[)]?[-\s0-9]{7,15}$/.test(normalized);
+  const input = String(value || '').trim();
+  if (input.length < 10 || input.length > 24) return false;
+
+  const compact = input.replace(/[\s().-]/g, '');
+  const withoutCountryCode = compact.startsWith('+234')
+    ? compact.slice(4)
+    : compact.startsWith('234') && compact.length === 13
+      ? compact.slice(3)
+      : compact;
+  const nationalNumber = withoutCountryCode.length === 11 && withoutCountryCode.startsWith('0')
+    ? withoutCountryCode.slice(1)
+    : withoutCountryCode;
+
+  return /^\d{10}$/.test(nationalNumber);
 }

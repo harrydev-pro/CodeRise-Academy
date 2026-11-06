@@ -1,11 +1,20 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 import StudentSidebar from "../components/layout/StudentSidebar";
 import StudentHeader from "../components/layout/StudentHeader";
+import { useAuth } from "../hooks/useAuth";
+import Loader from "../components/common/Loader";
 
 export default function StudentLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) return <Loader fullScreen />;
+  if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
+  if (user.role !== "student") return <Navigate to="/admin" replace />;
 
   return (
     <div className="min-h-screen bg-surface">

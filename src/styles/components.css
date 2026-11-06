@@ -1778,23 +1778,6 @@ footer.bg-ink {
   color: var(--brand-purple);
   font-weight: 600;
 }
-.demo-login-note {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 20px;
-  padding: 12px 14px;
-  border: 1px solid #dbe6ff;
-  border-radius: 9px;
-  background: #f5f8ff;
-  color: #586477;
-  font-size: 0.78rem;
-}
-.demo-login-note strong {
-  color: #1d4ed8;
-  font-size: 0.8rem;
-}
-
 .form-options {
   display: flex;
   justify-content: flex-end;

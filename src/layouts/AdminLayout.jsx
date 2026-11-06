@@ -1,9 +1,21 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 
 import AdminSidebar from "../components/layout/AdminSidebar";
 import AdminHeader from "../components/layout/AdminHeader";
+import { useAuth } from "../hooks/useAuth";
+import Loader from "../components/common/Loader";
+
+export default function AdminLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) return <Loader fullScreen />;
+  if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
+  if (user.role !== "instructor") return <Navigate to="/dashboard" replace />;
 import { adminNavigation } from "../config/navigation";
 
 export default function AdminLayout() {

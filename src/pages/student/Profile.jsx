@@ -4,20 +4,20 @@ import { Save, UserRound } from "lucide-react";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import { useAuth } from "../../hooks/useAuth";
-import { updateUser } from "../../features/users/userStorage";
-import { validateEmail, validatePhone } from "../../utils/validators";
+import { validatePhone } from "../../utils/validators";
 
 export default function Profile() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
 
   const [form, setForm] = useState({
     fullName: user?.fullName || "",
     email: user?.email || "",
-    phone: user?.phone || "",
+    phone: user?.phone_number || "",
   });
 
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
+  const [saving, setSaving] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -35,7 +35,7 @@ export default function Profile() {
     setMessage("");
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const nextErrors = {};
@@ -44,31 +44,18 @@ export default function Profile() {
       nextErrors.fullName = "Full name is required.";
     }
 
-    if (!validateEmail(form.email)) {
-      nextErrors.email = "Enter a valid email address.";
-    }
-
     if (!validatePhone(form.phone)) {
-      nextErrors.phone = "Enter a valid phone number.";
+      nextErrors.phone = "Enter a valid Nigerian phone number.";
     }
 
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) return;
 
-    try {
-      updateUser(user.id, {
-        fullName: form.fullName.trim(),
-        email: form.email.trim().toLowerCase(),
-        phone: form.phone.trim(),
-      });
-
-      setMessage(
-        "Profile update requested. If the updated details do not appear after refreshing, the authentication context must also be updated."
-      );
-    } catch {
-      setMessage("Unable to update your profile.");
-    }
+    setSaving(true);
+    const result = await updateProfile({ fullName: form.fullName.trim(), phone: form.phone.trim() });
+    setSaving(false);
+    setMessage(result.success ? "Your profile has been updated." : result.message);
   }
 
   return (
@@ -120,9 +107,8 @@ export default function Profile() {
               name="email"
               type="email"
               value={form.email}
-              onChange={handleChange}
-              error={errors.email}
-              required
+              readOnly
+              autoComplete="email"
             />
 
             <Input
@@ -135,17 +121,12 @@ export default function Profile() {
               required
             />
 
-            <Button type="submit">
+            <Button type="submit" loading={saving}>
               <Save size={17} />
               Save Changes
             </Button>
           </form>
 
-          <div className="alert alert-info profile-demo-notice">
-            This prototype stores profile data in your browser. Email
-            changes should be verified by a real backend before being
-            trusted.
-          </div>
         </section>
       </div>
     </div>
