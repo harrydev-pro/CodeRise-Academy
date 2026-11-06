@@ -1,8 +1,7 @@
 export const initialLessons = [
+  // Product Design Lessons
 
-// Product Design Lessons
-
-// product design-lesson-1
+  // product design-lesson-1
 
   {
     id: "design-lesson-1",
@@ -20,38 +19,140 @@ export const initialLessons = [
     published: true,
 
     content: `
-# What is Product Design?
 
-Product design is the process of understanding a problem and creating a useful solution.
 
-Digital product designers work on products such as websites, mobile applications, and digital services.
+1. What Is Product Design?
 
-## Why is product design important?
+Product Design is the process of researching, planning, and creating products that solve people’s problems and meet their needs.
 
-A product should help people complete tasks easily.
+In the digital world, Product Design focuses on creating useful and easy-to-use products such as websites, mobile applications, and software platforms.
 
-For example, a school website should help students find information without confusion.
+A good product should not only look attractive but should also be easy to understand, navigate, and use.
 
-## Important concepts
+Example: When designing a banking application, a Product Designer considers how users can check their account balance, transfer money, and view transactions without difficulty.
 
-1. Users are the people who use a product.
-2. User research helps us understand their needs.
-3. Wireframes show the basic structure of a screen.
-4. Prototypes demonstrate how a design may work.
-5. Usability testing helps identify problems.
+2. Who Is a Product Designer?
 
-## Practical activity
+A Product Designer is a professional responsible for understanding users’ problems and designing solutions that provide a positive experience.
 
-Choose an application you use regularly.
+Their responsibilities include:
 
-Write down:
-- What problem does it solve?
-- Who uses it?
-- What is easy to use?
-- What would you improve?
+* Researching users and understanding their needs.
+* Identifying problems that need solutions.
+* Planning how a product should work.
+* Designing layouts and interfaces.
+* Creating interactive prototypes.
+* Testing designs and improving them based on feedback.
+
+A Product Designer combines creativity, research, technology, and problem-solving skills.
+
+3. Understanding UI, UX, and Product Design
+
+These three terms are closely related but have different meanings.
+
+UI (User Interface)
+
+UI refers to the visual elements of a digital product that users interact with.
+
+Examples include:
+
+* Buttons and icons.
+* Colours and typography.
+* Images and illustrations.
+* Navigation menus.
+* Page layouts.
+
+UX (User Experience)
+
+UX focuses on how users feel when interacting with a product and how easily they can complete their tasks.
+
+For example, a shopping application should allow users to search for products, add items to their cart, and complete payments without confusion.
+
+Product Design
+
+Product Design brings together UI, UX, user research, and problem-solving to create products that meet users’ needs and business goals.
+
+4. Understanding Digital Products
+
+A digital product is a product or service that people access and use through electronic devices such as computers, tablets, and smartphones.
+
+Examples include:
+
+* Social Media: Instagram, Facebook, and TikTok.
+* Banking Applications: Mobile banking and payment platforms.
+* Learning Platforms: Online learning and educational applications.
+* E-commerce: Online shopping websites and applications.
+* Entertainment: Music and video streaming platforms.
+
+Product Designers help make these products functional, accessible, and enjoyable to use.
+
+5. Introduction to Design Thinking
+
+Design Thinking is a problem-solving approach that places users at the centre of the design process.
+
+Instead of immediately creating a design, Product Designers first try to understand the problem and the people experiencing it.
+
+Design Thinking has five major stages:
+
+1. Empathise: Understand users, their needs, and their challenges.
+2. Define: Clearly identify the problem that needs to be solved.
+3. Ideate: Generate different ideas and possible solutions.
+4. Prototype: Create an early version of the proposed solution.
+5. Test: Allow users to interact with the prototype and provide feedback.
+
+These stages help designers develop solutions that are based on real user needs.
+
+6. The Product Design Process
+
+The Product Design process involves several activities that help transform an idea into a usable product.
+
+1. Research: Gather information about users, their needs, and existing solutions.
+
+2. Planning: Define the product’s purpose, objectives, and required features.
+
+3. Wireframing: Create a basic visual structure showing where different elements will appear on a screen.
+
+4. UI Design: Develop the visual appearance of the product, including colours, typography, buttons, and layouts.
+
+5. Prototyping: Create an interactive version of the design to demonstrate how the product will work.
+
+6. Testing: Evaluate the design with users, identify problems, and make improvements.
+
+These stages may sometimes overlap or be repeated as the product develops.
+
+7. Important Qualities of a Good Product Design
+
+A well-designed digital product should have the following qualities:
+
+* Usability: It should be easy to understand and use.
+* Accessibility: Different people should be able to use it, including people with disabilities.
+* Consistency: Design elements should maintain a similar appearance and behaviour.
+* Functionality: Features should work as expected.
+* Visual Appeal: The product should have an attractive and organised appearance.
+
+EXPLANATORY NOTE
+
+Product Design goes beyond creating beautiful screens. It involves understanding people’s problems, identifying opportunities, and developing solutions that make their lives easier.
+
+For example, when designing a food delivery application, a Product Designer must consider how customers will find restaurants, select meals, place orders, make payments, and track deliveries.
+
+Every design decision should make the experience easier and more convenient for the user.
+
+Remember: A good Product Designer does not design only for appearance; they design to solve problems.
+
+LESSON SUMMARY
+
+In this lesson, we have learned that:
+
+* Product Design involves creating solutions to users’ problems.
+* UI focuses on the visual appearance of a product.
+* UX focuses on the user’s overall experience.
+* Design Thinking helps designers understand and solve problems.
+* The Product Design process involves research, planning, wireframing, UI design, prototyping, and testing.
+
+
 `,
   },
-
 
   // product design-lesson-2
 
@@ -59,7 +160,7 @@ Write down:
     id: "design-lesson-2",
     trackId: "track-product-design",
 
-    title: "Understanding Users",
+    title: "fundamentals of UI design",
 
     description:
       "Learn why designers need to understand the people using their products.",
@@ -71,40 +172,262 @@ Write down:
     published: true,
 
     content: `
-# Understanding Users
 
-Good design starts with understanding people.
 
-Before designing a product, ask:
+1. What is User Interface (UI) Design?
 
-- Who will use it?
-- What problem are they facing?
-- What do they need to accomplish?
-- What difficulties might they experience?
+User Interface Design is the process of designing the visual parts of a digital product that people interact with.
 
-## Example
+These include buttons, colours, images, icons, text, menus and layouts.
 
-Imagine designing a school attendance application.
+For example, when you open a mobile banking application, the login button, account balance, navigation menu and transaction icons are all parts of its user interface.
 
-Teachers may need to record attendance quickly.
+A good UI design should:
 
-School administrators may need reports.
+* Be attractive and organised.
+* Be easy to understand.
+* Use readable text.
+* Have clear buttons and navigation.
+* Make it easy for users to interact with the product.
 
-Students may need to see their attendance records.
+2. Introduction to Colour Theory
 
-These users have different needs.
+Colour theory is the study of how colours work together and how they affect the appearance of a design.
 
-## Practical activity
+Colours help designers communicate feelings, create visual interest and establish a product’s identity.
 
-Imagine you are designing an online registration form.
+Common colour groups:
 
-List three problems a student might encounter when completing it.
+* Primary colours: Red, blue and yellow.
+* Secondary colours: Green, orange and purple.
+* Neutral colours: Black, white, grey and beige.
 
-Then suggest one improvement for each problem.
+Examples of colour meanings:
+
+* Blue: Often represents trust and professionalism.
+* Red: Can represent urgency, excitement or danger.
+* Green: Often represents growth, nature or success.
+* Yellow: Can represent happiness and energy.
+* Purple: Often represents creativity and luxury.
+
+Important colour combinations:
+
+* Complementary colours: Colours opposite each other on the colour wheel.
+* Analogous colours: Colours that appear close to each other on the colour wheel.
+
+Example: A banking application may use blue and white to communicate trust, simplicity and professionalism.
+
+3. Understanding Typography
+
+Typography is the art of arranging text to make it clear, readable and attractive.
+
+In UI Design, typography helps users understand information and know what is important on a screen.
+
+For example, a heading should usually look different from the paragraph underneath it.
+
+Common font categories:
+
+* Serif: Fonts with small decorative strokes at the ends of letters.
+* Sans-serif: Fonts without decorative strokes. They are commonly used in modern digital interfaces.
+* Display fonts: Decorative fonts used mainly for titles and special designs.
+
+Examples of fonts include Arial, Roboto, Poppins and Inter.
+
+Good typography should:
+
+* Be easy to read.
+* Use suitable font sizes.
+* Maintain consistency.
+* Avoid using too many different fonts.
+
+4. Font Sizes and Font Weights
+
+Font size refers to how large or small text appears on a screen.
+
+Font weight refers to how thick or thin the letters appear.
+
+Designers use different sizes and weights to separate headings, subheadings and normal text.
+
+Examples of font sizes:
+
+* Main heading: 32px
+* Subheading: 24px
+* Body text: 16px
+* Small text: 12px
+
+These are example values, not fixed rules.
+
+Common font weights:
+
+* Light: Thin-looking text.
+* Regular: Normal text.
+* Medium: Slightly thicker text.
+* Bold: Thick text.
+
+Example:
+
+When designing a login page:
+
+* “Welcome Back” can be bold and large.
+* “Enter your details to continue” can be regular and smaller.
+* “Forgot Password?” can be smaller but still readable.
+
+This helps users understand which information is most important.
+
+5. Spacing, Padding and Margins
+
+Spacing is the empty area between elements in a design. It helps prevent a screen from looking crowded.
+
+Two important spacing concepts are padding and margin.
+
+Padding: The space inside an element, between its content and its border.
+
+Margin: The space outside an element, separating it from other elements.
+
+Example:
+
+Imagine a button containing the word “Sign Up”.
+
+* Padding creates space between the words and the edges of the button.
+* Margin creates space between the button and other elements around it.
+
+Good spacing makes a design look clean, organised and easier to use.
+
+6. Alignment and Visual Hierarchy
+
+Alignment means arranging design elements so that they line up properly.
+
+For example, text, buttons and images can be aligned to the left, right or centre.
+
+Proper alignment makes a design look organised and professional.
+
+Visual hierarchy is the arrangement of elements according to their importance.
+
+It helps users understand what to look at first, second and third.
+
+Designers create visual hierarchy using:
+
+* Font sizes.
+* Font weights.
+* Colours.
+* Spacing.
+* Positioning.
+* Images and shapes.
+
+Example:
+
+On a login page:
+
+1. The heading “Welcome Back” attracts attention first.
+2. The email and password fields come next.
+3. The login button guides the user to take action.
+4. The forgotten password link provides additional assistance.
+
+This arrangement helps users understand the page without confusion.
+
+7. Introduction to Accessibility
+
+Accessibility in UI Design means making digital products usable by people with different abilities.
+
+A good design should consider people who may have difficulties seeing, hearing, reading or interacting with digital devices.
+
+Examples of accessible design:
+
+* Use readable font sizes.
+* Provide enough contrast between text and background colours.
+* Add alternative text to meaningful images.
+* Make buttons large enough to interact with.
+* Do not use colour alone to communicate important information.
+* Make sure users can navigate with a keyboard where appropriate.
+
+Example:
+
+If a website uses light grey text on a white background, some users may struggle to read it. Using darker text improves readability.
+
+⸻
+
+Summary
+
+UI Design focuses on the visual parts of a digital product and how users interact with them.
+
+To create a good user interface, designers should understand:
+
+1. User Interface Design.
+2. Colour Theory.
+3. Typography.
+4. Font Sizes and Font Weights.
+5. Spacing, Padding and Margins.
+6. Alignment and Visual Hierarchy.
+7. Accessibility.
+
+These principles help designers create interfaces that are attractive, organised, readable and easy to use.
+
+
 `,
   },
 
+  {
+    id:"design-lesson-3",
+    trackId: "track-product-design",
+    title: "introduction from figma",
+    description: "",
 
+    type: "lesson",
+
+    duration: "10 minutes",
+
+    published: true,
+
+    content: `
+   
+1. WHAT IS FIGMA?
+Figma is a free, cloud-based design tool used by Product Designers to create user interfaces for websites and mobile apps. It works in your browser, saves automatically online, allows many people to design together at the same time, and lets you design, prototype and share work with developers in one place. Example: If you want to design a banking app login page, you will do it inside Figma.
+
+2. CREATING A FIGMA ACCOUNT
+Go to www.figma.com, click "Get started for free", sign up with your email or Google account, select Student/Design when asked what you will use Figma for, and from your Dashboard click "New Design File" to start.
+
+3. UNDERSTANDING THE FIGMA WORKSPACE
+The workspace has 4 main parts:
+a) Toolbar (Top): Your toolbox. Contains Move tool, Frame tool, Shape tools, Pen tool, Text tool.
+b) Layers Panel (Left): A list of everything you have added. The top layer is in front, bottom is behind. If you can't find an element, check here.
+c) Canvas (Center): Your main table where you place all your designs. You can zoom and move around.
+d) Properties Panel (Right): Controls how things look. When you select an element, it shows its colour, size, font, spacing, etc.
+
+4. FRAMES AND LAYERS
+Frame: A container/boundary that represents the screen you are designing for. Example: iPhone 14 Frame (390 x 844), Desktop Frame (1440 x 1024). You must start with a Frame. Press A to see frame presets.
+Layers: Every element you add is a layer. Text is a layer, button is a layer, image is a layer. You can rename layers (double-click), group layers (Ctrl+G or Cmd+G), hide/lock layers, and drag to reorder. Think of it this way: Frame = House, Layers = Furniture inside the house.
+
+5. SHAPES AND TEXT TOOLS
+Shapes: Your building blocks. Rectangle (R) for cards, buttons, backgrounds. Ellipse (O) for profile pictures, dots. Line (L) for dividers. You can change corner radius in the right panel to turn a rectangle into a rounded button.
+Text Tool (T): Press T and click anywhere to add text for headings, paragraphs, button labels. In the right panel you can change Font Family (e.g., Inter, Roboto), Font Size (16px is common for body text), Font Weight (Bold for headings), and Line Height for readability.
+
+6. ADDING COLOURS AND IMAGES
+Colour has two properties:
+- Fill: The colour inside an element (e.g., blue button background)
+- Stroke: The border line around an element (e.g., grey border around input field)
+You can use Solid colours, Gradients, and save colours as Styles to reuse.
+Images: Drag and drop an image from your computer into Figma. If you drop it inside a shape, the shape will be filled with the image. Under Fill settings you can set the image to Fill, Fit, Crop, or Tile.
+
+7. ALIGNMENT AND POSITIONING
+Good UI is always neat.
+- Alignment: Select 2 or more elements to see alignment buttons (Align Left, Center, Right, Top, Middle, Bottom). Use this to center a logo on a login screen.
+- Smart Guides: Pink lines that appear when you move elements to help you align.
+- X, Y, W, H: On the right panel you can type exact position and size. Example: X:0, Y:0 means top-left corner.
+- Spacing: Use the Tidy up and distribution tools to make equal space between cards or menu items.
+
+8. INTRODUCTION TO AUTO LAYOUT
+Auto Layout makes elements arrange themselves automatically. Without it, if you add more text to a button, you must manually increase the button size. With it, the button grows by itself.
+What it does: Adds automatic padding inside an element, adds automatic gap between elements, and makes your design responsive.
+How to use it: Design a button - Add text "Login", select the text and press Shift+A. Figma will add Auto Layout around it. In the right panel you can set Direction (Horizontal or Vertical), Padding (e.g., 12px top/bottom, 24px left/right), and Gap (e.g., 8px between icon and text).
+Use it for: Buttons, navigation bars, cards, lists.
+
+SUMMARY: Figma is where UI ideas become visible. Always start with a Frame, use Shapes and Text to build, use Alignment to keep it neat, use Colours and Images to make it beautiful, and use Auto Layout to make it smart and responsive.
+
+CLASS EXERCISE: Create an iPhone 14 Frame, add big text "Welcome Back", add two rectangles as email and password input fields, create a Login button using Auto Layout, and align everything to the center.
+    
+    
+    `,
+  },
 
   // Frontend Development Lessons
 
@@ -516,8 +839,6 @@ Learning outcome: By completing this activity, you should understand the differe
 `,
   },
 
-
-
   // frontend-lesson-2
   // HTML Fundamentals
 
@@ -527,8 +848,7 @@ Learning outcome: By completing this activity, you should understand the differe
 
     title: "HTML Fundamentals",
 
-    description:
-      "Learn the basic structure of an HTML document.",
+    description: "Learn the basic structure of an HTML document.",
 
     type: "lesson",
 
@@ -1004,7 +1324,6 @@ Next Lesson: CSS Fundamentals — Learn How to Style Your HTML Webpages.
 `,
   },
 
-
   // frontend-lesson-3
   // CSS Fundamentals
 
@@ -1014,8 +1333,7 @@ Next Lesson: CSS Fundamentals — Learn How to Style Your HTML Webpages.
 
     title: "CSS Fundamentals",
 
-    description:
-      "Learn how CSS styles the structure created with HTML.",
+    description: "Learn how CSS styles the structure created with HTML.",
 
     type: "lesson",
 
@@ -1544,15 +1862,14 @@ Next Lesson: CSS Styling and Layout Practice — you will practise combining CSS
 `,
   },
 
-
-
   // frontend-lesson-4
   // CSS Styling and Layout Practice
   {
     id: "frontend-lesson-4",
     trackId: "track-frontend",
-    title:" CSS Styling and Layout Practice",
-    description: "Practice combining CSS properties to create attractive webpages and organise content into professional layouts.",
+    title: " CSS Styling and Layout Practice",
+    description:
+      "Practice combining CSS properties to create attractive webpages and organise content into professional layouts.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -2057,10 +2374,8 @@ You practised:
 You also built a responsive course listing page using HTML and CSS.
 
 
-    `
-
+    `,
   },
-
 
   // frontend-lesson-5
   // CSS Positioning and Navigation Bars
@@ -2068,7 +2383,8 @@ You also built a responsive course listing page using HTML and CSS.
     id: "frontend-lesson-5",
     trackId: "track-frontend",
     title: "css positioning and navigation bars",
-    description: "Learn how to position elements on a webpage and create navigation bars.",
+    description:
+      "Learn how to position elements on a webpage and create navigation bars.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -2668,19 +2984,17 @@ You have now covered the essential HTML and CSS foundations needed to begin lear
 
 Next Module: Introduction to JavaScript
 
-    `
-
-
+    `,
   },
-
 
   // frontend-lesson-6
   // introduction to javascript
-{
+  {
     id: "frontend-lesson-6",
     trackId: "track-frontend",
     title: "Introduction to JavaScript",
-    description: "Learn the basics of JavaScript, a programming language that adds interactivity to websites.",
+    description:
+      "Learn the basics of JavaScript, a programming language that adds interactivity to websites.",
     type: "lesson",
     duration: "15 minutes",
     published: true,
@@ -3182,23 +3496,22 @@ Next Lesson: JavaScript Variables, Data Types, and Operators
 
 In the next lesson, students will study these concepts in greater detail and practise using them to solve simple programming problems.
     
-    `
+    `,
+  },
 
-},
+  // frontend-lesson-7
+  // JavaScript Variables, Data Types, and Operators
 
-
-// frontend-lesson-7
-// JavaScript Variables, Data Types, and Operators
-
-{
-  id: "frontend-lesson-7",
-  trackId: "track-frontend",
-  title: "JavaScript Variables, Data Types, and Operators",
-  description: "Learn how to use variables, data types, and operators in JavaScript to store and manipulate information.",
-  type: "lesson",
-  duration: "15 minutes",
-  published: true,
-  content: `
+  {
+    id: "frontend-lesson-7",
+    trackId: "track-frontend",
+    title: "JavaScript Variables, Data Types, and Operators",
+    description:
+      "Learn how to use variables, data types, and operators in JavaScript to store and manipulate information.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
   JavaScript Variables, Data Types, and Operators
 
 
@@ -4008,24 +4321,21 @@ Variables allow JavaScript to store information. Data types describe the kind of
 
 Understanding these concepts will help you write more useful JavaScript programs and prepare you for the next topics in your frontend development journey.
   
-  `
+  `,
+  },
 
-},
-
-
-
-
-// frontend-lesson-8
-// JavaScript condition, loops and functions
-{
-  id: "frontend-lesson-8",
-  trackId: "track-frontend",
-  title: "JavaScript condition, loops and functions",
-  description: "Learn how to use conditionals, loops, and functions in JavaScript to control the flow of your programs and create reusable code.",
-  type: "lesson",
-  duration: "15 minutes",
-  published: true,
-  content: `
+  // frontend-lesson-8
+  // JavaScript condition, loops and functions
+  {
+    id: "frontend-lesson-8",
+    trackId: "track-frontend",
+    title: "JavaScript condition, loops and functions",
+    description:
+      "Learn how to use conditionals, loops, and functions in JavaScript to control the flow of your programs and create reusable code.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
   JavaScript Conditions, Loops, and Functions
 
 CodeRise Academy — Beginner Level
@@ -4967,35 +5277,28 @@ You have now covered the three foundational JavaScript lessons in this beginner 
 3. Conditions, Loops, and Functions.
 
 Recommended next step: Practise these concepts by building small projects before moving to DOM manipulation, which allows JavaScript to interact with HTML elements and change webpage content.
-  `
-
-},
+  `,
+  },
 
 // backend-lesson-1
 // Introduction to Backend Development
   {
     id: "backend-lesson-1",
     trackId: "track-backend",
-
     title: "Introduction to Backend Development",
-
     description:
       "Understand what happens behind the scenes when an application works.",
-
     type: "lesson",
-
     duration: "12 minutes",
-
     published: true,
-
     content: `
-# Introduction to Backend Development
+Introduction to Backend Development
 
 Backend development focuses on the server-side systems that support applications.
 
 When a user signs in to a website, backend systems can check their credentials and retrieve account information.
 
-## Common backend responsibilities
+Common backend responsibilities
 
 - Processing requests.
 - Validating data.
@@ -5004,17 +5307,653 @@ When a user signs in to a website, backend systems can check their credentials a
 - Providing APIs.
 - Supporting authentication.
 
-## What is a database?
+What is a database?
 
 A database stores information in an organized way.
 
 For example, a school system may store student profiles, courses, and examination results.
 
-## Practical activity
+Practical activity
 
 Think about a school management application.
 
 List five types of information the application might need to store.
+`,
+  },
+  {
+    id: "backend-lesson-2",
+    trackId: "track-backend",
+    title: "How the Web Works",
+    description:
+      "Learn how browsers, servers, and HTTP work together to deliver web applications.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+How the Web Works
+
+A web application usually involves a client and a server.
+
+The client
+
+- Usually a web browser or mobile application.
+- Sends requests to a server.
+- Displays the response to the user.
+
+The server
+
+- Receives client requests.
+- Processes application logic.
+- May communicate with a database.
+- Sends responses back to the client.
+
+Request and response cycle
+
+1. A user performs an action in the browser.
+2. The browser sends an HTTP request.
+3. The server processes the request.
+4. The server may retrieve or update database information.
+5. The server returns an HTTP response.
+6. The browser displays the result.
+
+What is HTTP?
+
+HTTP is a protocol used for communication between clients and servers.
+
+Practical activity
+
+Describe what happens when you open a website and submit a login form.
+`,
+  },
+  {
+    id: "backend-lesson-3",
+    trackId: "track-backend",
+    title: "Introduction to Node.js",
+    description:
+      "Understand how JavaScript can run outside the browser using Node.js.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+Introduction to Node.js
+
+Node.js is a runtime environment that allows JavaScript to run outside the browser.
+
+Backend developers use Node.js to build servers, APIs, and command-line tools.
+
+Why use Node.js?
+
+- Use JavaScript on the frontend and backend.
+- Build web servers and APIs.
+- Work with files and databases.
+- Use packages from the npm ecosystem.
+
+Your first Node.js program
+
+Create a file named app.js.
+
+Add this code:
+
+console.log("Hello from Node.js!");
+
+Run it in the terminal:
+
+node app.js
+
+Practical activity
+
+Create a JavaScript file that prints your name and a message about what you want to build with backend development.
+`,
+  },
+  {
+    id: "backend-lesson-4",
+    trackId: "track-backend",
+    title: "Getting Started with Express.js",
+    description:
+      "Build a simple web server using the Express framework.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Getting Started with Express.js
+
+Express.js is a web framework for Node.js.
+
+It helps developers create servers, define routes, and handle HTTP requests.
+
+Create a project
+
+1. Create a project folder.
+2. Open the folder in your terminal.
+3. Run npm init -y.
+4. Install Express with npm install express.
+
+Create a file named server.js.
+
+Example server
+
+const express = require("express");
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Welcome to my backend server!");
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000");
+});
+
+What is a route?
+
+A route defines how the server responds to a request for a particular path and HTTP method.
+
+Practical activity
+
+Add a route at /about that returns a message describing your application.
+`,
+  },
+  {
+    id: "backend-lesson-5",
+    trackId: "track-backend",
+    title: "HTTP Methods and Status Codes",
+    description:
+      "Learn common HTTP methods and response status codes used in APIs.",
+    type: "lesson",
+    duration: "18 minutes",
+    published: true,
+    content: `
+HTTP Methods and Status Codes
+
+HTTP methods describe the action a client wants to perform.
+
+Common HTTP methods
+
+- GET: Retrieve information.
+- POST: Create or submit information.
+- PUT: Replace an existing resource.
+- PATCH: Update part of a resource.
+- DELETE: Remove a resource.
+
+HTTP status codes
+
+- 200 OK: The request succeeded.
+- 201 Created: A resource was created.
+- 400 Bad Request: The request contains invalid data.
+- 401 Unauthorized: Authentication is required or invalid.
+- 403 Forbidden: The client is not allowed to perform the action.
+- 404 Not Found: The requested resource does not exist.
+- 500 Internal Server Error: The server encountered an unexpected problem.
+
+Practical activity
+
+For a student management API, decide which HTTP method you would use to:
+
+1. Retrieve all students.
+2. Add a new student.
+3. Update a student's email.
+4. Delete a student.
+`,
+  },
+  {
+    id: "backend-lesson-6",
+    trackId: "track-backend",
+    title: "Introduction to REST APIs",
+    description:
+      "Understand how APIs allow frontend applications to communicate with backend services.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Introduction to REST APIs
+
+An API is an interface that allows software systems to communicate.
+
+A REST API commonly exposes resources through URLs and uses HTTP methods to interact with them.
+
+Example student API endpoints
+
+- GET /api/students
+- GET /api/students/1
+- POST /api/students
+- PATCH /api/students/1
+- DELETE /api/students/1
+
+What is JSON?
+
+JSON is a common format for exchanging data between clients and servers.
+
+Example:
+
+{
+  "id": 1,
+  "name": "Ada",
+  "course": "Frontend Development"
+}
+
+Practical activity
+
+Design three API endpoints for a school application and describe what each endpoint does.
+`,
+  },
+  {
+    id: "backend-lesson-7",
+    trackId: "track-backend",
+    title: "Working with Request Data",
+    description:
+      "Learn how to read route parameters, query parameters, and request bodies in Express.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Working with Request Data
+
+Backend applications receive data from clients in different ways.
+
+Route parameters
+
+Route parameters identify a specific resource.
+
+Example:
+
+app.get("/students/:id", (req, res) => {
+  res.send(req.params.id);
+});
+
+For /students/5, the id parameter is "5".
+
+Query parameters
+
+Query parameters are often used for filtering or searching.
+
+Example URL:
+
+/students?course=physics
+
+Access query parameters with req.query.
+
+Request body
+
+POST and PATCH requests often send data in the request body.
+
+Enable JSON parsing:
+
+app.use(express.json());
+
+Then access submitted data using req.body.
+
+Practical activity
+
+Create a route that accepts a student's name in a JSON request body and returns a greeting containing that name.
+`,
+  },
+  {
+    id: "backend-lesson-8",
+    trackId: "track-backend",
+    title: "Databases and Data Modeling",
+    description:
+      "Learn what databases do and how to organize application data.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Databases and Data Modeling
+
+A database stores and organizes information so an application can retrieve and update it.
+
+Relational databases
+
+Relational databases store data in tables made up of rows and columns.
+
+Example students table
+
+- id
+- name
+- email
+- course_id
+
+Example courses table
+
+- id
+- title
+- duration
+
+Primary key
+
+A primary key uniquely identifies each row in a table.
+
+Foreign key
+
+A foreign key connects a row in one table to a row in another table.
+
+Why model data?
+
+- Reduce unnecessary duplication.
+- Keep information organized.
+- Represent relationships.
+- Support reliable queries.
+
+Practical activity
+
+Design a simple database for a school application with students and courses. List the fields for each table and identify their relationship.
+`,
+  },
+  {
+    id: "backend-lesson-9",
+    trackId: "track-backend",
+    title: "Introduction to PostgreSQL",
+    description:
+      "Learn the basics of PostgreSQL and how to create and query tables.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Introduction to PostgreSQL
+
+PostgreSQL is an open-source relational database management system.
+
+It stores structured data in tables and supports SQL for querying and managing data.
+
+Common SQL commands
+
+Create a table:
+
+CREATE TABLE students (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(150) UNIQUE
+);
+
+Insert a record:
+
+INSERT INTO students (name, email)
+VALUES ('Ada', 'ada@example.com');
+
+Retrieve records:
+
+SELECT * FROM students;
+
+Update a record:
+
+UPDATE students
+SET name = 'Ada Lovelace'
+WHERE id = 1;
+
+Delete a record:
+
+DELETE FROM students
+WHERE id = 1;
+
+Practical activity
+
+Create a students table and insert two sample student records. Use SELECT to retrieve them.
+`,
+  },
+  {
+    id: "backend-lesson-10",
+    trackId: "track-backend",
+    title: "Connecting Node.js to PostgreSQL",
+    description:
+      "Understand how a Node.js backend connects to a PostgreSQL database.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Connecting Node.js to PostgreSQL
+
+A backend server can connect to PostgreSQL to store and retrieve application data.
+
+The pg package
+
+The Node.js pg package provides a PostgreSQL client.
+
+Install it:
+
+npm install pg
+
+Connection configuration
+
+Database connection details commonly include:
+
+- Host
+- Port
+- Database name
+- Username
+- Password
+
+Keep database credentials in environment variables rather than frontend code.
+
+Example connection
+
+const { Pool } = require("pg");
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+});
+
+A query
+
+const result = await pool.query(
+  "SELECT * FROM students"
+);
+
+console.log(result.rows);
+
+Important security practice
+
+Use parameterized queries when inserting or searching for user-provided data. Avoid building SQL queries by concatenating raw user input.
+
+Practical activity
+
+Connect your Express application to a local PostgreSQL database and retrieve a list of students.
+`,
+  },
+  {
+    id: "backend-lesson-11",
+    trackId: "track-backend",
+    title: "Input Validation and Error Handling",
+    description:
+      "Learn how to validate incoming data and respond safely to errors.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Input Validation and Error Handling
+
+Input validation checks whether incoming data meets the application's requirements.
+
+Examples of validation
+
+- A name must not be empty.
+- An email must have a valid format.
+- A password must meet minimum requirements.
+- A course ID must refer to an existing course.
+
+Why validate input?
+
+- Prevent invalid records.
+- Improve user experience.
+- Protect application logic.
+- Reduce unexpected errors.
+
+Error handling
+
+A backend should handle errors and return appropriate responses instead of crashing unexpectedly.
+
+Example:
+
+app.get("/students", async (req, res) => {
+  try {
+    // Retrieve students here
+    res.json([]);
+  } catch (error) {
+    res.status(500).json({
+      message: "An unexpected error occurred."
+    });
+  }
+});
+
+Practical activity
+
+Add validation to a student creation route so that it rejects requests with a missing name.
+`,
+  },
+  {
+    id: "backend-lesson-12",
+    trackId: "track-backend",
+    title: "Authentication and Authorization",
+    description:
+      "Understand how applications verify users and control access to resources.",
+    type: "lesson",
+    duration: "25 minutes",
+    published: true,
+    content: `
+Authentication and Authorization
+
+Authentication verifies who a user is.
+
+Authorization determines what an authenticated user is allowed to do.
+
+Authentication examples
+
+- Signing in with an email and password.
+- Verifying a session.
+- Validating an access token.
+
+Authorization examples
+
+- A student can view their own profile.
+- An instructor can manage assigned courses.
+- An administrator can manage users.
+
+Password security
+
+Passwords should never be stored as plain text.
+
+Use a suitable password-hashing algorithm and verify passwords securely.
+
+Practical activity
+
+For a school management application, list three user roles and describe what each role should be allowed to do.
+`,
+  },
+  {
+    id: "backend-lesson-13",
+    trackId: "track-backend",
+    title: "Environment Variables and Configuration",
+    description:
+      "Learn how to manage configuration and keep sensitive credentials out of source code.",
+    type: "lesson",
+    duration: "15 minutes",
+    published: true,
+    content: `
+Environment Variables and Configuration
+
+Applications need configuration such as database URLs, API keys, and server ports.
+
+Environment variables allow configuration to be supplied outside the source code.
+
+Using a .env file
+
+A local .env file may contain:
+
+PORT=3000
+DATABASE_URL=your_database_connection_string
+
+Load environment variables with a suitable package such as dotenv.
+
+Security practices
+
+- Do not commit .env files containing secrets.
+- Add .env to .gitignore.
+- Keep secrets on the backend.
+- Use separate configuration for development and production.
+
+Practical activity
+
+Create a .env file for your local backend and read the PORT value in your server.
+`,
+  },
+  {
+    id: "backend-lesson-14",
+    trackId: "track-backend",
+    title: "Testing Backend APIs",
+    description:
+      "Learn how to test API endpoints and verify expected responses.",
+    type: "lesson",
+    duration: "20 minutes",
+    published: true,
+    content: `
+Testing Backend APIs
+
+API testing checks whether backend endpoints behave as expected.
+
+What to test
+
+- Successful requests.
+- Missing or invalid input.
+- Unauthorized requests.
+- Resources that do not exist.
+- Database or server errors.
+
+Manual testing
+
+Tools such as Postman or an HTTP client can send requests to your API.
+
+For each endpoint, check:
+
+- HTTP status code.
+- Response body.
+- Data correctness.
+- Error behavior.
+
+Practical activity
+
+Test your student creation endpoint with valid data and with a missing name. Compare the responses.
+`,
+  },
+  {
+    id: "backend-lesson-15",
+    trackId: "track-backend",
+    title: "Building a Student Management API",
+    description:
+      "Combine Express, REST APIs, and PostgreSQL to build a simple backend project.",
+    type: "lesson",
+    duration: "30 minutes",
+    published: true,
+    content: `
+Building a Student Management API
+
+In this project, you will build a backend API for managing students.
+
+Core features
+
+- Retrieve all students.
+- Retrieve a student by ID.
+- Create a student.
+- Update a student's information.
+- Delete a student.
+
+Suggested endpoints
+
+- GET /api/students
+- GET /api/students/:id
+- POST /api/students
+- PATCH /api/students/:id
+- DELETE /api/students/:id
+
+Project steps
+
+1. Create an Express server.
+2. Connect the server to PostgreSQL.
+3. Create a students table.
+4. Implement the API endpoints.
+5. Validate incoming data.
+6. Handle errors.
+7. Test each endpoint.
+
+Practical activity
+
+Build and test the API. Then describe how your frontend could use each endpoint.
 `,
   },
 ];

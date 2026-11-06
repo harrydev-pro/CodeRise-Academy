@@ -9,6 +9,7 @@ import { initialTracks } from "../../data/initialTracks";
 import { initialLessons } from "../../data/initialLessons";
 import { initialQuizzes } from "../../data/initialQuizzes";
 import { formatCurrency } from "../../utils/formatCurrency";
+import AdminLearningManager from "./AdminLearningManager";
 
 const config = {
   users: { title: "Manage Users", key: STORAGE_KEYS.users, columns: ["fullName", "email", "role", "status"], label: "Users" },
@@ -18,7 +19,7 @@ const config = {
   "video-management": { title: "Video Courses", key: STORAGE_KEYS.videoCourses, columns: ["title", "category", "price", "published"], label: "Video Course" },
   programs: { title: "Manage Programs", key: STORAGE_KEYS.programs, columns: ["title", "category", "duration", "promotionalPrice", "published"], label: "Program" },
   pricing: { title: "Program Pricing", key: STORAGE_KEYS.programs, columns: ["title", "originalPrice", "promotionalPrice", "published"], label: "Pricing" },
-  quizzes: { title: "Manage Quizzes", key: STORAGE_KEYS.quizzes, columns: ["title", "trackId", "questionCount"], label: "Quiz" },
+  quizzes: { title: "Manage Quizzes", key: STORAGE_KEYS.quizzes, columns: ["title", "lessonId", "questionCount", "durationMinutes", "published"], label: "Quiz" },
   submissions: { title: "Project Submissions", key: STORAGE_KEYS.submissions, columns: ["projectTitle", "studentName", "status", "submittedAt"], label: "Submission" },
   applications: { title: "Program Applications", key: STORAGE_KEYS.applications, columns: ["fullName", "programTitle", "submittedAt", "status"], label: "Application" },
   settings: { title: "Settings", key: STORAGE_KEYS.settings, columns: [], label: "Setting" },
@@ -42,6 +43,7 @@ export default function AdminPage() {
   const current = config[section];
   const [, setRefresh] = useState(0);
   const [query, setQuery] = useState("");
+  if (section === "lessons" || section === "quizzes") return <AdminLearningManager type={section} />;
   const rows = (() => {
     if (section === "overview" || !current) return [];
     const defaults = section === "programs" || section === "pricing" ? initialPrograms

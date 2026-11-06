@@ -54,65 +54,229 @@
   }
 }
 
-/* VIDEO COURSES GRID - RESPONSIVE FIX */
-.video-course-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  padding: 20px;
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+/* REMOVE CONTAINER PADDING */
+.page-container.application-page {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
-.video-course-card {
-  background: #fff;
-  border: 1px solid #e4e4e7;
+/* BACK LINK - Keep it above with padding */
+.back-link,
+.back-link-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 20px 24px 0;
+  color: #475569;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+/* HERO - NOW TOUCHES EDGES */
+.application-hero,
+.application-heading {
+  background: radial-gradient(
+  120% 120% at 80% 20%,
+  #2d487f 0%,
+  #1a3564 35%,
+  #17234b 70%,
+  #0f172a 100%
+);
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  border-radius: 5px !important; /* remove rounded corners */
+  padding: 32px 24px 50px;
+}
+
+.eyebrow-hero {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.application-heading-icon {
+  background: rgba(255,255,255,0.18);
+  width: 48px;
+  height: 48px;
   border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  margin-bottom: 12px;
 }
 
-.video-course-cover {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-  background: #f4f4f5;
+.application-heading h1 {
+  color: #ffff;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.05;
+  margin: 0 0 12px 0;
 }
 
-.video-course-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.application-heading p {
+  color: #dbeafe;
+  font-size: 16px;
+  line-height: 1.5;
+  max-width: 420px;
+  margin: 0;
 }
 
-.video-course-body {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  flex: 1;
-}
-
-/* TABLET */
-@media (max-width: 1024px) {
-  .video-course-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* MOBILE - THIS IS THE FIX FOR YOUR SCREENSHOT */
+/* MOBILE FIX - STACK VERTICALLY */
 @media (max-width: 768px) {
-  .video-course-grid {
-    grid-template-columns: 1fr !important;
-    padding: 16px;
-    gap: 20px;
+  .application-heading {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 24px 16px !important;
   }
-  
-  .video-course-card {
-    width: 100%;
+  .application-heading h1 {
+    font-size: 32px !important;
+    max-width: 100% !important;
+    line-height: 1.15 !important;
+  }
+  .application-heading p {
+    max-width: 100% !important;
+    font-size: 14px !important;
+  }
+  .eyebrow, 
+  .application-heading span {
+    font-size: 10px !important;
   }
 }
+
+
+/* DESKTOP - keep the card as a side popup */
+.application-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  max-width: 1100px;
+  margin-bottom: 100px;
+}
+
+.before-you-apply,
+[class*="before-you-apply"],
+[class*="BeforeYouApply"] {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  height: fit-content;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* MOBILE FIX - THIS FIXES YOUR SCREENSHOT_325 */
+@media (max-width: 768px) {
+  .application-layout {
+    grid-template-columns: 1fr !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 16px !important;
+    gap: 16px !important;
+  }
+
+  /* Make the "Before you apply" card NOT absolute and show at top */
+.before-you-apply,
+[class*="before-you-apply"] {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  transform: none !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 0 16px 0 !important;
+  z-index: 1 !important;
+  order: -1 !important; /* this shows it before the form */
+}
+
+.application-form {
+  order: 1 !important;
+}
+
+/* MOBILE LAYOUT MUST BE FLEX COLUMN FOR ORDER TO WORK */
+@media (max-width: 768px) {
+  .application-layout {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}
+
+  .form-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .form-field,
+  .application-form-section input,
+  .application-form-section select {
+    width: 100% !important;
+  }
+
+  #preferredContact {
+    width: 100% !important;
+  }
+}
+
+/* MOBILE - all scroll up together */
+@media (max-width: 768px) {
+  .application-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+  .before-you-apply {
+    position: static !important;
+    order: -1 !important;
+  }
+  .application-form {
+    position: static !important;
+    overflow: visible !important;
+  }
+  body, html {
+    overflow: auto !important;
+    height: auto !important;
+  }
+}
+
+/* DESKTOP - Push form + Before you apply down */
+.application-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 40px auto 120px auto !important; /* 40px top gap, 120px bottom gap */
+  padding: 0 24px 60px;
+  align-items: start;
+}
+
+/* Both cards move down together */
+.application-form-section,
+.before-you-apply {
+  margin-top: 10px;
+}
+
+/* MOBILE - also move down a bit */
+@media (max-width: 768px) {
+  .application-layout {
+    margin-top: 20px !important;
+    margin-bottom: 100px !important;
+    padding-bottom: 100px !important;
+  }
+}
+

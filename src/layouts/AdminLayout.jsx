@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -15,9 +16,15 @@ export default function AdminLayout() {
   if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
   if (user.role !== "instructor") return <Navigate to="/dashboard" replace />;
+import { adminNavigation } from "../config/navigation";
+
+export default function AdminLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { pathname } = useLocation();
+  const pageTitle = adminNavigation.find((item) => item.path === pathname)?.label || "Administration";
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="admin-layout min-h-screen bg-surface">
       <AdminSidebar
         open={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
@@ -25,7 +32,7 @@ export default function AdminLayout() {
 
       <div className="min-h-screen lg:pl-72">
         <AdminHeader
-          title="CodeRise Administration"
+          title={pageTitle}
           onMenuClick={() => setSidebarOpen(true)}
         />
 

@@ -19,7 +19,7 @@ export default function ProjectDetails() {
 
   if (!track) {
     return (
-      <main className="page-container">
+      <main className="page-container free-learning-shell">
         <EmptyState
           title="Track not found"
           description="Choose an available learning track to view its projects."
@@ -34,7 +34,7 @@ export default function ProjectDetails() {
   }
 
   return (
-    <main className="page-container">
+    <main className="page-container free-learning-shell">
       <Link
         to={`/free-learning/${trackId}`}
         className="back-link"

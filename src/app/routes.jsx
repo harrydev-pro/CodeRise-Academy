@@ -43,6 +43,8 @@ import PurchaseConfirmation from "../pages/video-courses/PurchaseConfirmation";
 
 import ApplicationForm from "../pages/applications/ApplicationForm";
 import ApplicationConfirmation from "../pages/applications/ApplicationConfirmation";
+import AdminOverview from "../pages/admin/AdminOverview";
+import AdminPage from "../pages/admin/AdminPage";
 
 export default function AppRoutes() {
   return (
@@ -91,18 +93,18 @@ export default function AppRoutes() {
       </Route>
 
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<div>Admin dashboard placeholder</div>} />
-        <Route path="users" element={<div>Admin users</div>} />
-        <Route path="activity" element={<div>Admin activity</div>} />
-        <Route path="courses" element={<div>Admin courses</div>} />
-        <Route path="lessons" element={<div>Admin lessons</div>} />
-        <Route path="video-management" element={<div>Admin videos</div>} />
-        <Route path="programs" element={<div>Admin programs</div>} />
-        <Route path="pricing" element={<div>Admin pricing</div>} />
-        <Route path="quizzes" element={<div>Admin quizzes</div>} />
-        <Route path="submissions" element={<div>Admin submissions</div>} />
-        <Route path="applications" element={<div>Admin applications</div>} />
-        <Route path="settings" element={<div>Admin settings</div>} />
+        <Route index element={<AdminOverview />} />
+        <Route path="users" element={<AdminPage />} />
+        <Route path="activity" element={<AdminPage />} />
+        <Route path="courses" element={<AdminPage />} />
+        <Route path="lessons" element={<AdminPage />} />
+        <Route path="video-management" element={<AdminPage />} />
+        <Route path="programs" element={<AdminPage />} />
+        <Route path="pricing" element={<AdminPage />} />
+        <Route path="quizzes" element={<AdminPage />} />
+        <Route path="submissions" element={<AdminPage />} />
+        <Route path="applications" element={<AdminPage />} />
+        <Route path="settings" element={<AdminPage />} />
       </Route>
 
       <Route path="/student" element={<Navigate to="/dashboard" replace />} />
