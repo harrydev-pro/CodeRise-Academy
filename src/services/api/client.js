@@ -1,6 +1,8 @@
+const PRODUCTION_API_URL = 'https://coderise-academy-backend667-1.onrender.com';
+
 export const API_BASE_URL = import.meta.env.DEV
   ? ''
-  : (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+  : (import.meta.env.VITE_API_URL || PRODUCTION_API_URL).replace(/\/+$/, '');
 
 let csrfToken = null;
 
