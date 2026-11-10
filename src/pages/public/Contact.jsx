@@ -46,16 +46,16 @@ export default function Contact() {
 
     const nextErrors = {};
 
-    if (!form.name.trim()) {
-      nextErrors.name = "Enter your name.";
+    if (form.name.trim().length < 3) {
+      nextErrors.name = "Enter your name (at least 3 characters).";
     }
 
     if (!validateEmail(form.email)) {
       nextErrors.email = "Enter a valid email address.";
     }
 
-    if (!form.subject.trim()) {
-      nextErrors.subject = "Enter a subject.";
+    if (form.subject.trim().length < 3) {
+      nextErrors.subject = "Enter a subject (at least 3 characters).";
     }
 
     if (form.message.trim().length < 10) {
@@ -89,7 +89,7 @@ export default function Contact() {
   }
 
   return (
-    <main>
+    <div>
       <section className="page-hero">
         <div className="container page-hero-content">
           <span className="eyebrow">CONTACT US</span>
@@ -125,8 +125,9 @@ export default function Contact() {
                 <h3>Email support</h3>
 
                 <p>
-                  Connect an official CodeRise Academy email address
-                  before publishing the live contact service.
+                  Messages sent through this form go straight to the
+                  academy team, and we reply to the email address you
+                  provide.
                 </p>
               </div>
             </div>
@@ -226,6 +227,6 @@ export default function Contact() {
           </div>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

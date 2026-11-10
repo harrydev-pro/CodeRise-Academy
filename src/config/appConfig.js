@@ -19,7 +19,7 @@ export const APP_CONFIG = {
     register: "/register",
     login: "/login",
 
-    studentDashboard: "/student/dashboard",
+    studentDashboard: "/dashboard",
     freeLearning: "/free-learning",
     videoCourses: "/video-courses",
 

@@ -29,7 +29,8 @@ export const useAuthStore = create((set, get) => ({
 
   initialize: async () => {
     if (get().initializing) return;
-    set({ loading: true, initializing: true, authError: null });
+    // Keep showing the page while refreshing an already signed-in account.
+    set({ loading: !get().user, initializing: true, authError: null });
     try {
       const result = await apiClient('/auth/me');
       if (!result.ok) {
@@ -84,11 +85,11 @@ export const useAuthStore = create((set, get) => ({
     }
   },
 
-  updateProfile: async ({ fullName, phone }) => {
+  updateProfile: async ({ fullName, phone, avatarUrl }) => {
     try {
       const result = await apiClient('/auth/me', {
         method: 'PATCH',
-        body: JSON.stringify({ name: fullName, phone_number: phone }),
+        body: JSON.stringify({ name: fullName, phone_number: phone, ...(avatarUrl === undefined ? {} : { avatar_url: avatarUrl }) }),
       });
       if (!result.ok) return resultFailure(result, 'Unable to update your profile.');
       const user = getUser(result);

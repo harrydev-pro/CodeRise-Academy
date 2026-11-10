@@ -15,6 +15,7 @@ import { validateApplication } from "../../features/applications/applicationVali
 import { useApiResource } from "../../hooks/useApiResource";
 
 import { formatCurrency } from "../../utils/formatCurrency";
+import { getProgramPrice, hasProgramDiscount } from "../../utils/programPrice";
 
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button";
@@ -29,13 +30,21 @@ const initialForm = {
   programId: "",
   skillLevel: "",
   experience: "",
+  learningGoals: "",
   reason: "",
   preferredContact: "WhatsApp",
   acceptedTerms: false,
 };
 
+// The form's starting values come from the signed-in account. When the page is opened
+// directly, the account finishes loading after the first render, so the form is rebuilt
+// once it is known; that pre-fills the student's name and email.
 export default function ApplicationForm() {
   const { user } = useAuth();
+  return <ApplicationFormContent key={user?.id ?? "guest"} user={user} />;
+}
+
+function ApplicationFormContent({ user }) {
   const navigate = useNavigate();
   const { programId: requestedProgramId } = useParams();
 
@@ -56,7 +65,7 @@ export default function ApplicationForm() {
   const selectedProgram = programs.find(
     (program) => program.id === form.programId
   );
-  const currentPrice = selectedProgram?.promotionalPrice ?? selectedProgram?.originalPrice ?? 0;
+  const currentPrice = getProgramPrice(selectedProgram);
 
   function updateField(event) {
     const { name, value, type, checked } = event.target;
@@ -112,6 +121,7 @@ export default function ApplicationForm() {
 
         skillLevel: form.skillLevel,
         experience: form.experience.trim(),
+        learningGoals: form.learningGoals.trim(),
         reason: form.reason.trim(),
         preferredContact: form.preferredContact,
 
@@ -122,7 +132,7 @@ export default function ApplicationForm() {
         ...savedApplication,
         duration: selectedProgram.duration || "",
         originalPrice: Number(selectedProgram.originalPrice) || 0,
-        promoPrice: Number(selectedProgram.promotionalPrice ?? selectedProgram.originalPrice) || 0,
+        promotionalPrice: selectedProgram.promotionalPrice ?? null,
       };
       navigate(`/application-confirmation/${application.id}`, {
         replace: true,
@@ -135,12 +145,12 @@ export default function ApplicationForm() {
     }
   }
 
-  if (programsResource.loading) return <main className="page-container"><Loader label="Loading programs…" /></main>;
-  if (programsResource.error) return <main className="page-container"><ErrorMessage message={programsResource.error} onRetry={programsResource.reload} /></main>;
+  if (programsResource.loading) return <div className="page-container"><Loader label="Loading programs…" /></div>;
+  if (programsResource.error) return <div className="page-container"><ErrorMessage message={programsResource.error} onRetry={programsResource.reload} /></div>;
 
   if (programs.length === 0) {
     return (
-      <main className="page-container">
+      <div className="page-container">
         <EmptyState
           title="No programs available"
           description="There are currently no published training programs to apply for."
@@ -150,12 +160,12 @@ export default function ApplicationForm() {
             </Link>
           }
         />
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="page-container application-page">
+    <div className="page-container application-page">
       <Link to="/programs" className="back-link">
         <ArrowLeft size={17} />
         Browse training programs
@@ -299,7 +309,7 @@ export default function ApplicationForm() {
                 <div className="selected-program-price">
                   <strong>{formatCurrency(currentPrice)}</strong>
 
-                  {selectedProgram.promotionalPrice != null && selectedProgram.originalPrice > selectedProgram.promotionalPrice && (
+                  {hasProgramDiscount(selectedProgram) && (
                     <del>
                       {formatCurrency(selectedProgram.originalPrice)}
                     </del>
@@ -355,6 +365,28 @@ export default function ApplicationForm() {
                 <h2>Your learning goals</h2>
                 <p>Help us understand why you want to join.</p>
               </div>
+            </div>
+
+            <div className="form-field">
+              <label htmlFor="learningGoals">
+                What are your learning goals? *
+              </label>
+
+              <textarea
+                id="learningGoals"
+                name="learningGoals"
+                value={form.learningGoals}
+                onChange={updateField}
+                rows={3}
+                maxLength={2000}
+                placeholder="For example: build my own portfolio website and get a junior developer role."
+                aria-invalid={Boolean(errors.learningGoals)}
+                required
+              />
+
+              {errors.learningGoals && (
+                <span className="field-error">{errors.learningGoals}</span>
+              )}
             </div>
 
             <div className="form-field">
@@ -449,6 +481,6 @@ export default function ApplicationForm() {
           </div>
         </aside>
       </div>
-    </main>
+    </div>
   );
 }

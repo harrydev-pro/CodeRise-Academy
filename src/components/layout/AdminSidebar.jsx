@@ -28,7 +28,7 @@ export default function AdminSidebar({
 
       <aside
         className={[
-          "admin-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col text-white",
+          "admin-sidebar app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col text-white",
           "transition-transform duration-200 lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         ].join(" ")}

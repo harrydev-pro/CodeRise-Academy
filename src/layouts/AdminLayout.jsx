@@ -7,6 +7,7 @@ import AdminHeader from "../components/layout/AdminHeader";
 import { useAuth } from "../hooks/useAuth";
 import Loader from "../components/common/Loader";
 import { adminNavigation } from "../config/navigation";
+import { isAdminRole } from "../utils/roles";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -21,7 +22,7 @@ export default function AdminLayout() {
 
   if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
-  if (user.role !== "instructor") return <Navigate to="/dashboard" replace />;
+  if (!isAdminRole(user.role)) return <Navigate to="/dashboard" replace />;
 
   return (
     <div className="admin-layout min-h-screen">

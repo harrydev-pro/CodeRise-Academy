@@ -40,7 +40,7 @@ const values = [
 
 export default function About() {
   return (
-    <main>
+    <div>
       <section className="page-hero">
         <div className="container page-hero-content">
           <span className="eyebrow">ABOUT CODERISE ACADEMY</span>
@@ -179,6 +179,6 @@ export default function About() {
           </Button>
         </div>
       </section>
-    </main>
+    </div>
   );
 }

@@ -56,7 +56,9 @@ export default function PublicFooter() {
               <ArrowUpRight size={15} />
             </Link>
 
-            <p>Support details will be added here.</p>
+            <Link className="hover:text-white" to="/programs">
+              Program enquiries
+            </Link>
           </div>
         </div>
       </div>

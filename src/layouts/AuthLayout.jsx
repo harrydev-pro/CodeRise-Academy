@@ -6,7 +6,7 @@ export default function AuthLayout() {
     <main className="auth-layout">
       <aside className="auth-aside">
         <Link to="/" className="auth-brand"><GraduationCap size={19}/> CodeRise Academy</Link>
-        <div className="auth-aside-copy"><span className="auth-aside-kicker"><Sparkles size={15}/> YOUR FUTURE STARTS HERE</span><h1>Grow your skills.<br/><span>Shape your future.</span></h1><p>Learn from practical lessons, build real projects, and take the next step in your technology journey.</p></div>
+        <div className="auth-aside-copy"><span className="auth-aside-kicker"><Sparkles size={15}/> YOUR FUTURE STARTS HERE</span><p className="auth-aside-title">Grow your skills.<br/><span>Shape your future.</span></p><p>Learn from practical lessons, build real projects, and take the next step in your technology journey.</p></div>
         <div className="auth-art"><div className="auth-art-window"><div><i/><i/><i/></div><Code2 size={74}/><span>build( your_future )</span></div><div className="auth-art-orb">✦</div></div>
         <p className="auth-aside-foot">Learn. Build. Grow.</p>
       </aside>

@@ -18,14 +18,24 @@ npm run build
 
 ## Backend API
 
-During local development, Vite proxies `/auth` requests to `http://localhost:3000`, avoiding browser CORS checks. Set `VITE_API_URL` in a local `.env` file to use a different backend base URL. In production, configure `VITE_API_URL` to the public HTTPS API origin.
+The browser always calls the API on the website's own origin under `/api` (see `src/services/api/client.js`).
 
-Authentication uses the separately deployed CodeRise Auth Service. In production, configure `VITE_API_URL` to the public HTTPS API origin. `VITE_` settings are compiled into browser code and must contain only public configuration; database, SMTP, signing, and Redis credentials belong in the backend environment. The browser receives an HttpOnly session cookie and keeps no access token in local storage. Mutating auth requests include a CSRF token.
+- **Production (Vercel):** `vercel.json` rewrites `/api/*` to the Render backend and removes the `/api` prefix. Because the browser only ever talks to the Vercel domain, the HttpOnly session cookie and CSRF cookie are first-party. Safari on iPhone blocks third-party cookies, so do not point the frontend directly at the `onrender.com` URL. Leave `VITE_API_BASE_URL` unset in Vercel. If the backend URL changes, update the destination in `vercel.json`.
+- **Local development:** `npm run dev` forwards `/api/*` to `VITE_DEV_API_URL` (default `http://localhost:3000`).
+
+`VITE_` settings are compiled into browser code and must contain only public configuration; database, SMTP, signing, and Redis credentials belong in the backend environment. The browser keeps no access token in local storage, and mutating requests include a CSRF token.
+
+`vercel.json` also sends every non-file path to `index.html`, so refreshing a page such as `/dashboard` works.
 
 ## Route groups
 
-- Public: `/`, `/about`, `/contact`, `/programs`, `/video-courses`
+- Public: `/`, `/about`, `/contact`, `/programs`, `/programs/:programId`, `/video-courses`, `/video-courses/:courseId`, `/apply/:programId`
 - Authentication: `/login`, `/register`, `/verify-email`, `/forgot-password`, `/reset-password`
-- Student: `/dashboard`, `/profile`, `/my-learning`, `/my-applications`, `/my-submissions`, `/my-results`, `/my-purchases`, `/notifications`
-- Learning and course details use parameterized paths under `/free-learning/:trackId` and `/video-courses/:courseId`.
-- Administration pages are under `/admin`.
+- Student: `/dashboard`, `/profile`, `/my-learning`, `/my-applications`, `/my-submissions` (My Projects), `/my-results` (Quiz History), `/my-video-courses`, `/notifications`
+- Free Learning: `/free-learning`, `/free-learning/:trackId`, `/free-learning/:trackId/lessons/:topicId`, `/free-learning/:trackId/quizzes/:quizId` (+ `/results`), `/free-learning/:trackId/projects` (+ `/:projectId`, `/:projectId/submit`)
+- Video lessons: `/video-courses/:courseId/lessons/:lessonId`
+- Administration (admins only, loaded on demand): `/admin` (analytics), `/admin/users`, `/admin/applications`, `/admin/programs`, `/admin/learning` (tracks, levels, topics, notes, quizzes, question import), `/admin/projects`, `/admin/submissions`, `/admin/video-courses`, `/admin/reports`, `/admin/activity`, `/admin/notifications`
+
+## Deployment
+
+See `DEPLOYMENT.md` in the backend project for the full, ordered deployment steps.

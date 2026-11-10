@@ -5,11 +5,12 @@ import { Menu, X, GraduationCap } from "lucide-react";
 import Button from "../common/Button";
 import { publicNavigation } from "../../config/navigation";
 import { useAuth } from "../../hooks/useAuth";
+import { homePathFor } from "../../utils/roles";
 
 export default function PublicNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isAuthenticated, user } = useAuth();
-  const dashboardPath = user?.role === "instructor" ? "/admin" : "/dashboard";
+  const dashboardPath = homePathFor(user);
 
   const linkClass = ({ isActive }) =>
     [

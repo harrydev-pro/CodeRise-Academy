@@ -10,14 +10,19 @@ import {
 } from "lucide-react";
 
 import { useApiResource } from "../../hooks/useApiResource";
+import { useAuth } from "../../hooks/useAuth";
 import Loader from "../../components/common/Loader";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
 
 import { formatCurrency } from "../../utils/formatCurrency";
+import { formatLongDuration } from "../../utils/formatDuration";
 import EmptyState from "../../components/common/EmptyState";
 
 export default function VideoCourseCatalog() {
   const { data: courses, loading, error, reload } = useApiResource("/catalog/video-courses", "courses");
+  const { user } = useAuth();
+  const myCourses = useApiResource("/video/my-courses", "courses", undefined, user?.role === "student");
+  const accessByCourse = new Map(myCourses.data.map((item) => [item.course.id, item]));
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -49,7 +54,7 @@ export default function VideoCourseCatalog() {
   });
 
   return (
-    <main className="video-catalog-page">
+    <div className="video-catalog-page">
       <section className="page-hero video-catalog-hero">
         <div className="container page-hero-content ">
           <span className="eyebrow">CODERISE VIDEO ACADEMY</span>
@@ -155,6 +160,10 @@ export default function VideoCourseCatalog() {
                   <span className="video-course-badge ">
                     {course.level || "All levels"}
                   </span>
+
+                  {course.isDemo && (
+                    <span className="demo-badge">Demo content</span>
+                  )}
                 </div>
 
                 <div className="video-course-body">
@@ -162,12 +171,21 @@ export default function VideoCourseCatalog() {
                     {course.category || course.track || "Technology"}
                   </span>
 
+                  {accessByCourse.get(course.id)?.enrollment?.status === "active" && (
+                    <span className="ui-pill green">Enrolled · {accessByCourse.get(course.id).progress.percentage}% complete</span>
+                  )}
+                  {accessByCourse.get(course.id)?.enrollment?.status === "pending" && (
+                    <span className="ui-pill amber">Access requested</span>
+                  )}
+
                   <h3 className="text-2xl font-bold">{course.title}</h3>
 
                   <p className="">
                     {course.description ||
                       "Learn essential concepts through guided video lessons."}
                   </p>
+
+                  <p className="muted-text">{course.lessonCount} lessons</p>
 
                   <div className="video-course-meta ">
                     <span className="flex items-center gap-1 text-[16px] text-muted-foreground">
@@ -179,9 +197,9 @@ export default function VideoCourseCatalog() {
                       <div className="course-price">
                         {Number(course.price) === 0 ? "Free" : formatCurrency(course.price)}
                       </div>
-                      {course.duration && <span className="video-course-duration">
+                      {(course.duration || course.totalDurationSeconds > 0) && <span className="video-course-duration">
                         <Clock3 size={20} aria-hidden="true" />
-                        {course.duration}
+                        {course.duration || formatLongDuration(course.totalDurationSeconds)}
                       </span>}
                     </div>
                   </div>
@@ -191,7 +209,7 @@ export default function VideoCourseCatalog() {
                       to={`/video-courses/${course.id}`}
                       className="text-link  flex text-center items-center "
                     >
-                     <span>Explore course</span> <ArrowRight size={18} />
+                     <span>{accessByCourse.get(course.id)?.enrollment?.status === "active" ? "Continue course" : "View course"}</span> <ArrowRight size={18} />
                     </Link>
                   </div>
                 </div>
@@ -214,6 +232,6 @@ export default function VideoCourseCatalog() {
           View academy programs
         </Link>
       </section>
-    </main>
+    </div>
   );
 }

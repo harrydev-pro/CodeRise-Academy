@@ -15,6 +15,7 @@ import { useApiResource } from "../../hooks/useApiResource";
 import Loader from "../../components/common/Loader";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { getProgramPrice, hasProgramDiscount } from "../../utils/programPrice";
 
 const learningAreas = [
   {
@@ -235,20 +236,19 @@ export default function Home() {
                   <p>{program.description}</p>
 
                   <div className="program-price">
-                    {/* <strong> */}
-                      {/* {formatCurrency(program.promotionalPrice)} */}
-                    {/* </strong> */}
-
-                    <strong>{formatCurrency(program.originalPrice)}</strong>
+                    <strong>{formatCurrency(getProgramPrice(program))}</strong>
+                    {hasProgramDiscount(program) && <del>{formatCurrency(program.originalPrice)}</del>}
                   </div>
 
-                  <p className="program-duration">
-                    {program.duration}
-                  </p>
+                  {program.duration && (
+                    <p className="program-duration">
+                      {program.duration}
+                    </p>
+                  )}
 
                   <Button
                     as={Link}
-                    to={`/apply/${program.id}`}
+                    to={`/programs/${program.id}`}
                     fullWidth
                   >
                     Apply Now <ArrowRight size={17} />
