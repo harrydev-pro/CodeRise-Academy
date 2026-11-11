@@ -1,14 +1,13 @@
-// All API requests go to the same origin as the website under /api. Vercel (vercel.json)
-// and the Vite dev server (vite.config.js) forward /api/* to the backend. Keeping the API
-// on the website's own origin makes the session and CSRF cookies first-party, which Safari
-// on iPhone requires. Only override VITE_API_BASE_URL if you know the cookies will still be
-// first-party (for example a same-site api.yourdomain.com).
-export const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/+$/, '');
+// Keep API requests on the website's origin. Vercel and Vite forward /api to
+// the backend, keeping session and CSRF cookies first-party in Safari. Never
+// use a VITE_ API host override here: it is public and can break cookie/CORS
+// behavior by sending browser requests directly to a cross-origin service.
+export const API_BASE_URL = '/api';
 
 const RETRYABLE_STATUSES = new Set([502, 503, 504]);
 const RETRY_DELAYS_MS = [2000, 5000];
-
 let csrfToken = null;
+let csrfTokenRequest = null;
 
 function makeUrl(endpoint) {
   if (/^https?:\/\//i.test(endpoint)) return endpoint;
@@ -19,9 +18,7 @@ function wait(milliseconds) {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
-// Retries only safe (read-only) requests when the network fails or the backend is still
-// waking up on Render. Mutations are never retried automatically, so a form can't be
-// submitted twice.
+// Only safe read requests are retried when Render is waking or the network blips.
 async function fetchWithWakeUpRetry(url, init, retrySafe) {
   for (let attempt = 0; ; attempt += 1) {
     try {
@@ -52,24 +49,30 @@ async function readPayload(response) {
   return responseBody;
 }
 
-async function getCsrfToken() {
-  const response = await fetchWithWakeUpRetry(makeUrl('/auth/csrf'), {
-    method: 'GET',
-    credentials: 'include',
-    headers: { Accept: 'application/json' },
-  }, true);
-  const payload = await readPayload(response);
-  if (!response.ok || !payload?.csrfToken) {
-    throw new Error(payload?.message || 'Unable to establish a secure session.');
+function getCsrfToken() {
+  if (!csrfTokenRequest) {
+    csrfTokenRequest = (async () => {
+      const response = await fetchWithWakeUpRetry(makeUrl('/auth/csrf'), {
+        method: 'GET',
+        credentials: 'include',
+        headers: { Accept: 'application/json' },
+      }, true);
+      const payload = await readPayload(response);
+      if (!response.ok || !payload?.csrfToken) {
+        throw new Error(payload?.message || 'Unable to establish a secure session.');
+      }
+      csrfToken = payload.csrfToken;
+      return csrfToken;
+    })().finally(() => {
+      csrfTokenRequest = null;
+    });
   }
-  csrfToken = payload.csrfToken;
-  return csrfToken;
+  return csrfTokenRequest;
 }
 
 export async function apiClient(endpoint, options = {}) {
   const method = (options.method || 'GET').toUpperCase();
   const mutating = !['GET', 'HEAD', 'OPTIONS'].includes(method);
-  // FormData (file uploads) sets its own multipart Content-Type with the boundary.
   const isForm = typeof FormData !== 'undefined' && options.body instanceof FormData;
   const headers = {
     Accept: 'application/json',
@@ -78,39 +81,29 @@ export async function apiClient(endpoint, options = {}) {
   };
   if (mutating) headers['X-CSRF-Token'] = csrfToken || await getCsrfToken();
 
-  let response = await fetchWithWakeUpRetry(makeUrl(endpoint), {
-    ...options,
-    method,
-    credentials: 'include',
-    headers,
-  }, !mutating);
+  const requestOptions = { ...options, method, credentials: 'include', headers };
+  let response = await fetchWithWakeUpRetry(makeUrl(endpoint), requestOptions, !mutating);
   let payload = await readPayload(response);
 
-  if (mutating && response.status === 403 && payload?.message?.includes('CSRF')) {
-    csrfToken = await getCsrfToken();
+  if (mutating && response.status === 403 && /csrf/i.test(payload?.message || '')) {
+    csrfToken = null;
+    const refreshedToken = await getCsrfToken();
     response = await fetchWithWakeUpRetry(makeUrl(endpoint), {
-      ...options,
-      method,
-      credentials: 'include',
-      headers: { ...headers, 'X-CSRF-Token': csrfToken },
+      ...requestOptions,
+      headers: { ...headers, 'X-CSRF-Token': refreshedToken },
     }, false);
     payload = await readPayload(response);
   }
 
   if (!response.ok) {
     const validationErrors = Array.isArray(payload?.errors)
-      ? payload.errors
-          .map(({ field, message }) => [field, message].filter(Boolean).join(': '))
-          .filter(Boolean)
-          .join('. ')
+      ? payload.errors.map(({ field, message }) => [field, message].filter(Boolean).join(': ')).filter(Boolean).join('. ')
       : '';
     const error = response.status >= 500
       ? 'The service is temporarily unavailable. Please try again in a moment.'
       : typeof payload === 'string'
         ? (/<[a-z!]/i.test(payload) ? `Request failed (${response.status}).` : payload)
-        : [payload?.message || payload?.error, validationErrors]
-            .filter(Boolean)
-            .join(': ') || `Request failed (${response.status}).`;
+        : [payload?.message || payload?.error, validationErrors].filter(Boolean).join(': ') || `Request failed (${response.status}).`;
     return { ok: false, status: response.status, error, data: payload };
   }
   return { ok: true, status: response.status, data: payload };
