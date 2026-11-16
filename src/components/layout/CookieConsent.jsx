@@ -33,8 +33,8 @@ export default function CookieConsent() {
         </p>
       </div>
       <div className="cookie-consent-actions">
-        <button type="button" className="cookie-consent-reject" onClick={() => choose("rejected")}>Reject optional</button>
-        <button type="button" className="cookie-consent-accept" onClick={() => choose("accepted")}>Accept optional</button>
+        <button type="button" className="cookie-consent-reject" onClick={() => choose("rejected")}>Reject </button>
+        <button type="button" className="cookie-consent-accept" onClick={() => choose("accepted")}>Accept </button>
       </div>
     </section>
   );
