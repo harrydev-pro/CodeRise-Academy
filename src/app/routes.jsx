@@ -12,6 +12,7 @@ import Contact from "../pages/public/Contact";
 import Programs from "../pages/public/Programs";
 import ProgramDetails from "../pages/public/ProgramDetails";
 import NotFound from "../pages/public/NotFound";
+import Privacy from "../pages/public/Privacy";
 
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
@@ -69,6 +70,7 @@ export default function AppRoutes() {
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/privacy" element={<Privacy />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/programs/:programId" element={<ProgramDetails />} />
         <Route path="/apply/:programId" element={<ApplicationForm />} />
