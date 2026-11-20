@@ -75,7 +75,7 @@ export default function PWAInstallPrompt() {
   return (
     <aside className="pwa-install-prompt" role="region" aria-label="Install CodeRise Academy">
       <div className="pwa-install-copy">
-        <strong>Install CodeRise Academy</strong>
+        <strong>Install </strong>
         <p>{iosHelp && !installPrompt ? "Use Share, then Add to Home Screen to install the app." : "Add the app to your home screen for quick access."}</p>
       </div>
       <div className="pwa-install-actions">
