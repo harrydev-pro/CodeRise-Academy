@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Bell, CheckCircle2, Info } from "lucide-react";
+import { Bell, CheckCircle2, Info, Trash2 } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
 import Loader from "../../components/common/Loader";
@@ -16,6 +16,19 @@ export default function Notifications() {
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState("");
   const [readNow, setReadNow] = useState(() => new Set());
+  const [removing, setRemoving] = useState(() => new Set());
+
+  useEffect(() => {
+    const refresh = () => { if (document.visibilityState === "visible") reload(); };
+    const timer = window.setInterval(refresh, 30000);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, [reload]);
 
   async function markAllRead() {
     setBusy(true);
@@ -33,9 +46,28 @@ export default function Notifications() {
   async function open(notification) {
     if (!notification.read && !readNow.has(notification.id)) {
       setReadNow((previous) => new Set(previous).add(notification.id));
-      api.post(`/notifications/${notification.id}/read`, {}).catch(() => {});
+      try {
+        await api.post(`/notifications/${notification.id}/read`, {});
+      } catch (requestError) {
+        setReadNow((previous) => { const next = new Set(previous); next.delete(notification.id); return next; });
+        setActionError(requestError.message || "Could not mark this notification as read.");
+        return;
+      }
     }
     if (notification.link?.startsWith("/")) navigate(notification.link);
+  }
+
+  async function remove(notificationId) {
+    setRemoving((previous) => new Set(previous).add(notificationId));
+    setActionError("");
+    try {
+      await api.delete(`/notifications/${notificationId}`);
+      reload();
+    } catch (requestError) {
+      setActionError(requestError.message || "Could not remove this notification.");
+    } finally {
+      setRemoving((previous) => { const next = new Set(previous); next.delete(notificationId); return next; });
+    }
   }
 
   if (loading) return <div className="student-page"><Loader label="Loading notifications…" /></div>;
@@ -57,20 +89,23 @@ export default function Notifications() {
       ) : (
         <div className="notification-list">
           {notifications.map((notification) => (
-            <button
-              type="button"
+            <article
               className={`notification-card ${isRead(notification) ? "" : "notification-unread"}`}
               key={notification.id}
-              onClick={() => open(notification)}
             >
-              <span className="notification-icon">{isRead(notification) ? <CheckCircle2 size={21} aria-hidden="true" /> : <Info size={21} aria-hidden="true" />}</span>
-              <span className="notification-content">
+              <button type="button" className="notification-open" onClick={() => open(notification)} aria-label={`${isRead(notification) ? "Read" : "Mark as read"}: ${notification.title}`}>
+                <span className="notification-icon">{isRead(notification) ? <CheckCircle2 size={21} aria-hidden="true" /> : <Info size={21} aria-hidden="true" />}</span>
+                <span className="notification-content">
                 <strong>{notification.title}</strong>
                 <span>{notification.message}</span>
                 <time dateTime={notification.createdAt}>{formatDate(notification.createdAt)}</time>
-              </span>
-              {!isRead(notification) && <span className="unread-dot" aria-label="Unread" />}
-            </button>
+                </span>
+                {!isRead(notification) && <span className="unread-dot" aria-label="Unread" />}
+              </button>
+              <button type="button" className="notification-remove" onClick={() => remove(notification.id)} disabled={removing.has(notification.id)} aria-label={`Remove notification: ${notification.title}`} title="Remove notification">
+                <Trash2 size={17} aria-hidden="true" />
+              </button>
+            </article>
           ))}
         </div>
       )}

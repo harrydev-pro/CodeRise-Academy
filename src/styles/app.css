@@ -281,7 +281,11 @@ textarea.ui-input { line-height: 1.6; resize: vertical; }
 .notification-bell { position: relative; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid #e2e8f0; border-radius: 12px; color: #475569; background: #fff; }
 .notification-bell:hover { background: #f8fafc; }
 .notification-bell-count { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; color: #fff; background: #dc2626; font-size: .7rem; font-weight: 800; line-height: 20px; text-align: center; }
-button.notification-card { width: 100%; border: 1px solid var(--border-color); font: inherit; text-align: left; cursor: pointer; }
+.notification-card { display: flex; align-items: stretch; gap: 10px; width: 100%; padding: 0; border: 1px solid var(--border-color); font: inherit; text-align: left; }
+.notification-open { display: flex; flex: 1; align-items: flex-start; gap: 14px; min-width: 0; padding: 18px; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.notification-remove { display: grid; flex: 0 0 44px; place-items: center; align-self: center; width: 44px; height: 44px; margin-right: 10px; border: 1px solid #e2e8f0; border-radius: 10px; color: #64748b; background: #fff; }
+.notification-remove:hover { color: #b91c1c; background: #fef2f2; }
+.notification-remove:focus-visible, .notification-open:focus-visible { outline: 3px solid #88a7ff; outline-offset: 2px; }
 .notification-content { display: grid; gap: 4px; min-width: 0; }
 .notification-content strong { color: var(--color-ink); }
 .notification-content span { color: #475569; line-height: 1.5; overflow-wrap: anywhere; }
