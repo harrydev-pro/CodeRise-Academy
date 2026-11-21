@@ -52,6 +52,14 @@
     line-height: 1.6;
     max-width: 100%;
   }
+ .form-grid{
+  grid-template-columns: 1fr !important;
+ }
+ .course-details-hero {
+  grid-template-columns: 1fr !important;
+  gap: 20px !important;   
+
+ }
 }
 
 /* VIDEO COURSES GRID - RESPONSIVE FIX */

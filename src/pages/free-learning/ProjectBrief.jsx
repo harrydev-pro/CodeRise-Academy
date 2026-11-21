@@ -90,7 +90,7 @@ export default function ProjectBrief() {
           {project.allowSubmissions ? (
             <Link to={`/free-learning/${trackId}/projects/${projectId}/submit`} className="btn btn-primary full-width">Submit your project <ArrowRight size={17} aria-hidden="true" /></Link>
           ) : <p className="alert alert-info">Submissions are not open for this project.</p>}
-          <small>Your instructor reviews every submission and gives feedback.</small>
+          {/* <small>Your instructor reviews every submission and gives feedback.</small> */}
         </aside>
       </div>
     </div>

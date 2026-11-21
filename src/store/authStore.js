@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { apiClient } from '../services/api/client';
+import { AUTH_BYPASS_ENABLED, createBypassUser } from '../config/devAuthBypass';
 
 function payloadData(result) {
   return result?.data?.data || result?.data || {};
@@ -29,6 +30,10 @@ export const useAuthStore = create((set, get) => ({
 
   initialize: async () => {
     if (get().initializing) return;
+    if (AUTH_BYPASS_ENABLED) {
+      set({ user: createBypassUser(), isAuthenticated: true, loading: false, initializing: false, authError: null });
+      return;
+    }
     // Keep showing the page while refreshing an already signed-in account.
     set({ loading: !get().user, initializing: true, authError: null });
     try {
@@ -46,6 +51,11 @@ export const useAuthStore = create((set, get) => ({
   },
 
   login: async ({ email, password }) => {
+    if (AUTH_BYPASS_ENABLED) {
+      const user = createBypassUser();
+      set({ user, isAuthenticated: true, loading: false, authError: null });
+      return { success: true, user };
+    }
     set({ loading: true, authError: null });
     try {
       const result = await apiClient('/auth/login', {
@@ -86,6 +96,18 @@ export const useAuthStore = create((set, get) => ({
   },
 
   updateProfile: async ({ fullName, phone, avatarUrl }) => {
+    if (AUTH_BYPASS_ENABLED) {
+      // No real account to save to: update the local bypass user only.
+      const current = get().user || createBypassUser();
+      const user = {
+        ...current,
+        ...(fullName ? { name: fullName, fullName } : {}),
+        ...(phone === undefined ? {} : { phone_number: phone }),
+        ...(avatarUrl === undefined ? {} : { avatar_url: avatarUrl }),
+      };
+      set({ user, isAuthenticated: true, authError: null });
+      return { success: true, user };
+    }
     try {
       const result = await apiClient('/auth/me', {
         method: 'PATCH',
@@ -102,6 +124,11 @@ export const useAuthStore = create((set, get) => ({
   },
 
   logout: async () => {
+    if (AUTH_BYPASS_ENABLED) {
+      // Signs out of the bypass until the page reloads or Login is submitted again.
+      set({ user: null, isAuthenticated: false, loading: false, authError: null });
+      return true;
+    }
     try {
       await apiClient('/auth/logout', { method: 'POST' });
     } catch {
