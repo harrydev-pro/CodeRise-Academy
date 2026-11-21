@@ -1,5 +1,6 @@
 import { Menu } from "lucide-react";
 import NotificationBell from "./NotificationBell";
+import ThemeToggle from "../../features/theme/ThemeToggle";
 
 export default function StudentHeader({ onMenuClick }) {
   return (
@@ -17,7 +18,10 @@ export default function StudentHeader({ onMenuClick }) {
         <p className="hidden text-sm font-semibold text-ink md:block">Student portal</p>
       </div>
 
-      <NotificationBell to="/notifications" />
+      <div className="flex items-center gap-2 sm:gap-3">
+        <ThemeToggle />
+        <NotificationBell to="/notifications" />
+      </div>
     </header>
   );
 }
