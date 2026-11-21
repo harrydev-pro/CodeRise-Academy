@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "CodeRise Academy",
+  "short_name": "CodeRise",
+  "description": "Learn practical technology skills with CodeRise Academy.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#ffffff",
+  "theme_color": "#2563eb",
+  "icons": [
+    { "src": "/pwa-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
