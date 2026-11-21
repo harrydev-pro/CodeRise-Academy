@@ -13,6 +13,9 @@ import "./src/styles/variables.css"
 import "./src/styles/components.css"
 import "./src/styles/responsive.css"
 import "./src/styles/app.css"
+import "./src/styles/theme-colors.css"
+import "./src/styles/theme.css"
+import "./src/features/theme/theme.js"
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

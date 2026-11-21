@@ -1,6 +1,7 @@
 import { Menu, ExternalLink, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import NotificationBell from "./NotificationBell";
+import ThemeToggle from "../../features/theme/ThemeToggle";
 
 export default function AdminHeader({
   title = "Admin dashboard",
@@ -33,6 +34,7 @@ export default function AdminHeader({
       </div>
 
       <div className="admin-header-actions flex shrink-0 items-center gap-2 sm:gap-3">
+        <ThemeToggle />
         <NotificationBell to="/admin/notifications" />
         <div className="admin-user-chip" title={user?.email || user?.name || "Administrator"}>
           <span className="admin-user-avatar"><ShieldCheck size={17} /></span>

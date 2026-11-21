@@ -8,6 +8,18 @@
     <meta name="theme-color" content="#2563eb" />
     <meta name="description" content="CodeRise Academy: learn practical technology skills with free lessons, quizzes, projects, video courses, and full training programs." />
     <title>CodeRise Academy</title>
+    <script>
+      // Apply the saved (or system) theme before the page paints. Keep in sync with src/features/theme/theme.js.
+      (function () {
+        var theme = null;
+        try { theme = localStorage.getItem("coderise-theme"); } catch (e) {}
+        if (theme !== "light" && theme !== "dark") {
+          theme = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+        if (theme === "dark") document.querySelector('meta[name="theme-color"]').setAttribute("content", "#0f1726");
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

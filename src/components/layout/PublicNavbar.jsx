@@ -6,6 +6,7 @@ import Button from "../common/Button";
 import { publicNavigation } from "../../config/navigation";
 import { useAuth } from "../../hooks/useAuth";
 import { homePathFor } from "../../utils/roles";
+import ThemeToggle from "../../features/theme/ThemeToggle";
 
 export default function PublicNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -44,6 +45,7 @@ export default function PublicNavbar() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <ThemeToggle />
           {isAuthenticated ? (
             <Link to={dashboardPath}>
               <Button>My Dashboard</Button>
@@ -69,15 +71,18 @@ export default function PublicNavbar() {
           )}
         </div>
 
-        <button
-          type="button"
-          className="rounded-xl p-2 text-gray-700 hover:bg-gray-100 md:hidden"
-          onClick={() => setMenuOpen((value) => !value)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-        >
-          {menuOpen ? <X size={23} /> : <Menu size={23} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="rounded-xl p-2 text-gray-700 hover:bg-gray-100"
+            onClick={() => setMenuOpen((value) => !value)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? <X size={23} /> : <Menu size={23} />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
