@@ -27,7 +27,7 @@
   font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   line-height: 1.7;
   margin: 0;
-  color: #666;
+  color: var(--cr-fg-666666);
 }
 
 /* Mobile responsiveness */
@@ -39,8 +39,8 @@
   }
 
   .section-heading .eyebrow {
-    font-size: 0.7rem;
-  }
+    font-size: 0.7rem;}
+ 
 
   .section-heading h2 {
     font-size: 1.65rem;
@@ -52,6 +52,14 @@
     line-height: 1.6;
     max-width: 100%;
   }
+ .form-grid{
+  grid-template-columns: 1fr !important;
+ }
+ .course-details-hero {
+  grid-template-columns: 1fr !important;
+  gap: 20px !important;   
+
+ }
 }
 
 /* VIDEO COURSES GRID - RESPONSIVE FIX */
@@ -66,8 +74,8 @@
 }
 
 .video-course-card {
-  background: #fff;
-  border: 1px solid #e4e4e7;
+  background: var(--cr-bg-ffffff);
+  border: 1px solid var(--cr-bg-e4e4e7);
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -80,7 +88,7 @@
   width: 100%;
   height: 160px;
   overflow: hidden;
-  background: #f4f4f5;
+  background: var(--cr-bg-f4f4f5);
 }
 
 .video-course-cover img {

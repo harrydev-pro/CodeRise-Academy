@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { GraduationCap, ArrowLeft, Code2, Sparkles } from "lucide-react";
+import ThemeToggle from "../features/theme/ThemeToggle";
 
 export default function AuthLayout() {
   return (
@@ -10,7 +11,7 @@ export default function AuthLayout() {
         <div className="auth-art"><div className="auth-art-window"><div><i/><i/><i/></div><Code2 size={74}/><span>build( your_future )</span></div><div className="auth-art-orb">✦</div></div>
         <p className="auth-aside-foot">Learn. Build. Grow.</p>
       </aside>
-      <section className="auth-main"><div className="auth-main-top"><Link to="/" className="auth-mobile-brand"><GraduationCap size={20}/> CodeRise Academy</Link><Link to="/" className="auth-back"><ArrowLeft size={15}/> Back home</Link></div><div className="auth-main-content"><Outlet /></div></section>
+      <section className="auth-main"><div className="auth-main-top"><Link to="/" className="auth-mobile-brand"><GraduationCap size={20}/> CodeRise Academy</Link><div className="flex items-center gap-3"><Link to="/" className="auth-back"><ArrowLeft size={15}/> Back home</Link><ThemeToggle /></div></div><div className="auth-main-content"><Outlet /></div></section>
     </main>
   );
 }
