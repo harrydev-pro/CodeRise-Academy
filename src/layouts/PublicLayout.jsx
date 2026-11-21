@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import PublicNavbar from "../components/layout/PublicNavbar";
 import PublicFooter from "../components/layout/PublicFooter";
+import CookieConsent from "../components/layout/CookieConsent";
 
 export default function PublicLayout() {
   return (
@@ -12,6 +13,7 @@ export default function PublicLayout() {
       </main>
 
       <PublicFooter />
+      <CookieConsent />
     </div>
   );
 }

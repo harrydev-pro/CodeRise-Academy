@@ -1,15 +1,32 @@
+/* PWA install prompt */
+.pwa-install-prompt { position: fixed; z-index: 1100; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); display: flex; align-items: center; gap: 20px; width: min(480px, calc(100vw - 32px)); padding: 16px; border: 1px solid #dbe2ed; border-radius: 14px; background: #fff; box-shadow: 0 12px 40px #17203326; }
+.pwa-install-copy { min-width: 0; flex: 1; }
+.pwa-install-copy strong { color: #172033; font-size: .95rem; }
+.pwa-install-copy p { margin: 4px 0 0; color: #526078; font-size: .82rem; line-height: 1.45; }
+.pwa-install-actions { display: flex; align-items: center; gap: 8px; }
+.pwa-install-actions button { min-height: 42px; padding: 9px 12px; border: 1px solid #2454d7; border-radius: 8px; font-weight: 650; }
+.pwa-install { display: inline-flex; align-items: center; gap: 6px; color: white; background: #2454d7; }
+.pwa-later, .pwa-dismiss { color: #2454d7; background: white; }
+.pwa-dismiss { display: none; padding: 8px !important; }
+.pwa-install-actions button:focus-visible { outline: 3px solid #88a7ff; outline-offset: 3px; }
+@media (max-width: 480px) { .pwa-install-prompt { right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); width: calc(100vw - 24px); gap: 10px; padding: 13px; } .pwa-install-actions { gap: 6px; } .pwa-install-actions button { padding: 8px; font-size: .8rem; } }
+
 /* Shared interface kit for the student portal and admin dashboard (PRD 14). */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
-}
+.cookie-consent { position: fixed; z-index: 1000; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); left: max(16px, env(safe-area-inset-left)); display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 960px; margin: 0 auto; padding: 20px 24px; border: 1px solid #dbe2ed; border-radius: 14px; background: #fff; box-shadow: 0 12px 40px #17203326; }
+.cookie-consent h2 { margin: 0 0 6px; color: #172033; font-size: 1rem; font-weight: 700; }
+.cookie-consent p { margin: 0; max-width: 62ch; color: #526078; font-size: .875rem; line-height: 1.55; }
+.cookie-consent p a, .privacy-page a { color: #2454d7; text-decoration: underline; text-underline-offset: 3px; }
+.cookie-consent-actions { display: flex; flex-shrink: 0; gap: 10px; }
+.cookie-consent-actions button { min-height: 44px; padding: 10px 14px; border: 1px solid #2454d7; border-radius: 8px; font-weight: 650; }
+.cookie-consent-reject { color: #2454d7; background: #fff; }
+.cookie-consent-accept { color: #fff; background: #2454d7; }
+.cookie-consent-actions button:focus-visible { outline: 3px solid #88a7ff; outline-offset: 3px; }
+.privacy-page { max-width: 850px; margin: 0 auto; color: #526078; line-height: 1.75; }
+.privacy-page h1, .privacy-page h2 { color: #172033; }
+.privacy-page h1 { margin: 10px 0 24px; font-size: clamp(2rem, 5vw, 3rem); }
+.privacy-page h2 { margin: 32px 0 8px; font-size: 1.25rem; }
+@media (max-width: 640px) { .cookie-consent { flex-direction: column; align-items: stretch; gap: 14px; padding: 18px; } .cookie-consent-actions { display: grid; grid-template-columns: 1fr 1fr; } .cookie-consent-actions button { padding-inline: 8px; font-size: .875rem; } }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 .ui-page-header {
   display: flex;
@@ -1338,59 +1355,18 @@ textarea.ui-input {
 }
 
 /* Notifications */
-.notification-bell {
-  position: relative;
-  display: grid; 
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  color: #475569;
-  background: #fff;
-}
-.notification-bell:hover {
-  background: #f8fafc;
-}
-.notification-bell-count {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 5px;
-  border-radius: 999px;
-  color: #fff;
-  background: #dc2626;
-  font-size: 0.7rem;
-  font-weight: 800;
-  line-height: 20px;
-  text-align: center;
-}
-button.notification-card {
-  width: 100%;
-  border: 1px solid var(--border-color);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-.notification-content {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-}
-.notification-content strong {
-  color: var(--color-ink);
-}
-.notification-content span {
-  color: #475569;
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-}
-.notification-content time {
-  color: var(--text-muted);
-  font-size: 0.8rem;
-}
+.notification-bell { position: relative; display: grid; width: 44px; height: 44px; place-items: center; border: 1px solid #e2e8f0; border-radius: 12px; color: #475569; background: #fff; }
+.notification-bell:hover { background: #f8fafc; }
+.notification-bell-count { position: absolute; top: -6px; right: -6px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; color: #fff; background: #dc2626; font-size: .7rem; font-weight: 800; line-height: 20px; text-align: center; }
+.notification-card { display: flex; align-items: stretch; gap: 10px; width: 100%; padding: 0; border: 1px solid var(--border-color); font: inherit; text-align: left; }
+.notification-open { display: flex; flex: 1; align-items: flex-start; gap: 14px; min-width: 0; padding: 18px; border: 0; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.notification-remove { display: grid; flex: 0 0 44px; place-items: center; align-self: center; width: 44px; height: 44px; margin-right: 10px; border: 1px solid #e2e8f0; border-radius: 10px; color: #64748b; background: #fff; }
+.notification-remove:hover { color: #b91c1c; background: #fef2f2; }
+.notification-remove:focus-visible, .notification-open:focus-visible { outline: 3px solid #88a7ff; outline-offset: 2px; }
+.notification-content { display: grid; gap: 4px; min-width: 0; }
+.notification-content strong { color: var(--color-ink); }
+.notification-content span { color: #475569; line-height: 1.5; overflow-wrap: anywhere; }
+.notification-content time { color: var(--text-muted); font-size: .8rem; }
 
 /* Admin editors */
 .admin-editor-grid {

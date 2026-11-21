@@ -93,7 +93,82 @@ a {
   text-decoration: none;
 }
 
+.public-nav-link {
+  position: relative;
+  display: inline-flex;
+  transition: color 180ms ease;
+}
+
+.public-nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -6px;
+  left: 0;
+  height: 2px;
+  background-color: var(--color-brand-600);
+  content: "";
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 180ms ease;
+}
+
+.public-nav-link:hover,
+.public-nav-link[aria-current="page"] {
+  color: var(--color-brand-700);
+}
+
+.public-nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+.public-nav-link:focus-visible {
+  border-radius: 2px;
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 4px;
+}
+
+.btn.public-navbar-auth-button {
+  font-size: 1rem;
+}
+
+.btn.public-navbar-login {
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #475569;
+  background: transparent;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.btn.public-navbar-login:hover {
+  border-color: var(--color-brand-600);
+  color: var(--color-brand-700);
+  background-color: var(--color-surface);
+  box-shadow: 0 4px 12px rgb(37 99 235 / 20%);
+}
+
+.btn.public-navbar-login[aria-current="page"] {
+  border-color: var(--color-brand-700);
+  color: var(--color-brand-700);
+}
+
+.btn.public-navbar-login:focus-visible {
+  outline: 2px solid var(--color-brand-600);
+  outline-offset: 3px;
+}
+
 img {
   display: block;
   max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .public-nav-link,
+  .public-nav-link::after,
+  .btn.public-navbar-login {
+    transition: none;
+  }
 }

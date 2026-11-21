@@ -12,14 +12,6 @@ export default function PublicNavbar() {
   const { isAuthenticated, user } = useAuth();
   const dashboardPath = homePathFor(user);
 
-  const linkClass = ({ isActive }) =>
-    [
-      "text-sm font-medium transition-colors",
-      isActive
-        ? "text-brand-700"
-        : "text-gray-600 hover:text-brand-700",
-    ].join(" ");
-
   return (
     <header className="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
@@ -44,7 +36,7 @@ export default function PublicNavbar() {
             <NavLink
               key={item.path}
               to={item.path}
-              className={linkClass}
+              className="public-nav-link text-base font-medium text-gray-600"
             >
               {item.label}
             </NavLink>
@@ -58,12 +50,20 @@ export default function PublicNavbar() {
             </Link>
           ) : (
             <>
-              <Link to="/login">
-                <Button variant="ghost">Log in</Button>
-              </Link>
+              <Button
+                as={NavLink}
+                to="/login"
+                end
+                variant="ghost"
+                className="public-navbar-auth-button public-navbar-login"
+              >
+                Log in
+              </Button>
 
               <Link to="/register">
-                <Button>Create account</Button>
+                <Button className="public-navbar-auth-button">
+                  Create account
+                </Button>
               </Link>
             </>
           )}
@@ -87,7 +87,7 @@ export default function PublicNavbar() {
               <NavLink
                 key={item.path}
                 to={item.path}
-                className={linkClass}
+                className="public-nav-link text-base font-medium text-gray-600"
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
@@ -95,28 +95,24 @@ export default function PublicNavbar() {
             ))}
 
             {isAuthenticated ? (
-              <Link
-                to={dashboardPath}
-                onClick={() => setMenuOpen(false)}
-              >
+              <Link to={dashboardPath} onClick={() => setMenuOpen(false)}>
                 <Button className="w-full">My Dashboard</Button>
               </Link>
             ) : (
               <>
-                <Link
+                <Button
+                  as={NavLink}
                   to="/login"
+                  end
+                  variant="ghost"
+                  className="public-navbar-auth-button public-navbar-login w-full"
                   onClick={() => setMenuOpen(false)}
                 >
-                  <Button variant="outline" className="w-full">
-                    Log in
-                  </Button>
-                </Link>
+                  Log in
+                </Button>
 
-                <Link
-                  to="/register"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  <Button className="w-full">
+                <Link to="/register" onClick={() => setMenuOpen(false)}>
+                  <Button className="public-navbar-auth-button w-full">
                     Create account
                   </Button>
                 </Link>
