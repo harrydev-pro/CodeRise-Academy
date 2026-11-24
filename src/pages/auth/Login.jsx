@@ -127,7 +127,11 @@ export default function Login() {
         <p>Sign in to continue learning with CodeRise Academy.</p>
       </div>
 
-      {message && <div className="alert alert-error">{message}</div>}
+      {message && (
+        <div className="alert alert-error" role="alert">
+          {message}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} noValidate>
         <Input

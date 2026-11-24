@@ -98,11 +98,11 @@ test.describe("Public pages", () => {
     await expect(page).toHaveURL(/\/dashboard/);
   });
 
-  test("mobile menu opens and closes with the keyboard", async ({
+  test("responsive menu opens and closes with the keyboard", async ({
     page,
     viewport,
   }) => {
-    test.skip(viewport.width >= 768, "mobile menu only");
+    test.skip(viewport.width >= 1024, "responsive menu only below desktop");
     await page.goto(ROUTES.home);
     const toggle = page.getByRole("button", { name: /menu/i });
     await expect(toggle).toBeVisible();

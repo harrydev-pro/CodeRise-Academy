@@ -1,4 +1,5 @@
-import { NavLink, Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { LogOut, X, GraduationCap } from "lucide-react";
 
 import { studentNavigation } from "../../config/navigation";
@@ -9,10 +10,16 @@ export default function StudentSidebar({
   onClose,
 }) {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const firstNavigationLink = useRef(null);
+
+  useEffect(() => {
+    if (open) firstNavigationLink.current?.focus();
+  }, [open]);
 
   async function handleLogout() {
     await logout();
-    window.location.href = "/login";
+    navigate("/", { replace: true });
   }
 
   return (
@@ -27,11 +34,18 @@ export default function StudentSidebar({
       )}
 
       <aside
+        id="student-navigation"
         className={[
           "app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-gray-100 bg-white",
           "transition-transform duration-200 lg:translate-x-0",
-          open ? "translate-x-0" : "-translate-x-full",
+          open ? "translate-x-0 visible" : "-translate-x-full invisible lg:visible",
         ].join(" ")}
+        onKeyDown={(event) => {
+          if (open && event.key === "Escape") {
+            event.preventDefault();
+            onClose();
+          }
+        }}
       >
         <div className="flex h-[76px] items-center justify-between border-b border-gray-100 px-6">
           <Link to="/" className="flex items-center gap-3">
@@ -85,6 +99,7 @@ export default function StudentSidebar({
             return (
               <NavLink
                 key={item.path}
+                ref={item.path === "/dashboard" ? firstNavigationLink : undefined}
                 to={item.path}
                 end={item.path === "/dashboard"}
                 onClick={onClose}

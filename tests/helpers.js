@@ -13,7 +13,7 @@ export async function expectNoA11yViolations(page) {
     help: v.help,
     elements: v.nodes.map((n) => n.target.join(" ")),
   }));
-  expect(summary, "accessibility violations").toEqual([]);
+  expect.soft(summary, "accessibility violations").toEqual([]);
 }
 
 /** No sideways scrolling at the current viewport width. */
@@ -22,9 +22,9 @@ export async function expectNoHorizontalOverflow(page) {
     scrollWidth: document.documentElement.scrollWidth,
     innerWidth: window.innerWidth,
   }));
-  expect(scrollWidth, "page is wider than the viewport").toBeLessThanOrEqual(
-    innerWidth,
-  );
+  expect
+    .soft(scrollWidth, "page is wider than the viewport")
+    .toBeLessThanOrEqual(innerWidth);
 }
 
 /** No visible interactive control sticks out past the right edge of the viewport. */
@@ -43,7 +43,6 @@ export async function expectControlsInsideViewport(page) {
           r.height > 0 &&
           cs.visibility !== "hidden" &&
           cs.display !== "none";
-        // Off the right edge = real overflow. Off the left edge = a closed drawer.
         return visible && r.right > vw + 1 && r.left < vw;
       })
       .map(
@@ -57,8 +56,11 @@ export async function expectControlsInsideViewport(page) {
             .slice(0, 30)}"`,
       );
   });
-  expect(offenders, "controls sticking out past the right edge").toEqual([]);
+  expect
+    .soft(offenders, "controls sticking out past the right edge")
+    .toEqual([]);
 }
+
 /** Tab through the page; every focused element must show an outline or ring. */
 export async function expectVisibleFocusIndicators(page, maxTabs = 40) {
   const missing = [];
@@ -92,9 +94,9 @@ export async function expectVisibleFocusIndicators(page, maxTabs = 40) {
     seen.add(info.id);
     if (!info.ok) missing.push(info.desc);
   }
-  expect(missing, "focused elements with no visible focus indicator").toEqual(
-    [],
-  );
+  expect
+    .soft(missing, "focused elements with no visible focus indicator")
+    .toEqual([]);
 }
 
 /** Attach a full-page screenshot to the report. */
@@ -103,7 +105,6 @@ export async function attachScreenshot(page, testInfo, name) {
   await testInfo.attach(name, { body, contentType: "image/png" });
 }
 
-/** Run every layout + a11y check on the current page. */
 /** Run every layout + a11y check on the current page. */
 export async function checkPage(page, testInfo, name) {
   await page.waitForLoadState("networkidle");

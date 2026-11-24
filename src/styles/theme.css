@@ -19,6 +19,7 @@
   --brand-text-strong: #a5c3ff;
   --text-primary: #e2e8f0;
   --text-muted: #9aa6b8;
+  --text-muted-contrast: var(--text-muted);
   --surface: #1a202e;
   --page: #0f1726;
   --border-color: #2a3346;

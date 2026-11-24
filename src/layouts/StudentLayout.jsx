@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -9,8 +9,16 @@ import Loader from "../components/common/Loader";
 
 export default function StudentLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const menuButtonRef = useRef(null);
   const { user, loading } = useAuth();
   const location = useLocation();
+
+  function closeSidebar() {
+    setSidebarOpen(false);
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      menuButtonRef.current?.focus();
+    }
+  }
 
   if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
@@ -20,11 +28,13 @@ export default function StudentLayout() {
     <div className="min-h-screen bg-surface">
       <StudentSidebar
         open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
+        onClose={closeSidebar}
       />
 
       <div className="min-h-screen lg:pl-72">
         <StudentHeader
+          menuButtonRef={menuButtonRef}
+          menuOpen={sidebarOpen}
           onMenuClick={() => setSidebarOpen(true)}
         />
 

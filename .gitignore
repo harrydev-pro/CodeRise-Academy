@@ -1,3 +1,6 @@
+findings-*.txt
+audit-output/
+
 test-results/
 playwright-report/
 blob-report/
@@ -38,3 +41,11 @@ dist-ssr
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# Playwright / test artifacts
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+audit-output/
+findings-*.txt
