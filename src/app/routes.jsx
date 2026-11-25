@@ -41,6 +41,7 @@ import ProjectSubmission from "../pages/free-learning/ProjectSubmissions";
 import VideoCourseCatalog from "../pages/video-courses/VideoCourseCatalog";
 import VideoCourseDetails from "../pages/video-courses/VideoCourseDetails";
 import VideoLessonPlayer from "../pages/video-courses/VideoLessonPlayer";
+import PaymentReturn from "../pages/payments/PaymentReturn";
 
 import ApplicationForm from "../pages/applications/ApplicationForm";
 import ApplicationConfirmation from "../pages/applications/ApplicationConfirmation";
@@ -67,6 +68,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route element={<PublicLayout />}>
+        <Route path="/payments/return" element={<PaymentReturn />} />
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />

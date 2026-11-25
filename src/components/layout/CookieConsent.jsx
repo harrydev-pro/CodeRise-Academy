@@ -1,18 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const STORAGE_KEY = "coderise-cookie-consent-v1";
 
 export default function CookieConsent() {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
+  const [visible, setVisible] = useState(() => {
     try {
-      setVisible(localStorage.getItem(STORAGE_KEY) === null);
+      return localStorage.getItem(STORAGE_KEY) === null;
     } catch {
-      setVisible(true);
+      return true;
     }
-  }, []);
+  });
 
   function choose(value) {
     try {

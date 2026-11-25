@@ -15,13 +15,18 @@ function isIOSInstallBrowser() {
 export default function PWAInstallPrompt() {
   const [installPrompt, setInstallPrompt] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [iosHelp, setIosHelp] = useState(false);
+  const [iosHelp] = useState(() => typeof window !== "undefined" && isIOSInstallBrowser());
 
   useEffect(() => {
     if (isStandalone()) return undefined;
 
     let timer;
-    const dismissedUntil = Number(localStorage.getItem(DISMISS_KEY) || 0);
+    let dismissedUntil = 0;
+    try {
+      dismissedUntil = Number(localStorage.getItem(DISMISS_KEY) || 0);
+    } catch {
+      // Continue without dismissal persistence when browser storage is unavailable.
+    }
     if (dismissedUntil > Date.now()) return undefined;
 
     const showIfAllowed = () => {
@@ -42,7 +47,6 @@ export default function PWAInstallPrompt() {
     window.addEventListener("beforeinstallprompt", onBeforeInstall);
     window.addEventListener("appinstalled", onInstalled);
     if (isIOSInstallBrowser()) {
-      setIosHelp(true);
       showIfAllowed();
     }
 
@@ -54,7 +58,11 @@ export default function PWAInstallPrompt() {
   }, []);
 
   function later() {
-    localStorage.setItem(DISMISS_KEY, String(Date.now() + LATER_DAYS * 24 * 60 * 60 * 1000));
+    try {
+      localStorage.setItem(DISMISS_KEY, String(Date.now() + LATER_DAYS * 24 * 60 * 60 * 1000));
+    } catch {
+      // The prompt still closes for this visit if browser storage is unavailable.
+    }
     setVisible(false);
   }
 

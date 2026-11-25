@@ -50,15 +50,27 @@ export default function VideoCourseDetails() {
     }
   }
 
+  async function checkout() {
+    setEnrolling(true);
+    setMessage("");
+    try {
+      const result = await api.post(`/payments/paystack/initialize/course/${encodeURIComponent(course.id)}`, {});
+      window.location.assign(result.authorizationUrl);
+    } catch (error) {
+      setMessage(error.message || "We couldn't start secure checkout. Please try again.");
+      setEnrolling(false);
+    }
+  }
+
   let action;
   if (!user) action = <Link to="/login" state={{ from: `/video-courses/${course.id}` }} className="btn btn-primary full-width">Sign in to start</Link>;
   else if (!isStudent) action = <p className="muted-text">Course access is for student accounts.</p>;
   else if (accessResource.loading) action = <Button fullWidth loading>Checking access…</Button>;
   else if (enrollment?.status === "active" || (course.isFree && enrollment)) action = <Link to={lessonPath(continueId)} className="btn btn-primary full-width">{progress?.completedLessons ? "Continue watching" : "Start course"} <ArrowRight size={17} aria-hidden="true" /></Link>;
-  else if (enrollment?.status === "pending") action = <p className="alert alert-info">Your access request is awaiting approval. You will be notified.</p>;
+  else if (enrollment?.status === "pending" && course.isFree) action = <p className="alert alert-info">Your access request is awaiting approval. You will be notified.</p>;
   else if (enrollment?.status === "revoked") action = <p className="alert alert-info">Your access to this course was removed. Contact CodeRise Academy for help.</p>;
   else if (course.isFree) action = <Button fullWidth loading={enrolling} onClick={enroll}>Enroll for free</Button>;
-  else action = <Button fullWidth loading={enrolling} onClick={enroll}>Request access</Button>;
+  else action = <Button fullWidth loading={enrolling} onClick={checkout}>{enrolling ? "Opening secure checkout…" : "Pay and enroll"}</Button>;
 
   return (
     <div className="page-container course-details-page">
@@ -89,7 +101,8 @@ export default function VideoCourseDetails() {
           <div className="course-purchase-content">
             <span className="eyebrow">{course.isFree ? "FREE COURSE" : "COURSE PRICE"}</span>
             <h2>{course.isFree ? "Free" : formatCurrency(course.price)}</h2>
-            {!course.isFree && !enrollment && <p>Request access and the academy team will contact you about payment. Access is only granted after confirmation.</p>}
+            {!course.isFree && !enrollment && <p>Complete secure checkout to get immediate access after your payment is confirmed.</p>}
+            {!course.isFree && enrollment?.status === "pending" && <p>Complete secure checkout to activate your course access.</p>}
             {action}
             {message && <p className="muted-text" role="status">{message}</p>}
           </div>
