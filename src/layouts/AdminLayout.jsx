@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Navigate, useLocation } from "react-router-dom";
 
@@ -11,6 +11,7 @@ import { isAdminRole } from "../utils/roles";
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const menuButtonRef = useRef(null);
   const { user, loading } = useAuth();
   const location = useLocation();
   const title = useMemo(() => {
@@ -20,6 +21,13 @@ export default function AdminLayout() {
     return activeItem?.label || "Administration";
   }, [location.pathname]);
 
+  function closeSidebar() {
+    setSidebarOpen(false);
+    if (window.matchMedia("(max-width: 1023px)").matches) {
+      menuButtonRef.current?.focus();
+    }
+  }
+
   if (loading) return <Loader fullScreen />;
   if (!user) return <Navigate to="/login" replace state={{ from: `${location.pathname}${location.search}` }} />;
   if (!isAdminRole(user.role)) return <Navigate to="/dashboard" replace />;
@@ -28,13 +36,15 @@ export default function AdminLayout() {
     <div className="admin-layout min-h-screen">
       <AdminSidebar
         open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
+        onClose={closeSidebar}
       />
 
       <div className="admin-layout-main min-h-screen lg:pl-72">
         <AdminHeader
           title={title}
           user={user}
+          menuButtonRef={menuButtonRef}
+          menuOpen={sidebarOpen}
           onMenuClick={() => setSidebarOpen(true)}
         />
 

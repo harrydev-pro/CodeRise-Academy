@@ -1,4 +1,5 @@
-import { NavLink, Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Settings, X, LogOut } from "lucide-react";
 
 import { adminNavigation } from "../../config/navigation";
@@ -9,10 +10,16 @@ export default function AdminSidebar({
   onClose,
 }) {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+  const firstNavigationLink = useRef(null);
+
+  useEffect(() => {
+    if (open) firstNavigationLink.current?.focus();
+  }, [open]);
 
   async function handleLogout() {
     await logout();
-    window.location.href = "/login";
+    navigate("/", { replace: true });
   }
 
   return (
@@ -27,11 +34,18 @@ export default function AdminSidebar({
       )}
 
       <aside
+        id="admin-navigation"
         className={[
           "admin-sidebar app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col text-white",
           "transition-transform duration-200 lg:translate-x-0",
-          open ? "translate-x-0" : "-translate-x-full",
+          open ? "translate-x-0 visible" : "-translate-x-full invisible lg:visible",
         ].join(" ")}
+        onKeyDown={(event) => {
+          if (open && event.key === "Escape") {
+            event.preventDefault();
+            onClose();
+          }
+        }}
       >
         <div className="flex h-[76px] items-center justify-between border-b border-white/10 px-6">
           <Link to="/admin" className="flex items-center gap-3">
@@ -64,6 +78,7 @@ export default function AdminSidebar({
             return (
               <NavLink
                 key={item.path}
+                ref={item.path === "/admin" ? firstNavigationLink : undefined}
                 to={item.path}
                 end={item.path === "/admin"}
                 onClick={onClose}
