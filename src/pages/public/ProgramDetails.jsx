@@ -72,7 +72,7 @@ export default function ProgramDetails() {
           </div>
           <p className="program-details-duration"><Clock size={17} aria-hidden="true" /> Duration: {program.duration || "To be announced"}</p>
           <Button as={Link} to={applyLink} fullWidth>Apply for this program <ArrowRight size={18} aria-hidden="true" /></Button>
-          <small>Applying does not take a payment. The academy team reviews every application.</small>
+          <small>Applying is free. If the academy approves your application, you pay the program fee from your dashboard.</small>
         </aside>
       </section>
 

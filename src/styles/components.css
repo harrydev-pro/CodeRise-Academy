@@ -2193,6 +2193,59 @@ footer.bg-ink {
   background: var(--cr-bg-ffedd5);
 }
 
+/* Program application payment */
+.status-paid,
+.status-successful,
+.status-payment-waived {
+  color: var(--cr-fg-166534);
+  background: var(--cr-bg-dcfce7);
+}
+
+.status-unpaid,
+.status-payment-pending {
+  color: var(--cr-fg-92400e);
+  background: var(--cr-bg-fef3c7);
+}
+
+.status-payment-failed,
+.status-failed {
+  color: var(--cr-fg-991b1b);
+  background: var(--cr-bg-fee2e2);
+}
+
+.application-payment-callout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 0;
+  padding: 14px 16px;
+  border: 1px solid var(--cr-bg-dbeafe);
+  border-radius: 12px;
+  background: var(--cr-bg-eff6ff);
+}
+
+.application-payment-callout p {
+  margin: 0;
+  color: var(--cr-fg-1e3a8a);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.application-payment-callout strong {
+  display: block;
+  font-size: 1rem;
+}
+
+.application-payment-callout .btn {
+  flex-shrink: 0;
+}
+
+.application-payment-message {
+  flex-basis: 100%;
+}
+
 .result-progress {
   max-width: 350px;
   margin: 14px 0 0;

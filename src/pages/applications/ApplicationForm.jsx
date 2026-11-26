@@ -422,7 +422,8 @@ function ApplicationFormContent({ user }) {
             <span>
               I confirm that the information I provided is accurate and
               understand that submitting this form does not guarantee
-              admission or complete a payment.
+              admission. If I am approved, I will pay the program fee from
+              My Applications.
             </span>
           </label>
 

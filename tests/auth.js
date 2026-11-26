@@ -14,6 +14,7 @@ const A_SUBMISSIONS = /^https?:\/\/[^/]+\/api\/admin\/submissions(\?.*)?$/;
 const A_APPLICATIONS = /^https?:\/\/[^/]+\/api\/admin\/applications(\?.*)?$/;
 const A_PROGRAMS_ARCHIVED =
   /^https?:\/\/[^/]+\/api\/admin\/programs\?includeArchived=true/;
+const A_PAYMENTS = /^https?:\/\/[^/]+\/api\/admin\/payments(\?.*)?$/;
 const A_REPORTS_LIST = /^https?:\/\/[^/]+\/api\/admin\/reports(\?.*)?$/;
 const A_REPORT = /^https?:\/\/[^/]+\/api\/admin\/reports\/[^?]+/;
 
@@ -55,7 +56,9 @@ const dashboard = {
 };
 
 const applications = [
-  { id: "APP-001", programTitle: "Frontend Bootcamp", status: "Pending" },
+  { id: "APP-001", programTitle: "Frontend Bootcamp", status: "Pending", originalPrice: 150000 },
+  // Approved and unpaid, so the "Pay now" step is on screen for the checks.
+  { id: "APP-002", programTitle: "Product Design", status: "Approved", originalPrice: 120000, payment: { status: "unpaid", amount: 120000 } },
 ];
 
 const videoCourses = [
@@ -164,8 +167,41 @@ const adminApplications = {
       status: "Pending",
       submittedAt: "2026-11-05T12:00:00Z",
     },
+    {
+      id: "APP-002",
+      fullName: "Bola Student",
+      studentName: "Bola Student",
+      userId: 3,
+      programTitle: "Product Design",
+      status: "Approved",
+      submittedAt: "2026-11-02T12:00:00Z",
+      payment: { status: "successful", amount: 120000, reference: "PSK-123", method: "paystack", paidAt: "2026-11-06T09:00:00Z" },
+    },
   ],
-  statusCounts: { Pending: 1 },
+  statusCounts: { Pending: 1, Approved: 1 },
+  pagination,
+};
+
+const adminPayments = {
+  payments: [
+    {
+      id: "PAY-1",
+      type: "application",
+      applicationId: "APP-002",
+      userId: 3,
+      studentName: "Bola Student",
+      email: "bola@example.com",
+      programTitle: "Product Design",
+      amount: 120000,
+      currency: "NGN",
+      status: "successful",
+      reference: "PSK-123",
+      method: "paystack",
+      paidAt: "2026-11-06T09:00:00Z",
+    },
+  ],
+  summary: { collected: 120000, paidApplications: 1, awaitingPayment: 0, failed: 0 },
+  statusCounts: { successful: 1 },
   pagination,
 };
 
@@ -219,6 +255,9 @@ export async function mockApi(page, { role = null } = {}) {
   );
   await page.route(A_PROGRAMS_ARCHIVED, (route) =>
     json(route, { data: { programs: adminPrograms } }),
+  );
+  await page.route(A_PAYMENTS, (route) =>
+    json(route, { data: adminPayments }),
   );
   await page.route(A_REPORTS_LIST, (route) =>
     json(route, { data: { reports: reportsList } }),
