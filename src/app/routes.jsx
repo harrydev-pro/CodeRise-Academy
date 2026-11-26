@@ -61,6 +61,7 @@ const ReviewSubmissions = lazy(() => import("../pages/admin/ReviewSubmissions"))
 const AdminVideoCourses = lazy(() => import("../pages/admin/AdminVideoCourses"));
 const AdminVideoCourseEditor = lazy(() => import("../pages/admin/AdminVideoCourseEditor"));
 const ReviewApplications = lazy(() => import("../pages/admin/ReviewApplications"));
+const AdminPayments = lazy(() => import("../pages/admin/AdminPayments"));
 const AdminReports = lazy(() => import("../pages/admin/AdminReports"));
 const AdminActivity = lazy(() => import("../pages/admin/AdminActivity"));
 
@@ -125,6 +126,7 @@ export default function AppRoutes() {
         <Route path="video-courses" element={<AdminVideoCourses />} />
         <Route path="video-courses/:courseId" element={<AdminVideoCourseEditor />} />
         <Route path="applications" element={<ReviewApplications />} />
+        <Route path="payments" element={<AdminPayments />} />
         <Route path="reports" element={<AdminReports />} />
         <Route path="activity" element={<AdminActivity />} />
         <Route path="notifications" element={<Notifications />} />

@@ -12,6 +12,8 @@ import { formatCurrency } from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import { getProgramPrice } from "../../utils/programPrice";
 import { APPLICATION_STATUSES } from "../../utils/statuses";
+import { PAYMENT_FILTERS, getApplicationPayment } from "../../utils/applicationPayment";
+import ApplicationPaymentPanel from "./ApplicationPaymentPanel";
 
 function ApplicationDetail({ id, onChanged }) {
   const { data: application, loading, error, reload } = useApiResource(`/admin/applications/${id}`, "application", null);
@@ -26,6 +28,7 @@ function ApplicationDetail({ id, onChanged }) {
   const currentStatus = status ?? application.status;
   const currentFeedback = feedback ?? application.adminFeedback;
   const currentInternal = internal ?? application.internalNotes;
+  const payment = getApplicationPayment(application);
 
   async function act(action, message) {
     setSaving(true);
@@ -37,8 +40,10 @@ function ApplicationDetail({ id, onChanged }) {
       reload();
       // Also shown at page level: with a status filter, this application may leave the list.
       onChanged(`${application.fullName || application.studentName}: ${message}`);
+      return true;
     } catch (actionError) {
       setNotice({ tone: "error", text: actionError.message });
+      return false;
     } finally {
       setSaving(false);
     }
@@ -57,7 +62,10 @@ function ApplicationDetail({ id, onChanged }) {
           <SelectField label="Status" value={currentStatus} onChange={setStatus} options={APPLICATION_STATUSES} />
           <TextArea label="Message to the student" rows={3} value={currentFeedback} onChange={setFeedback} hint="Shown to the student with the status." />
           <TextArea label="Internal note for this change (optional)" rows={2} value={note} onChange={setNote} hint="Only admins see this, in the history." />
-          <p className="ui-hint">Approval is not payment. Mark “Enrolled” only once the student has actually joined the program.</p>
+          <p className="ui-hint">Setting “Approved” lets the student pay the program fee from their dashboard. Mark “Enrolled” once they have paid and joined.</p>
+          {currentStatus === "Enrolled" && !payment.settled && (
+            <p className="ui-hint" role="status"><strong>Heads up:</strong> this student hasn't paid yet. Record the payment below if they paid another way.</p>
+          )}
           <div className="ui-form-actions"><Button type="submit" loading={saving}>Save status</Button></div>
         </form>
         <div className="ui-form">
@@ -74,6 +82,7 @@ function ApplicationDetail({ id, onChanged }) {
           </ol>
         </div>
       </div>
+      <ApplicationPaymentPanel key={`${payment.status}-${payment.reference}`} application={application} saving={saving} act={act} />
       <Notice tone={notice?.tone}>{notice?.text}</Notice>
     </div>
   );
@@ -84,7 +93,7 @@ export default function ReviewApplications() {
   const [search, setSearch] = useState(params.get("q") || "");
   const [openId, setOpenId] = useState(null);
   const [pageNotice, setPageNotice] = useState("");
-  const filters = { status: params.get("status") || "", programId: params.get("programId") || "", q: params.get("q") || "", page: params.get("page") || "1", sort: params.get("sort") || "-submittedAt" };
+  const filters = { status: params.get("status") || "", programId: params.get("programId") || "", q: params.get("q") || "", paymentStatus: params.get("paymentStatus") || "", page: params.get("page") || "1", sort: params.get("sort") || "-submittedAt" };
   const { data, loading, error, reload } = useApiResource(`/admin/applications${queryString(filters)}`, null, null);
   const programs = useApiResource("/admin/programs?includeArchived=true", "programs");
   const update = (changes) => setParams(Object.fromEntries(Object.entries({ ...filters, page: "1", ...changes }).filter(([, value]) => value)), { replace: true });
@@ -92,12 +101,13 @@ export default function ReviewApplications() {
 
   return (
     <section className="admin-page">
-      <PageHeader eyebrow="ADMISSIONS" title="Program applications" description="Review applications, update their status, and keep internal notes." />
+      <PageHeader eyebrow="ADMISSIONS" title="Program applications" description="Review applications, update their status, track program payments, and keep internal notes." />
       <Tabs value={filters.status} onChange={(status) => update({ status })} label="Filter by status"
         tabs={[{ value: "", label: "All", count: Object.values(counts).reduce((a, b) => a + b, 0) }, ...APPLICATION_STATUSES.map((status) => ({ value: status, label: status, count: counts[status] || 0 }))]} />
       <form className="ui-toolbar" onSubmit={(event) => { event.preventDefault(); update({ q: search.trim() }); }}>
         <TextField label="Search" type="search" value={search} onChange={setSearch} placeholder="Name, email, or phone" />
         <SelectField label="Program" value={filters.programId} onChange={(programId) => update({ programId })} options={[{ value: "", label: "All programs" }, ...programs.data.map((program) => ({ value: program.id, label: program.title }))]} />
+        <SelectField label="Payment" value={filters.paymentStatus} onChange={(paymentStatus) => update({ paymentStatus })} options={PAYMENT_FILTERS.map((option) => (option.value ? option : { ...option, label: "Any payment" }))} />
         <SelectField label="Sort" value={filters.sort} onChange={(sort) => update({ sort })} options={[{ value: "-submittedAt", label: "Newest first" }, { value: "submittedAt", label: "Oldest first" }, { value: "-updatedAt", label: "Recently updated" }]} />
         <button type="submit" className="btn btn-primary ui-toolbar-fixed">Search</button>
       </form>
@@ -107,6 +117,8 @@ export default function ReviewApplications() {
           <ul className="ui-list">
             {data.applications.map((application) => {
               const open = openId === application.id;
+              const payment = getApplicationPayment(application);
+              const showPayment = ["Approved", "Enrolled"].includes(application.status) && payment.amount > 0;
               return (
                 <li key={application.id} className="ui-card">
                   <div className="ui-card-header">
@@ -115,7 +127,10 @@ export default function ReviewApplications() {
                       <h3>{application.fullName || application.studentName}</h3>
                       <p className="muted-text">Applied {formatDate(application.submittedAt)} · ref {application.id}{application.userId && <> · <Link to={`/admin/users/${application.userId}`} className="text-link">profile</Link></>}</p>
                     </div>
-                    <StatusBadge status={application.status} />
+                    <div className="flex flex-wrap items-center justify-end gap-2">
+                      {showPayment && <StatusBadge status={payment.label} />}
+                      <StatusBadge status={application.status} />
+                    </div>
                   </div>
                   <button type="button" className="application-toggle" aria-expanded={open} onClick={() => setOpenId(open ? null : application.id)}>
                     {open ? "Hide details" : "Review application"} <ChevronDown size={16} aria-hidden="true" className={open ? "rotate-180" : ""} />

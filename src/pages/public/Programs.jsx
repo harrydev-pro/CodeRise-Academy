@@ -36,8 +36,8 @@ export default function Programs() {
             <div>
               <h2>Available programs</h2>
               <p>
-                Prices are shown before you apply. Submitting an application does not enroll you or take
-                a payment; the academy team reviews every application first.
+                Prices are shown before you apply. Applying is free: the academy team reviews every
+                application first, and you pay the program fee only after you are approved.
               </p>
             </div>
           </div>

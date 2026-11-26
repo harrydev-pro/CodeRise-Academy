@@ -7,6 +7,7 @@ import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { StatCard, StatusBadge } from "../../components/ui";
 import { useAuth } from "../../hooks/useAuth";
 import { useApiResource } from "../../hooks/useApiResource";
+import ApplicationPaymentCallout from "../../features/applications/ApplicationPaymentCallout";
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -74,7 +75,10 @@ export default function Dashboard() {
             <ul className="ui-list">
               {applications.data.slice(0, 3).map((application) => (
                 <li className="ui-list-item" key={application.id}>
-                  <div className="min-w-0"><h4>{application.programTitle}</h4><p>Reference {application.id}</p></div>
+                  <div className="min-w-0">
+                    <h4>{application.programTitle}</h4><p>Reference {application.id}</p>
+                    <ApplicationPaymentCallout application={application} compact />
+                  </div>
                   <StatusBadge status={application.status} />
                 </li>
               ))}

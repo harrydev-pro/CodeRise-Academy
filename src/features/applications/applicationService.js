@@ -21,6 +21,12 @@ export const createApplication = (application) => requestData("/applications", "
     acceptedTerms: application.acceptedTerms,
   }),
 });
+// Starts Paystack checkout for an approved application. The backend returns the
+// Paystack page to open; Paystack sends the student back to /payments/return.
+export const startApplicationPayment = (applicationId) => requestData(
+  `/payments/paystack/initialize/application/${encodeURIComponent(applicationId)}`, null,
+  { method: "POST", body: JSON.stringify({}) },
+);
 export const updateApplicationStatus = (applicationId, status, adminFeedback = "") => requestData(
   `/applications/${encodeURIComponent(applicationId)}/status`, "application",
   { method: "PATCH", body: JSON.stringify({ status, adminFeedback }) },

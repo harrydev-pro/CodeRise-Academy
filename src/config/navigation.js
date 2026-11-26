@@ -13,6 +13,7 @@ import {
   FolderKanban,
   BarChart3,
   History,
+  CreditCard,
 } from "lucide-react";
 
 export const publicNavigation = [
@@ -95,6 +96,7 @@ export const adminNavigation = [
   { label: "Overview", path: "/admin", icon: LayoutDashboard },
   { label: "Users", path: "/admin/users", icon: Users },
   { label: "Applications", path: "/admin/applications", icon: FileText },
+  { label: "Payments", path: "/admin/payments", icon: CreditCard },
   { label: "Programs", path: "/admin/programs", icon: GraduationCap },
   { label: "Learning tracks", path: "/admin/learning", icon: BookOpen },
   { label: "Projects", path: "/admin/projects", icon: FolderKanban },

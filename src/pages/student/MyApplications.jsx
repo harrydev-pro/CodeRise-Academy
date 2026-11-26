@@ -9,6 +9,8 @@ import { useApiResource } from "../../hooks/useApiResource";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { formatDate } from "../../utils/formatDate";
 import { getProgramPrice } from "../../utils/programPrice";
+import { getApplicationPayment } from "../../utils/applicationPayment";
+import ApplicationPaymentCallout from "../../features/applications/ApplicationPaymentCallout";
 
 function Detail({ label, value }) {
   if (!value) return null;
@@ -43,6 +45,8 @@ export default function MyApplications() {
         <div className="student-record-list">
           {applications.map((application) => {
             const open = openId === application.id;
+            const payment = getApplicationPayment(application);
+            const showPayment = ["Approved", "Enrolled"].includes(application.status) && payment.amount > 0;
             return (
               <article className="student-record-card application-card" key={application.id}>
                 <div className="student-record-icon"><FileText size={23} aria-hidden="true" /></div>
@@ -51,10 +55,12 @@ export default function MyApplications() {
                   <div className="record-meta">
                     <span><CalendarDays size={15} aria-hidden="true" /> Applied {formatDate(application.submittedAt)}</span>
                     <span>{formatCurrency(getProgramPrice(application))}</span>
+                    {showPayment && <StatusBadge status={payment.label} />}
                   </div>
                   {application.adminFeedback && (
                     <p className="application-feedback"><strong>Message from the academy:</strong> {application.adminFeedback}</p>
                   )}
+                  <ApplicationPaymentCallout application={application} />
                   <button
                     type="button"
                     className="application-toggle"
@@ -75,6 +81,8 @@ export default function MyApplications() {
                         <Detail label="Learning goals" value={application.learningGoals} />
                         <Detail label="Why you want to join" value={application.reason} />
                         <Detail label="Experience" value={application.experience} />
+                        {showPayment && <Detail label="Payment" value={payment.label} />}
+                        <Detail label="Payment reference" value={payment.reference} />
                       </dl>
                       {Array.isArray(application.history) && application.history.length > 0 && (
                         <>
@@ -89,7 +97,7 @@ export default function MyApplications() {
                           </ol>
                         </>
                       )}
-                      <p className="muted-text">Approval and payment are separate steps. The academy team will contact you about payment after approval.</p>
+                      <p className="muted-text">Payment opens here once the academy approves your application. Payments are processed securely by Paystack.</p>
                     </div>
                   )}
                 </div>

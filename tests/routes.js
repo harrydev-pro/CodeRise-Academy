@@ -26,6 +26,7 @@ export const ROUTES = {
     "/admin/learning",
     "/admin/submissions",
     "/admin/applications",
+    "/admin/payments",
     "/admin/reports",
   ],
 };
