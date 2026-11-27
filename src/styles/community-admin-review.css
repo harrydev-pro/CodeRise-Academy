@@ -1,0 +1,264 @@
+/* Admin Community: competitions, payments, results and submission review (A12–A18).
+   Class prefix: car-. Colours use the community.css tokens; new colours have dark values. */
+
+.community-admin {
+  --car-green-btn: #15803d;
+  --car-green-btn-hover: #166534;
+  --car-orange-border: #fdba74;
+  --car-info-bg: #eef2ff;
+  --car-info-border: #c7d2fe;
+  --car-preview-hero: #e0e7ff;
+  --car-preview-block: #e5e7eb;
+}
+:root[data-theme="dark"] .community-admin {
+  --car-green-btn: #16a34a;
+  --car-green-btn-hover: #15803d;
+  --car-orange-border: #9a3412;
+  --car-info-bg: #1e1b4b;
+  --car-info-border: #3730a3;
+  --car-preview-hero: #2e2a6b;
+  --car-preview-block: #2a3346;
+}
+
+/* ---------- Shared bits ---------- */
+.car-stats-4 { grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+@media (min-width: 1100px) {
+  .car-stats-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.car-stat:hover { transform: none; box-shadow: none; }
+.car-stat-suffix { color: var(--cm-muted); font-size: 0.9rem; font-weight: 600; }
+.car-value-warn { color: var(--cm-orange); }
+
+.car-avatar { border: 0; }
+.car-cell-title { display: block; color: var(--cm-ink); font-weight: 600; }
+a.car-cell-title { color: var(--cm-admin-strong); }
+.car-cell-sub { display: block; color: var(--cm-muted); font-size: 0.78rem; }
+.community-table td.car-cell-wrap { min-width: 200px; white-space: normal; }
+.car-reference { color: var(--cm-ink); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.8rem; }
+.car-field-help { margin: 0; color: var(--cm-muted); font-size: 0.8rem; line-height: 1.45; }
+.car-field-title { color: var(--cm-ink); font-size: 0.88rem; font-weight: 700; }
+.car-subheading { margin: 18px 0 8px; color: var(--cm-ink); font-size: 0.92rem; font-weight: 700; }
+.car-note { margin: 0; padding: 12px 14px; border-radius: 10px; color: var(--cm-text); background: var(--cm-surface-soft); font-size: 0.88rem; line-height: 1.6; overflow-wrap: anywhere; }
+
+/* Section tabs for one competition */
+.car-tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 1px solid var(--cm-border); scrollbar-width: thin; }
+.car-tab { flex: none; padding: 10px 14px; border-bottom: 2px solid transparent; color: var(--cm-text); font-size: 0.92rem; font-weight: 600; white-space: nowrap; }
+.car-tab:hover { color: var(--cm-ink); }
+.car-tab.active { border-bottom-color: var(--cm-admin); color: var(--cm-admin-strong); }
+.car-tab:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: -2px; border-radius: 6px; }
+
+/* Table card toolbar: search, chips and selects */
+.car-table-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; padding: 20px; }
+.car-toolbar-search { flex: 1 1 260px; max-width: 320px; }
+.car-toolbar-select { flex: 0 1 220px; margin-left: auto; }
+.car-toolbar-selects { display: flex; flex-wrap: wrap; gap: 10px; margin-left: auto; }
+.car-toolbar-selects .community-admin-field { flex: 0 1 180px; }
+.car-table-toolbar .community-chips { flex: 0 1 auto; gap: 8px; }
+
+.car-simple-pager { align-items: center; }
+.car-page-of { color: var(--cm-muted); font-size: 0.88rem; }
+
+.car-table-competitions { min-width: 1080px; }
+.car-table-participants { min-width: 980px; }
+.car-table-payments { min-width: 1000px; }
+.car-table-submissions { min-width: 1060px; }
+.car-table-results { min-width: 820px; }
+.car-reviewer-select { min-width: 160px; padding-block: 6px; }
+
+/* On/off switch */
+.car-switch { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--cm-ink); font-size: 0.9rem; cursor: pointer; }
+.car-switch input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.car-switch-track { position: relative; flex: none; width: 40px; height: 22px; border-radius: 999px; background: var(--cm-border); transition: background 0.15s ease; }
+.car-switch-track::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 999px; background: #ffffff; box-shadow: 0 1px 2px #0f172a33; transition: transform 0.15s ease; }
+.car-switch input:checked + .car-switch-track { background: var(--cm-admin); }
+.car-switch input:checked + .car-switch-track::after { transform: translateX(18px); }
+.car-switch input:focus-visible + .car-switch-track { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.car-switch input:disabled + .car-switch-track { opacity: 0.5; }
+@media (prefers-reduced-motion: reduce) {
+  .car-switch-track, .car-switch-track::after { transition: none; }
+}
+
+/* Confirmation dialogs (refund, publish, reject) */
+.car-dialog { display: grid; gap: 12px; color: var(--cm-text); font-size: 0.92rem; line-height: 1.55; }
+.car-dialog .ui-input { width: 100%; }
+.car-dialog textarea { resize: vertical; }
+.car-dialog-head { display: flex; align-items: flex-start; gap: 14px; }
+.car-dialog-head p,
+.car-dialog-text { margin: 0; color: var(--cm-muted); }
+.car-dialog-facts { display: grid; gap: 6px; margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--cm-surface-soft); }
+.car-dialog-facts div { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; }
+.car-dialog-facts dt { color: var(--cm-muted); font-size: 0.86rem; }
+.car-dialog-facts dd { margin: 0; color: var(--cm-ink); font-size: 0.88rem; text-align: right; }
+.car-dialog .community-delete-warning { margin: 0; }
+
+/* ---------- A13 Competition editor ---------- */
+.car-saved-indicator { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; color: var(--cm-muted); font-size: 0.85rem; }
+.car-segmented { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--cm-border); border-radius: 12px; }
+.car-segmented button { flex: 0 1 auto; padding: 9px 18px; border: 0; border-radius: 9px; color: var(--cm-text); background: transparent; font: inherit; font-weight: 700; cursor: pointer; }
+.car-segmented button.active { color: #ffffff; background: var(--cm-admin); }
+.car-segmented button:disabled { opacity: 0.45; cursor: not-allowed; }
+.car-segmented button:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.car-inline-note { margin: 0; padding: 10px 14px; border: 1px solid var(--car-orange-border); border-radius: 10px; color: var(--cm-orange); background: var(--cm-orange-tint); font-size: 0.85rem; line-height: 1.45; }
+.car-money-input { display: flex; align-items: stretch; }
+.car-money-input > span { display: grid; place-items: center; padding: 0 14px; border: 1px solid var(--cm-border); border-right: 0; border-radius: 10px 0 0 10px; color: var(--cm-ink); background: var(--cm-surface-soft); font-weight: 700; }
+.car-money-input .ui-input { flex: 1; min-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.car-editor-layout .community-file-list li { color: var(--cm-muted); }
+
+.car-judge-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.car-judge-list li { display: flex; align-items: center; gap: 10px; }
+.car-judge-list li > .min-w-0 { display: grid; flex: 1; }
+.car-judge-list strong { color: var(--cm-ink); font-size: 0.9rem; }
+.car-judge-list small { color: var(--cm-muted); font-size: 0.78rem; }
+.car-switch-list { display: grid; gap: 12px; }
+.car-side-actions { display: grid; gap: 10px; }
+.car-side-actions .btn { width: 100%; justify-content: center; }
+
+/* ---------- A16 Results ---------- */
+.car-info-banner { display: flex; align-items: flex-start; gap: 10px; margin: 0; padding: 12px 16px; border: 1px solid var(--car-info-border); border-radius: 12px; color: var(--cm-admin-strong); background: var(--car-info-bg); font-size: 0.88rem; line-height: 1.5; }
+.car-info-banner svg { flex: none; margin-top: 1px; }
+.car-results-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
+.car-results-side { display: grid; gap: 22px; min-width: 0; }
+@media (min-width: 1100px) {
+  .car-results-layout { grid-template-columns: minmax(0, 1fr) 320px; }
+}
+.car-reorder-cell { width: 92px; }
+.car-reorder-cell > * { vertical-align: middle; }
+.car-grip { margin-right: 4px; color: var(--cm-muted); cursor: grab; }
+.car-mini-button { display: inline-grid; width: 26px; height: 26px; place-items: center; margin-right: 2px; border: 1px solid var(--cm-border); border-radius: 7px; color: var(--cm-muted); background: var(--cm-surface); cursor: pointer; }
+.car-mini-button:hover:not(:disabled) { color: var(--cm-ink); border-color: var(--cm-muted); }
+.car-mini-button:disabled { opacity: 0.35; cursor: not-allowed; }
+.car-mini-button:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: 1px; }
+.car-table-results tr[draggable="true"] { cursor: grab; }
+.car-table-results tr.car-dragging td { opacity: 0.5; background: var(--cm-surface-soft); }
+.car-placement-select { min-width: 170px; padding-block: 6px; }
+
+.car-podium-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.car-podium-list li { display: flex; align-items: flex-start; gap: 12px; padding: 12px 0; border-top: 1px solid var(--cm-border); }
+.car-podium-list li:first-child { border-top: 0; padding-top: 0; }
+.car-podium-list li > .min-w-0 { display: grid; }
+.car-podium-list strong { color: var(--cm-ink); font-size: 0.95rem; }
+.car-podium-list small { color: var(--cm-muted); font-size: 0.8rem; line-height: 1.4; }
+.car-place { display: grid; flex: none; width: 30px; height: 30px; place-items: center; border-radius: 999px; font-size: 0.78rem; font-weight: 800; }
+.car-place-first { color: var(--cm-amber); background: var(--cm-amber-tint); }
+.car-place-second { color: var(--cm-text); background: var(--cm-neutral-tint); }
+.car-place-third { color: var(--cm-orange); background: var(--cm-orange-tint); }
+.car-place-mention { color: var(--cm-admin-strong); background: var(--car-info-bg); font-size: 0.68rem; }
+.car-check-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.car-check-list li { display: flex; align-items: flex-start; gap: 10px; color: var(--cm-text); font-size: 0.88rem; line-height: 1.45; }
+.car-check-list svg { flex: none; margin-top: 2px; color: var(--cm-green); }
+
+/* ---------- A17 Submissions ---------- */
+.car-submission-filters { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }
+
+/* ---------- A18 Review ---------- */
+.car-review-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; margin-top: 4px; }
+.car-review-meta .car-cell-sub { display: inline; font-size: 0.85rem; }
+.car-reviewer-pick { display: flex; align-items: center; gap: 10px; color: var(--cm-muted); font-size: 0.88rem; }
+.car-reviewer-pick strong { color: var(--cm-ink); }
+.car-reviewer-pick .ui-input { min-width: 200px; }
+
+.car-review-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; align-items: start; }
+.car-review-main,
+.car-review-side { display: grid; gap: 22px; min-width: 0; }
+@media (min-width: 1100px) {
+  .car-review-layout { grid-template-columns: minmax(0, 1fr) minmax(320px, 380px); }
+}
+
+.car-review-student-mini { display: none; }
+.car-review-student-mini > .min-w-0 { display: grid; flex: 1; }
+.car-review-student-mini strong { color: var(--cm-ink); font-size: 1rem; }
+.car-review-student-mini small,
+.car-review-student-mini time { color: var(--cm-muted); font-size: 0.8rem; }
+
+.car-work-list { display: grid; gap: 12px; margin: 0 0 14px; padding: 0; list-style: none; }
+.car-work-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid var(--cm-border); border-radius: 12px; color: var(--cm-admin-strong); transition: border-color 0.15s ease; }
+.car-work-item:hover { border-color: var(--cm-admin); }
+.car-work-item:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.car-work-item .community-icon { width: 36px; height: 36px; border-radius: 10px; color: var(--cm-admin-strong); background: var(--car-info-bg); }
+.car-work-item > .min-w-0 { display: grid; flex: 1; }
+.car-work-item strong { color: var(--cm-ink); font-size: 0.92rem; }
+.car-work-item small { overflow: hidden; color: var(--cm-muted); font-size: 0.82rem; text-overflow: ellipsis; white-space: nowrap; }
+.car-work-item > svg { flex: none; }
+
+/* Decorative preview of the live site */
+.car-site-preview { overflow: hidden; border: 1px solid var(--cm-border); border-radius: 12px; background: var(--cm-surface-soft); }
+.car-site-bar { display: flex; align-items: center; gap: 6px; padding: 10px 12px; border-bottom: 1px solid var(--cm-border); }
+.car-site-bar span { width: 9px; height: 9px; border-radius: 999px; background: var(--cm-border); }
+.car-site-bar em { overflow: hidden; margin-left: 10px; padding: 2px 8px; border-radius: 6px; color: var(--cm-muted); background: var(--cm-surface); font-size: 0.72rem; font-style: normal; text-overflow: ellipsis; white-space: nowrap; }
+.car-site-body { display: grid; gap: 14px; padding: 18px 22px 22px; }
+.car-site-nav { display: flex; gap: 10px; }
+.car-site-nav i { height: 10px; border-radius: 6px; background: var(--car-preview-block); }
+.car-site-nav i:first-child { width: 28%; margin-right: auto; }
+.car-site-nav i:not(:first-child) { width: 10%; }
+.car-site-hero { height: 110px; border-radius: 6px; background: var(--car-preview-hero); }
+.car-site-cards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.car-site-cards i { height: 64px; border-radius: 6px; background: var(--car-preview-block); }
+
+.car-student-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; }
+.car-student-head > .min-w-0 { display: grid; flex: 1 1 200px; }
+.car-student-head strong { color: var(--cm-ink); font-size: 1rem; }
+.car-student-head small { color: var(--cm-muted); font-size: 0.84rem; overflow-wrap: anywhere; }
+
+/* Rubric card (a fieldset so it can be disabled once decided) */
+.car-rubric { min-width: 0; margin: 0; }
+.car-rubric:focus { outline: none; }
+.car-rubric:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.car-rubric-list { display: grid; margin: 0 0 14px; padding: 0; list-style: none; }
+.car-rubric-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--cm-border); }
+.car-rubric-list label { display: grid; gap: 2px; cursor: pointer; }
+.car-rubric-list strong { color: var(--cm-ink); font-size: 0.9rem; line-height: 1.3; }
+.car-rubric-list small { color: var(--cm-muted); font-size: 0.78rem; line-height: 1.35; }
+.car-score-input { display: flex; flex: none; align-items: center; gap: 6px; padding: 0 12px 0 4px; border: 1px solid var(--cm-border); border-radius: 10px; background: var(--cm-surface); }
+.car-score-input:focus-within { border-color: var(--cm-admin); box-shadow: 0 0 0 3px #4f46e522; }
+.car-score-input .ui-input { width: 54px; padding: 8px 4px; border: 0; background: transparent; font-weight: 800; text-align: right; box-shadow: none; }
+.car-score-input .ui-input:focus { outline: none; box-shadow: none; }
+.car-score-input .ui-input[aria-invalid="true"] { color: #dc2626; }
+.car-score-input > span { color: var(--cm-muted); font-size: 0.86rem; white-space: nowrap; }
+.car-rubric:disabled .car-score-input { background: var(--cm-surface-soft); }
+.car-total { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-radius: 12px; color: var(--cm-admin-strong); background: var(--car-info-bg); }
+.car-total span { font-weight: 700; }
+.car-total strong { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.car-decision { display: grid; gap: 14px; }
+.car-decision textarea { min-height: 140px; resize: vertical; }
+.car-decision-buttons { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr)); gap: 10px; }
+.car-decision-buttons .btn { justify-content: center; }
+.car-btn-approve { color: #ffffff; background: var(--car-green-btn); }
+.car-btn-approve:hover:not(:disabled) { background: var(--car-green-btn-hover); }
+.car-btn-corrections { border: 1px solid var(--car-orange-border); color: var(--cm-orange); background: var(--cm-surface); }
+.car-btn-corrections:hover:not(:disabled) { background: var(--cm-orange-tint); }
+.car-reject-link { display: inline-flex; align-items: center; gap: 6px; justify-self: start; color: #dc2626; }
+:root[data-theme="dark"] .car-reject-link { color: var(--cm-red); }
+.car-decided { display: grid; justify-items: start; gap: 10px; }
+.car-decided p { margin: 0; color: var(--cm-muted); font-size: 0.88rem; }
+.car-decided .car-note { justify-self: stretch; color: var(--cm-text); }
+
+.car-history { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.car-history li { position: relative; display: grid; padding-left: 22px; }
+.car-history li::before { content: ""; position: absolute; top: 6px; left: 2px; width: 9px; height: 9px; border-radius: 999px; background: var(--cm-border); }
+.car-history li.is-latest::before { background: var(--cm-admin); }
+.car-history strong { color: var(--cm-ink); font-size: 0.88rem; }
+.car-history time { color: var(--cm-muted); font-size: 0.8rem; }
+
+/* ---------- Small screens ---------- */
+@media (max-width: 639px) {
+  .car-table-toolbar { padding: 16px; }
+  .car-toolbar-search { flex-basis: 100%; max-width: none; }
+  .car-toolbar-select,
+  .car-toolbar-selects { flex: 1 1 100%; margin-left: 0; }
+  .car-toolbar-selects .community-admin-field { flex: 1 1 140px; }
+  .car-reviewer-pick { flex: 1 1 100%; }
+  .car-reviewer-pick .ui-input { flex: 1; min-width: 0; }
+  .car-segmented button { flex: 1 1 0; padding-inline: 10px; }
+  .car-site-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .car-total strong { font-size: 1.3rem; }
+  .car-decision-buttons { grid-template-columns: minmax(0, 1fr); }
+  /* Phone review layout (page 186): compact student card first, full card hidden. */
+  .ui-card.car-review-student-mini { display: flex; align-items: center; gap: 12px; }
+  .car-review-student { display: none; }
+  .car-review-main { gap: 16px; }
+  .car-review-layout { gap: 16px; }
+  .car-review-side { gap: 16px; }
+  .community-admin .car-results-layout { gap: 16px; }
+  .car-dialog-facts dd { text-align: left; }
+}
