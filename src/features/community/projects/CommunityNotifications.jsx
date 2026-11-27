@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Bell, Check, CheckCheck, Clipboard, Clock, Crown, Megaphone, SquareCheck, UserPlus, Users } from "lucide-react";
 
@@ -35,7 +35,10 @@ function groupOf(iso) {
 
 const isInternal = (link) => typeof link === "string" && link.startsWith("/") && !link.startsWith("//");
 
-export default function CommunityNotifications() {
+// header(actions): renders the page header with the given header actions (Mark all as read).
+// tabs: the page's filter tabs, shown under the header.
+// onUnreadChange(count): lets the page show this tab's unread count on the Community tab.
+export default function CommunityNotifications({ header = () => null, tabs = null, onUnreadChange }) {
   const first = useCommunityList(getCommunityNotifications, { before: "" });
   const [older, setOlder] = useState({ items: [], nextCursor: undefined });
   const [loadingOlder, setLoadingOlder] = useState(false);
@@ -45,15 +48,20 @@ export default function CommunityNotifications() {
   const [toast, setToast] = useState(null);
   const closeToast = useCallback(() => setToast(null), [setToast]);
 
-  if (first.loading) return <Loader label="Loading community notifications…" />;
-  if (first.error) return <ErrorMessage message={first.error} onRetry={first.reload} />;
-
   const data = first.data;
-  const sample = Boolean(data.isSample);
-  const items = [...data.notifications, ...older.items];
-  const nextCursor = older.nextCursor === undefined ? data.nextCursor : older.nextCursor;
+  const items = data ? [...data.notifications, ...older.items] : [];
   const isRead = (item) => allRead || item.read || readIds.has(item.id);
   const unread = items.filter((item) => !isRead(item)).length;
+
+  useEffect(() => {
+    if (data) onUnreadChange?.(unread);
+  }, [data, unread, onUnreadChange]);
+
+  if (first.loading) return <>{header(null)}{tabs}<Loader label="Loading community notifications…" /></>;
+  if (first.error) return <>{header(null)}{tabs}<ErrorMessage message={first.error} onRetry={first.reload} /></>;
+
+  const sample = Boolean(data.isSample);
+  const nextCursor = older.nextCursor === undefined ? data.nextCursor : older.nextCursor;
 
   function markRead(item) {
     if (isRead(item)) return;
@@ -95,7 +103,16 @@ export default function CommunityNotifications() {
     else groups.push({ label, items: [item] });
   }
 
+  const markAllButton = unread > 0 && (
+    <button type="button" className="btn btn-outline btn-sm" onClick={markAll} disabled={marking}>
+      <CheckCheck size={16} aria-hidden="true" /> {marking ? "Updating…" : "Mark all as read"}
+    </button>
+  );
+
   return (
+    <>
+    {header(markAllButton)}
+    {tabs}
     <div className="cmp-notifications">
       {sample && (
         <p className="community-sample-notice" role="status">
@@ -103,14 +120,7 @@ export default function CommunityNotifications() {
         </p>
       )}
 
-      <div className="cmp-notifications-bar">
-        <p aria-live="polite">{unread ? `${unread} unread community ${unread === 1 ? "notification" : "notifications"}` : "No unread community notifications"}</p>
-        {unread > 0 && (
-          <button type="button" className="btn btn-outline btn-sm" onClick={markAll} disabled={marking}>
-            <CheckCheck size={16} aria-hidden="true" /> {marking ? "Updating…" : "Mark all as read"}
-          </button>
-        )}
-      </div>
+      <p className="sr-only" aria-live="polite">{unread ? `${unread} unread community ${unread === 1 ? "notification" : "notifications"}` : "No unread community notifications"}</p>
 
       {items.length === 0 ? (
         <div className="community-card community-empty">
@@ -139,6 +149,7 @@ export default function CommunityNotifications() {
                             ? <Link to={item.link} onClick={() => markRead(item)}>{item.title}</Link>
                             : item.title}
                         </h3>
+                        <time className="cmp-notification-time-inline" dateTime={item.createdAt} aria-hidden="true">{timeAgo(item.createdAt)}</time>
                         <p>
                           {item.message}
                           {item.dueAt ? ` Due ${formatDeadline(item.dueAt)}.` : ""}
@@ -171,5 +182,6 @@ export default function CommunityNotifications() {
 
       <Toast message={toast?.message} type={toast?.type} onClose={closeToast} />
     </div>
+    </>
   );
 }

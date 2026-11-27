@@ -229,8 +229,6 @@
 
 /* ---------- S24 Notifications: Community tab ---------- */
 .cmp-notifications { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; min-width: 0; }
-.cmp-notifications-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
-.cmp-notifications-bar p { margin: 0; color: var(--cm-muted); font-size: 0.88rem; }
 .community-card.cmp-notification-card { padding: 0; overflow: hidden; }
 .cmp-notification-group { margin: 0; padding: 12px 22px; border-bottom: 1px solid var(--cm-border); color: var(--cm-muted); background: var(--cm-surface-soft); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
 section + section > .cmp-notification-group { border-top: 1px solid var(--cm-border); }
@@ -250,11 +248,14 @@ section + section > .cmp-notification-group { border-top: 1px solid var(--cm-bor
 .cmp-notification-side { display: flex; flex: none; align-items: center; gap: 12px; color: var(--cm-muted); font-size: 0.8rem; white-space: nowrap; }
 .cmp-unread-dot { width: 18px; height: 18px; padding: 0; border: 0; border-radius: 999px; background: radial-gradient(circle, var(--cm-blue) 0 4.5px, transparent 5px); cursor: pointer; }
 .cmp-load-older { justify-self: center; }
+/* Phones show the time under the title (as in the design); wider screens show it on the right. */
+.cmp-notification-time-inline { display: none; margin-bottom: 4px; color: var(--cm-muted); font-size: 0.8rem; }
+.notification-tabs { flex-wrap: wrap; }
 
 @media (max-width: 639px) {
-  .cmp-notification-list li { flex-wrap: wrap; padding: 16px; }
+  .cmp-notification-list li { padding: 16px; }
   .cmp-notification-group { padding: 12px 16px; }
-  .cmp-notification-body { flex-basis: calc(100% - 100px); }
-  .cmp-notification-side { flex-direction: column-reverse; align-items: flex-end; gap: 6px; }
+  .cmp-notification-time-inline { display: block; }
+  .cmp-notification-side time { display: none; }
   .cmp-my-actions { margin-left: 0; }
 }

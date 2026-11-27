@@ -100,8 +100,10 @@
     grid-template-areas: "main action" "main side";
     grid-template-rows: auto 1fr;
   }
-  .cmh-details-main { grid-area: main; }
-  .cmh-details-action { grid-area: action; }
+  /* Scoped to the details layout: an unscoped grid-area adds stray columns to any other
+     grid that reuses .cmh-details-main (the workspace and the community profile). */
+  .cmh-details-layout > .cmh-details-main { grid-area: main; }
+  .cmh-details-layout > .cmh-details-action { grid-area: action; }
   .cmh-details-layout > .cmh-details-side { grid-area: side; align-self: start; }
   .cmh-workspace-layout,
   .cmh-submit-layout { grid-template-columns: minmax(0, 1fr) 320px; }
