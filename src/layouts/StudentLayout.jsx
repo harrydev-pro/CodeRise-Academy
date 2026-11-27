@@ -31,7 +31,7 @@ export default function StudentLayout() {
         onClose={closeSidebar}
       />
 
-      <div className="min-h-screen lg:pl-72">
+      <div className="min-h-screen lg:pl-80">
         <StudentHeader
           menuButtonRef={menuButtonRef}
           menuOpen={sidebarOpen}

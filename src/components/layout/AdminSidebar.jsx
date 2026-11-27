@@ -36,7 +36,7 @@ export default function AdminSidebar({
       <aside
         id="admin-navigation"
         className={[
-          "admin-sidebar app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col text-white",
+          "admin-sidebar app-sidebar fixed inset-y-0 left-0 z-50 flex w-80 max-w-[calc(100vw-1rem)] flex-col text-white",
           "transition-transform duration-200 lg:translate-x-0",
           open ? "translate-x-0 visible" : "-translate-x-full invisible lg:visible",
         ].join(" ")}
@@ -84,14 +84,14 @@ export default function AdminSidebar({
                 onClick={onClose}
                 className={({ isActive }) =>
                   [
-                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition",
+                    "flex items-center gap-3 whitespace-nowrap rounded-xl px-4 py-3 text-base font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                     isActive
                       ? "admin-nav-link-active text-white"
                       : "text-gray-300 hover:bg-white/10 hover:text-white",
                   ].join(" ")
                 }
               >
-                <Icon size={19} />
+                <Icon size={22} className="shrink-0" />
                 {item.label}
               </NavLink>
             );
@@ -109,7 +109,7 @@ export default function AdminSidebar({
                 onClick={onClose}
                 className={({ isActive }) =>
                   [
-                    "admin-nav-sublink flex items-center rounded-xl px-4 text-sm font-medium transition",
+                    "admin-nav-sublink flex items-center whitespace-nowrap rounded-xl px-4 text-base font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
                     isActive
                       ? "admin-nav-link-active text-white"
                       : "text-gray-300 hover:bg-white/10 hover:text-white",
@@ -126,9 +126,9 @@ export default function AdminSidebar({
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-medium text-gray-300 hover:bg-white/10 hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
           >
-            <LogOut size={19} />
+            <LogOut size={22} />
             Sign out
           </button>
         </div>
