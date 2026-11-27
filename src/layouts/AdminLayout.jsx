@@ -51,7 +51,7 @@ export default function AdminLayout() {
         onClose={closeSidebar}
       />
 
-      <div className="admin-layout-main min-h-screen lg:pl-72">
+      <div className="admin-layout-main min-h-screen lg:pl-80">
         <AdminHeader
           title={title}
           section={section}

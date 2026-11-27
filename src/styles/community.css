@@ -1063,7 +1063,7 @@ a.community-creator-name:hover strong { color: var(--cm-blue-strong); }
 .admin-nav-group { margin-top: 18px; padding-top: 16px; border-top: 1px solid #ffffff14; }
 .admin-nav-group-title { display: flex; align-items: center; justify-content: space-between; margin: 0 0 8px; padding: 0 16px; color: #9aa3b8; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; }
 .admin-nav-new { padding: 1px 8px; border-radius: 999px; color: #c7d2fe; background: #ffffff1a; font-size: 0.66rem; letter-spacing: 0.04em; text-transform: none; }
-.admin-sidebar nav a.admin-nav-sublink { min-height: 38px; padding-block: 8px; }
+.admin-sidebar nav a.admin-nav-sublink { min-height: 44px; padding-block: 8px; }
 
 /* Indigo accent used across the admin Community screens */
 .community-admin { --cm-admin: #4f46e5; --cm-admin-strong: #4338ca; display: grid; gap: 22px; }

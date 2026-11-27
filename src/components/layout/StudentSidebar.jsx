@@ -36,7 +36,7 @@ export default function StudentSidebar({
       <aside
         id="student-navigation"
         className={[
-          "app-sidebar fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-gray-100 bg-white",
+          "app-sidebar fixed inset-y-0 left-0 z-50 flex w-80 max-w-[calc(100vw-1rem)] flex-col border-r border-gray-100 bg-white",
           "transition-transform duration-200 lg:translate-x-0",
           open ? "translate-x-0 visible" : "-translate-x-full invisible lg:visible",
         ].join(" ")}
@@ -105,14 +105,14 @@ export default function StudentSidebar({
                 onClick={onClose}
                 className={({ isActive }) =>
                   [
-                    "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition",
+                    "flex items-center gap-3 whitespace-nowrap rounded-xl px-4 py-3 text-base font-medium transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
                     isActive
                       ? "bg-brand-50 text-brand-700"
                       : "text-gray-600 hover:bg-gray-50 hover:text-ink",
                   ].join(" ")
                 }
               >
-                <Icon size={19} />
+                <Icon size={22} className="shrink-0" />
                 {item.label}
                 {item.badge && (
                   <span className="ml-auto rounded-md bg-brand-100 px-2 py-0.5 text-[11px] font-semibold text-brand-700">
@@ -128,9 +128,9 @@ export default function StudentSidebar({
           <button
             type="button"
             onClick={handleLogout}
-            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-red-600 hover:bg-red-50"
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-base font-medium text-red-600 hover:bg-red-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
           >
-            <LogOut size={19} />
+            <LogOut size={22} />
             Sign out
           </button>
         </div>
