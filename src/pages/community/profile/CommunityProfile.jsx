@@ -28,7 +28,11 @@ import { useCommunityList } from "../../../features/community/listHooks";
 import { getCertificateDownload, getCommunityProfile } from "../../../features/community/profile/profileService";
 
 const numberFormat = new Intl.NumberFormat("en-GB");
-const monthYear = new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" });
+// "Sep 2026", as in the design (en-GB on some browsers writes "Sept").
+const shortMonthYear = new Intl.DateTimeFormat("en-GB", { month: "short", year: "numeric" });
+const monthYear = { format: (date) => shortMonthYear.format(date).replace("Sept", "Sep") };
+// The design shows the earned badges plus the next few to unlock, not every locked badge.
+const LOCKED_BADGES_SHOWN = 2;
 const joinedFormat = new Intl.DateTimeFormat("en-GB", { month: "long", year: "numeric" });
 
 const PROJECT_STYLE = {
@@ -56,10 +60,6 @@ const ACTIVITY_STYLE = {
   team: { icon: UsersRound, tone: "blue" },
 };
 const STATUS_TAG = { "Under review": "tag-blue", Participated: "tag-green", Approved: "tag-green", Active: "tag-neutral" };
-
-function initials(name = "") {
-  return name.trim().split(/\s+/).slice(0, 2).map((part) => part.charAt(0).toUpperCase()).join("") || "?";
-}
 
 export default function CommunityProfile() {
   const { username = "" } = useParams();
@@ -120,6 +120,7 @@ export default function CommunityProfile() {
   }
 
   const earned = profile.badges.filter((badge) => badge.earnedAt);
+  const shownBadges = [...earned, ...profile.badges.filter((badge) => !badge.earnedAt).slice(0, LOCKED_BADGES_SHOWN)];
   const stats = [
     { label: "Projects completed", value: numberFormat.format(profile.stats.projectsCompleted) },
     { label: "Collaborations", value: numberFormat.format(profile.stats.collaborations) },
@@ -140,7 +141,7 @@ export default function CommunityProfile() {
       <section className="community-card cmh-profile" aria-labelledby="cmh-profile-name">
         <div className="cmh-profile-cover" aria-hidden="true" />
         <div className="cmh-profile-head">
-          <span className={`cmh-profile-avatar${profile.isViewer ? " is-viewer" : ""}`} aria-hidden="true">{initials(profile.name)}</span>
+          <span className={`cmh-profile-avatar${profile.isViewer ? " is-viewer" : ""}`} aria-hidden="true">{profile.name.trim().charAt(0).toUpperCase() || "?"}</span>
           <div className="cmh-profile-id">
             <div className="cmh-profile-name">
               <h1 id="cmh-profile-name">{profile.name}</h1>
@@ -251,7 +252,7 @@ export default function CommunityProfile() {
               <span className="cmh-muted">{earned.length} of {profile.badges.length}</span>
             </div>
             <ul className="community-badge-grid">
-              {profile.badges.map((badge) => {
+              {shownBadges.map((badge) => {
                 const style = BADGE_STYLE[badge.id] ?? { icon: Award, tone: "blue" };
                 const Icon = badge.earnedAt ? style.icon : Lock;
                 return (
