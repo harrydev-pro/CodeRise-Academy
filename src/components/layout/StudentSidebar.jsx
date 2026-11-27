@@ -114,6 +114,11 @@ export default function StudentSidebar({
               >
                 <Icon size={19} />
                 {item.label}
+                {item.badge && (
+                  <span className="ml-auto rounded-md bg-brand-100 px-2 py-0.5 text-[11px] font-semibold text-brand-700">
+                    {item.badge}
+                  </span>
+                )}
               </NavLink>
             );
           })}

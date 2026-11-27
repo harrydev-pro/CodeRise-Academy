@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Bell, CheckCircle2, Info, Trash2 } from "lucide-react";
 
 import EmptyState from "../../components/common/EmptyState";
 import Loader from "../../components/common/Loader";
 import ErrorMessage from "../../components/feedback/ErrorMessage";
 import { PageHeader } from "../../components/ui";
+import CommunityNotifications from "../../features/community/projects/CommunityNotifications";
 import { useApiResource } from "../../hooks/useApiResource";
 import { api } from "../../services/api/api";
 import { formatDate } from "../../utils/formatDate";
 
 export default function Notifications() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const tab = searchParams.get("tab") === "community" ? "community" : "all";
   const { data: notifications, loading, error, reload } = useApiResource("/notifications/me", "notifications");
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState("");
@@ -70,9 +73,42 @@ export default function Notifications() {
     }
   }
 
-  if (loading) return <div className="student-page"><Loader label="Loading notifications…" /></div>;
-  if (error) return <div className="student-page"><ErrorMessage message={error} onRetry={reload} /></div>;
+  // Community tab (S24): ?tab=community shows community notifications only.
+  function selectTab(next) {
+    setSearchParams((current) => {
+      const params = new URLSearchParams(current);
+      if (next === "community") params.set("tab", "community");
+      else params.delete("tab");
+      return params;
+    });
+  }
   const isRead = (item) => item.read || readNow.has(item.id);
+  const feed = Array.isArray(notifications) ? notifications : [];
+  const allUnread = feed.filter((item) => !isRead(item)).length;
+  const communityUnread = feed.filter((item) => item.category === "community" && !isRead(item)).length;
+  const tabs = (
+    <div className="ui-tabs" role="group" aria-label="Filter notifications">
+      <button type="button" className={tab === "all" ? "active" : ""} aria-pressed={tab === "all"} onClick={() => selectTab("all")}>
+        All {allUnread > 0 && <span className="ui-tab-count">{allUnread}</span>}
+      </button>
+      <button type="button" className={tab === "community" ? "active" : ""} aria-pressed={tab === "community"} onClick={() => selectTab("community")}>
+        Community {communityUnread > 0 && <span className="ui-tab-count">{communityUnread}</span>}
+      </button>
+    </div>
+  );
+
+  if (tab === "community") {
+    return (
+      <div className="student-page">
+        <PageHeader eyebrow="YOUR UPDATES" title="Notifications" description="Updates about your applications, projects, courses and the community." />
+        {tabs}
+        <CommunityNotifications />
+      </div>
+    );
+  }
+
+  if (loading) return <div className="student-page"><Loader label="Loading notifications…" /></div>;
+  if (error) return <div className="student-page">{tabs}<ErrorMessage message={error} onRetry={reload} /></div>;
   const unread = notifications.filter((item) => !isRead(item)).length;
 
   return (
@@ -83,6 +119,7 @@ export default function Notifications() {
         description={unread ? `You have ${unread} unread notification${unread === 1 ? "" : "s"}.` : "You're all caught up."}
         actions={unread > 0 && <button type="button" className="btn btn-outline btn-sm" onClick={markAllRead} disabled={busy}>{busy ? "Updating…" : "Mark all as read"}</button>}
       />
+      {tabs}
       {actionError && <ErrorMessage message={actionError} />}
       {notifications.length === 0 ? (
         <EmptyState icon={Bell} title="No notifications yet" description="Updates about your applications, projects, and courses appear here." />

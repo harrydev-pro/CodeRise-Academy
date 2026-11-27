@@ -14,6 +14,7 @@ import {
   BarChart3,
   History,
   CreditCard,
+  UsersRound,
 } from "lucide-react";
 
 export const publicNavigation = [
@@ -76,6 +77,12 @@ export const studentNavigation = [
     icon: ClipboardCheck,
   },
   {
+    label: "Community",
+    path: "/community",
+    icon: UsersRound,
+    badge: "New",
+  },
+  {
     label: "Quiz History",
     path: "/my-results",
     icon: Trophy,
@@ -90,6 +97,40 @@ export const studentNavigation = [
     path: "/profile",
     icon: UserRound,
   },
+];
+
+// Tab bar shown on every /community screen (see layouts/CommunityLayout.jsx).
+export const communityTabs = [
+  { label: "Home", path: "/community" },
+  { label: "Projects", path: "/community/projects" },
+  { label: "Collaborate", path: "/community/collaborate" },
+  { label: "Hackathons", path: "/community/hackathons" },
+  { label: "Competitions", path: "/community/competitions" },
+  { label: "Showcase", path: "/community/showcase" },
+  { label: "Leaderboard", path: "/community/leaderboard" },
+  { label: "Announcements", path: "/community/announcements" },
+  { label: "My Activities", path: "/community/activities" },
+];
+
+// The admin sidebar's "Community" group (A01–A27). Text-only links, as in the design.
+export const adminCommunityNavigation = [
+  { label: "Overview", path: "/admin/community" },
+  { label: "Analytics", path: "/admin/community/analytics" },
+  { label: "Projects", path: "/admin/community/projects" },
+  { label: "Collaborations", path: "/admin/community/collaborations" },
+  { label: "Teams", path: "/admin/community/teams" },
+  { label: "Hackathons", path: "/admin/community/hackathons" },
+  { label: "Competitions", path: "/admin/community/competitions" },
+  { label: "Payments", path: "/admin/community/payments" },
+  { label: "Submissions & reviews", path: "/admin/community/submissions" },
+  { label: "Announcements", path: "/admin/community/announcements" },
+  { label: "Members", path: "/admin/community/members" },
+  { label: "Premium plans", path: "/admin/community/premium" },
+  { label: "Subscriptions", path: "/admin/community/subscriptions" },
+  { label: "Badges", path: "/admin/community/badges" },
+  { label: "Points", path: "/admin/community/points" },
+  { label: "Reports & moderation", path: "/admin/community/moderation" },
+  { label: "Settings", path: "/admin/community/settings" },
 ];
 
 export const adminNavigation = [

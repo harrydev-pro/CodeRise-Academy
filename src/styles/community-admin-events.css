@@ -1,0 +1,221 @@
+/* Admin Community: Collaborations, Teams and Hackathons (A05–A11). Prefix: cae-
+   Builds on community.css tokens and classes; every new colour has a dark value. */
+
+:root {
+  --cae-live-bg: #f5f7ff;
+  --cae-live-border: #c7d2fe;
+  --cae-gold-bg: #fffbeb;
+  --cae-bronze-bg: #fff7ed;
+  --cae-gold-border: #fcd34d;
+  --cae-red-tint: #fee2e2;
+  --cae-red-ink: #b91c1c;
+  --cae-info-bg: #eef2ff;
+  --cae-info-border: #c7d2fe;
+  --cae-warn-bg: #fef3c7;
+  --cae-warn-border: #fcd34d;
+  --cae-warn-ink: #92400e;
+}
+:root[data-theme="dark"] {
+  --cae-live-bg: #171a33;
+  --cae-live-border: #3730a3;
+  --cae-gold-bg: #2a2210;
+  --cae-bronze-bg: #2b1d12;
+  --cae-gold-border: #78591a;
+  --cae-red-tint: #3a1418;
+  --cae-red-ink: #fca5a5;
+  --cae-info-bg: #1e1b4b;
+  --cae-info-border: #3730a3;
+  --cae-warn-bg: #3d2f12;
+  --cae-warn-border: #78591a;
+  --cae-warn-ink: #fcd34d;
+}
+
+/* ---------- shared ---------- */
+.cae-stats { grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); }
+.community-admin-stat.cae-stat:hover { transform: none; box-shadow: none; }
+.cae-stat .community-icon.tone-red,
+.community-icon.tone-red { color: var(--cae-red-ink); background: var(--cae-red-tint); }
+
+.cae-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 20px; }
+.cae-toolbar .community-admin-search { flex: 1 1 280px; max-width: 320px; }
+.cae-toolbar > .community-admin-field:not(.community-admin-search) { flex: 0 1 200px; }
+.cae-showing { margin: 0 0 0 auto; color: var(--cm-muted); font-size: 0.88rem; }
+
+.cae-sub { display: block; margin-top: 2px; color: var(--cm-muted); font-size: 0.78rem; font-weight: 500; }
+.cae-muted { color: var(--cm-muted); }
+.cae-hint { margin: 0; color: var(--cm-muted); font-size: 0.8rem; line-height: 1.5; }
+.cae-label { color: var(--cm-ink); font-size: 0.88rem; font-weight: 700; }
+.cae-break { overflow-wrap: anywhere; }
+.cae-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.cae-header-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.cae-card-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+
+.cae-info { display: flex; align-items: flex-start; gap: 8px; margin: 0; padding: 12px 14px; border: 1px solid var(--cae-info-border); border-radius: 10px; color: var(--cm-admin-strong); background: var(--cae-info-bg); font-size: 0.86rem; line-height: 1.5; }
+.cae-info svg { flex: none; margin-top: 2px; }
+.cae-warning { margin: 0; padding: 12px 14px; border: 1px solid var(--cae-warn-border); border-radius: 10px; color: var(--cae-warn-ink); background: var(--cae-warn-bg); font-size: 0.86rem; line-height: 1.5; }
+.cae-restore { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; padding: 12px 16px; border: 1px solid var(--cae-warn-border); border-radius: 12px; color: var(--cae-warn-ink); background: var(--cae-warn-bg); }
+.cae-restore p { margin: 0; font-size: 0.9rem; }
+
+.cae-menu-button { border-color: var(--cm-border); }
+
+.cae-progress { display: inline-flex; align-items: center; gap: 10px; }
+.cae-progress-track { display: block; width: 120px; height: 6px; overflow: hidden; border-radius: 999px; background: var(--cm-neutral-tint); }
+.cae-progress-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--cm-blue), #0d9488); }
+.cae-progress-value { min-width: 3.2em; color: var(--cm-muted); font-variant-numeric: tabular-nums; }
+
+.cae-person { display: grid; text-align: left; }
+.cae-person strong { color: var(--cm-ink); font-weight: 700; }
+.community-table th.cae-person { color: var(--cm-text); background: transparent; font-size: inherit; letter-spacing: 0; text-transform: none; border-bottom: 1px solid var(--cm-border); padding: 13px 14px; }
+
+.cae-dialog-form { display: grid; gap: 14px; color: var(--cm-text); font-size: 0.92rem; line-height: 1.55; }
+.cae-dialog-form p { margin: 0; }
+.cae-dialog-lead { display: flex; align-items: flex-start; gap: 14px; }
+.cae-dialog-lead p { margin: 0; }
+
+/* Radio pill (Free / Premium, Individual / Teams) */
+.cae-radio-pill { display: inline-flex; flex-wrap: wrap; gap: 0; justify-self: start; overflow: hidden; border: 1px solid var(--cm-border); border-radius: 10px; }
+.cae-radio-pill label { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; color: var(--cm-text); font-size: 0.9rem; font-weight: 600; cursor: pointer; }
+.cae-radio-pill label + label { border-left: 1px solid var(--cm-border); }
+.cae-radio-pill label.is-checked { color: var(--cm-admin-strong); background: var(--cae-info-bg); }
+.cae-radio-pill input { width: 16px; height: 16px; accent-color: var(--cm-admin); }
+.cae-radio-pill label:focus-within { outline: 2px solid var(--cm-admin); outline-offset: -2px; }
+
+/* ---------- A05 Collaborations ---------- */
+.cae-table-collabs { min-width: 1000px; }
+
+/* ---------- A06 Collaboration editor ---------- */
+.cae-check-row { display: flex; flex-wrap: wrap; gap: 12px 24px; }
+.cae-side-text { margin: 0; color: var(--cm-muted); font-size: 0.86rem; line-height: 1.55; }
+.cae-side-actions { display: grid; gap: 10px; }
+.cae-side-actions .btn { width: 100%; justify-content: center; }
+.cae-roles { display: grid; gap: 10px; }
+.cae-roles-head,
+.cae-role-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 4fr) 38px; gap: 10px; align-items: center; }
+.cae-roles-head { color: var(--cm-muted); font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+.cae-role-row .ui-input { width: 100%; }
+.cae-half { display: grid; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) {
+  .cae-half { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+/* ---------- A07 Teams ---------- */
+.cae-table-teams { min-width: 1040px; }
+.community-table th.cae-team-cell { padding: 8px 10px; border-bottom: 1px solid var(--cm-border); background: transparent; color: var(--cm-ink); font-size: inherit; letter-spacing: 0; text-transform: none; }
+.cae-expand { display: inline-flex; align-items: center; gap: 6px; padding: 6px; border: 0; border-radius: 8px; color: var(--cm-ink); background: transparent; font: inherit; font-weight: 700; cursor: pointer; }
+.cae-expand svg { color: var(--cm-muted); transition: transform 0.15s ease; }
+.cae-expand[aria-expanded="true"] svg { transform: rotate(180deg); }
+.cae-expand:hover { background: var(--cm-surface-soft); }
+.cae-expand:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.cae-members { display: inline-flex; align-items: center; gap: 8px; color: var(--cm-muted); }
+.cae-row-open td,
+.cae-row-open th { border-bottom-color: transparent; }
+.community-table .cae-detail-row > td { padding: 0 16px 18px; white-space: normal; }
+.cae-team-details { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; padding: 18px; border: 1px solid var(--cm-border); border-radius: 14px; background: var(--cm-surface-soft); }
+@media (min-width: 1100px) {
+  .cae-team-details { grid-template-columns: minmax(0, 3fr) minmax(240px, 1fr); }
+}
+.cae-team-details h3 { margin: 0 0 10px; color: var(--cm-ink); font-size: 0.95rem; font-weight: 700; }
+.cae-contribution { min-width: 0; }
+.cae-inner-scroll { overflow-x: auto; }
+.community-table.cae-inner-table { min-width: 560px; background: var(--cm-surface); }
+.cae-inner-table tbody th { padding: 12px 14px; border-bottom: 1px solid var(--cm-border); color: var(--cm-ink); background: transparent; font-size: inherit; font-weight: 600; letter-spacing: 0; text-align: left; text-transform: none; }
+.cae-team-meta { display: grid; align-content: start; gap: 6px; min-width: 0; color: var(--cm-muted); font-size: 0.86rem; }
+.cae-team-meta p { margin: 0; }
+.cae-team-meta .cae-actions { margin-top: 8px; }
+
+/* ---------- A08 Hackathons ---------- */
+.cae-live { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; padding: 22px 24px; border: 1px solid var(--cae-live-border); border-radius: 16px; background: var(--cae-live-bg); }
+.cae-live-tag { align-self: center; }
+.cae-live-text { flex: 1 1 320px; }
+.cae-live-text h2 { margin: 0 0 4px; color: var(--cm-ink); font-size: 1.1rem; font-weight: 800; }
+.cae-live-text p { margin: 0; color: var(--cm-muted); font-size: 0.86rem; line-height: 1.5; }
+.cae-live-timer { display: grid; justify-items: center; }
+.cae-live-timer strong { color: var(--cm-admin-strong); font-size: 1.8rem; font-weight: 800; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.cae-live-timer span { color: var(--cm-muted); font-size: 0.78rem; }
+
+.cae-tabs { display: flex; gap: 6px; padding: 0 20px; overflow-x: auto; border-bottom: 1px solid var(--cm-border); }
+.cae-tab { display: inline-flex; flex: none; align-items: center; gap: 8px; padding: 14px 14px 12px; border: 0; border-bottom: 2px solid transparent; color: var(--cm-text); background: transparent; font: inherit; font-weight: 700; cursor: pointer; }
+.cae-tab .community-chip-count { display: inline-grid; min-width: 22px; padding: 1px 6px; border-radius: 999px; background: var(--cm-neutral-tint); font-size: 0.72rem; text-align: center; }
+.cae-tab:hover { color: var(--cm-ink); }
+.cae-tab.active { border-bottom-color: var(--cm-admin); color: var(--cm-admin-strong); }
+.cae-tab:focus-visible { outline: 2px solid var(--cm-admin); outline-offset: -2px; border-radius: 6px; }
+.cae-table-hackathons { min-width: 1100px; }
+
+.cae-recent { padding: 20px; border-top: 1px solid var(--cm-border); }
+.cae-recent h2 { margin: 0 0 8px; color: var(--cm-ink); font-size: 1rem; font-weight: 700; }
+.cae-recent ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.cae-recent li { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 14px 0; color: var(--cm-text); font-size: 0.9rem; }
+.cae-recent li + li { border-top: 1px solid var(--cm-border); }
+.cae-recent li strong { color: var(--cm-ink); }
+.cae-recent li .btn { justify-self: start; }
+@media (min-width: 900px) {
+  .cae-recent li { grid-template-columns: minmax(0, 2.2fr) 1.1fr 1.1fr 1.8fr auto; align-items: center; gap: 16px; padding-inline: 16px; }
+}
+
+/* ---------- A09 Hackathon editor ---------- */
+.cae-first-prize { display: grid; gap: 10px; padding: 14px; border: 1px solid var(--cm-purple-border); border-radius: 12px; background: var(--cm-purple-soft); }
+.cae-first-prize-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+.cae-first-prize-head label { color: var(--cm-ink); font-size: 0.9rem; font-weight: 700; }
+.cae-first-prize .ui-input { width: 100%; }
+.cae-switch { position: relative; display: flex; align-items: flex-start; gap: 10px; color: var(--cm-text); font-size: 0.82rem; line-height: 1.4; cursor: pointer; }
+.cae-switch input { position: absolute; width: 40px; height: 22px; margin: 0; opacity: 0; cursor: pointer; }
+.cae-switch-track { position: relative; flex: none; width: 40px; height: 22px; border-radius: 999px; background: var(--cm-border); transition: background 0.15s ease; }
+.cae-switch-track::after { position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 999px; background: #ffffff; content: ""; transition: transform 0.15s ease; }
+.cae-switch input:checked + .cae-switch-track { background: var(--cm-admin); }
+.cae-switch input:checked + .cae-switch-track::after { transform: translateX(18px); }
+.cae-switch input:focus-visible + .cae-switch-track { outline: 2px solid var(--cm-admin); outline-offset: 2px; }
+.cae-small-check { align-items: flex-start; font-size: 0.84rem; }
+.cae-small-check input { flex: none; margin-top: 2px; }
+.cae-judges { display: grid; gap: 8px; padding: 8px; border: 1px solid var(--cm-border); border-radius: 10px; }
+.cae-judges ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.cae-judges .ui-input { width: 100%; }
+.cae-judge-initials { margin-right: 2px; font-size: 0.66rem; opacity: 0.75; }
+.cae-banner-preview img { aspect-ratio: 8 / 3; }
+.community-criteria-total strong { display: inline-flex; align-items: center; gap: 6px; }
+
+/* ---------- A10 Participants ---------- */
+.cae-table-participants { min-width: 980px; }
+
+/* ---------- A11 Submissions ---------- */
+.cae-header-buttons { margin-top: 14px; }
+.cae-published-tag { padding: 8px 14px; font-size: 0.85rem; }
+.cae-table-submissions { min-width: 1120px; }
+.community-table th.cae-person { font-weight: 400; }
+.cae-place-1 td,
+.cae-place-1 th,
+.cae-place-3 td,
+.cae-place-3 th { background: var(--cae-gold-bg); }
+.cae-place-3 td,
+.cae-place-3 th { background: var(--cae-bronze-bg); }
+.cae-rank { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.75rem; font-weight: 700; }
+.cae-rank-1 { color: var(--cm-amber); background: var(--cm-amber-tint); }
+.cae-rank-2 { color: var(--cm-text); background: var(--cm-neutral-tint); }
+.cae-rank-3 { color: var(--cm-orange); background: var(--cm-orange-tint); }
+.cae-judge-cell { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.cae-assign.ui-input { width: auto; min-width: 150px; padding-block: 6px; }
+.cae-winners { display: grid; gap: 12px; max-width: 720px; }
+.cae-winners h2 { margin: 0; }
+.cae-winners ol { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.cae-winners li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; padding: 14px 16px; border: 1px solid var(--cm-border); border-radius: 12px; }
+.cae-winners li.is-first { border-color: var(--cae-gold-border); background: var(--cae-gold-bg); }
+.cae-winners li strong { color: var(--cm-ink); }
+
+/* ---------- small screens ---------- */
+@media (max-width: 639px) {
+  .cae-toolbar { display: grid; grid-template-columns: minmax(0, 1fr); padding: 16px; }
+  .cae-toolbar .community-admin-search,
+  .cae-toolbar > .community-admin-field:not(.community-admin-search) { max-width: none; }
+  .cae-showing { margin: 0; }
+  .cae-tabs { padding: 0 8px; }
+  .cae-live { padding: 18px; }
+  .cae-live-timer { justify-items: start; }
+  .cae-roles-head { display: none; }
+  .cae-role-row { grid-template-columns: minmax(0, 1fr) 38px; padding-bottom: 10px; border-bottom: 1px solid var(--cm-border); }
+  .cae-role-row .ui-input:nth-child(2) { grid-column: 1; }
+  .cae-role-row .community-icon-button { grid-column: 2; grid-row: 1; }
+  .cae-recent { padding: 16px; }
+  .cae-team-details { padding: 14px; }
+  .community-table .cae-detail-row > td { padding: 0 8px 14px; }
+  .cae-actions > .btn { flex: 1 1 auto; }
+  .community-page-header .cae-actions { width: 100%; }
+}

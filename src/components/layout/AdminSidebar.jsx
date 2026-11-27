@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { Settings, X, LogOut } from "lucide-react";
 
-import { adminNavigation } from "../../config/navigation";
+import { adminCommunityNavigation, adminNavigation } from "../../config/navigation";
 import { useAuth } from "../../hooks/useAuth";
 
 export default function AdminSidebar({
@@ -96,6 +96,30 @@ export default function AdminSidebar({
               </NavLink>
             );
           })}
+
+          <div className="admin-nav-group" role="group" aria-labelledby="admin-community-heading">
+            <p id="admin-community-heading" className="admin-nav-group-title">
+              Community <span className="admin-nav-new">New</span>
+            </p>
+            {adminCommunityNavigation.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === "/admin/community"}
+                onClick={onClose}
+                className={({ isActive }) =>
+                  [
+                    "admin-nav-sublink flex items-center rounded-xl px-4 text-sm font-medium transition",
+                    isActive
+                      ? "admin-nav-link-active text-white"
+                      : "text-gray-300 hover:bg-white/10 hover:text-white",
+                  ].join(" ")
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
         </nav>
 
         <div className="border-t border-white/10 p-4">

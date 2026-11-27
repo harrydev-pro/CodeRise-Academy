@@ -1,5 +1,6 @@
 // Lightweight SVG charts (no chart library). They scale to their container's width.
-export function LineChart({ points, label, height = 160 }) {
+// `caption` replaces the default "label · N total" text, e.g. for running totals where a sum means nothing.
+export function LineChart({ points, label, height = 160, caption }) {
   const width = 600;
   const pad = { top: 12, right: 12, bottom: 26, left: 34 };
   if (!points?.length) return <p className="muted-text">No data for this period.</p>;
@@ -11,7 +12,7 @@ export function LineChart({ points, label, height = 160 }) {
   const total = points.reduce((sum, point) => sum + point.count, 0);
   return (
     <figure className="ui-chart">
-      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={`${label}: ${total} in total`} preserveAspectRatio="none">
+      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={caption ?? `${label}: ${total} in total`} preserveAspectRatio="none">
         {[0, 0.5, 1].map((ratio) => (
           <g key={ratio}>
             <line x1={pad.left} x2={width - pad.right} y1={y(max * ratio)} y2={y(max * ratio)} className="ui-chart-grid" />
@@ -24,7 +25,7 @@ export function LineChart({ points, label, height = 160 }) {
           <text key={point.day} x={x(index)} y={height - 6} textAnchor="middle" className="ui-chart-axis">{point.day.slice(5)}</text>
         ))}
       </svg>
-      <figcaption>{label} · {total} total</figcaption>
+      <figcaption>{caption ?? `${label} · ${total} total`}</figcaption>
     </figure>
   );
 }

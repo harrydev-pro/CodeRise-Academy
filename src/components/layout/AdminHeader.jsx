@@ -5,6 +5,7 @@ import ThemeToggle from "../../features/theme/ThemeToggle";
 
 export default function AdminHeader({
   title = "Admin dashboard",
+  section = null,
   onMenuClick,
   menuButtonRef,
   menuOpen,
@@ -33,7 +34,10 @@ export default function AdminHeader({
         </button>
 
         <div className="min-w-0">
-          <p className="admin-header-context">CODERISE ACADEMY <span>/</span> ADMIN</p>
+          <p className="admin-header-context">
+            CODERISE ACADEMY <span>/</span> ADMIN
+            {section && <> <span>/</span> {section.toUpperCase()}</>}
+          </p>
           <p className="m-0 truncate text-lg font-bold text-ink sm:text-xl">{title}</p>
         </div>
       </div>
