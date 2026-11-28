@@ -221,6 +221,9 @@ function RegistrationCard({ competition }) {
     action = (
       <>
         <p className="cmc-registered" role="status"><CircleCheck size={18} aria-hidden="true" /> You're registered</p>
+        {competition.acceptingSubmissions !== false && (
+          <Link to={`${path}/entry`} className="btn btn-primary btn-full">Submit your entry <ArrowRight size={17} aria-hidden="true" /></Link>
+        )}
         <Link to="/community/activities?tab=competitions" className="btn btn-outline btn-full">My registrations</Link>
       </>
     );
@@ -244,12 +247,12 @@ function RegistrationCard({ competition }) {
       </div>
       <div className="community-participants-head">
         <span>Participants</span>
-        <strong>{formatNumber(competition.participants)} / {formatNumber(competition.capacity)}</strong>
+        <strong>{formatNumber(competition.participants)}{competition.capacity == null ? "" : ` / ${formatNumber(competition.capacity)}`}</strong>
       </div>
       <div className="community-progress community-progress-wide community-progress-gradient cmc-bar" role="progressbar" aria-label="Places taken" aria-valuenow={fill} aria-valuemin={0} aria-valuemax={100}>
         <span style={{ width: `${fill}%` }} />
       </div>
-      <p className="cmc-small-note">{formatNumber(placesLeft(competition))} places left</p>
+      <p className="cmc-small-note">{competition.capacity == null ? "Unlimited places" : `${formatNumber(placesLeft(competition))} places left`}</p>
 
       <dl className="cmc-facts cmc-facts-bordered">
         <div><dt>Entry fee</dt><dd>{free ? "Free" : `${formatUsd(competition.entryFeeUsd)} USD`}</dd></div>

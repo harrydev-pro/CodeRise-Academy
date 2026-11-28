@@ -29,7 +29,8 @@ export function daysUntil(iso) {
 
 export const isRegistrationOpen = (competition) => competition.status === "open" || competition.status === "closing_soon";
 export const isFull = (competition) => competition.capacity > 0 && competition.participants >= competition.capacity;
-export const placesLeft = (competition) => Math.max(0, (competition.capacity ?? 0) - (competition.participants ?? 0));
+// capacity null means no limit; placesLeft is then null and pages say "Unlimited".
+export const placesLeft = (competition) => (competition.capacity == null ? null : Math.max(0, competition.capacity - (competition.participants ?? 0)));
 export const competitionPath = (id) => `/community/competitions/${encodeURIComponent(id)}`;
 
 

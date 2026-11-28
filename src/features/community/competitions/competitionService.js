@@ -167,3 +167,47 @@ function pageSampleResults(sample, { page, pageSize }) {
     viewerEntry: entries.find((entry) => entry.isViewer) ?? null,
   };
 }
+
+// ---- Competition entry (registered students only) ----
+// GET /community/competitions/:id/entry -> { competition, entry, acceptingSubmissions, serverNow }
+// PUT /community/competitions/:id/entry { title, description, links:[{type,url}], confirmed, final }
+//      final false saves a draft; final true submits. Submitted entries can be updated until the deadline.
+const sampleEntries = new Map();
+
+export async function getCompetitionEntry({ id }) {
+  try {
+    const data = await requestData(`${competitionPath(id)}/entry`);
+    return { ...data, isSample: false };
+  } catch (error) {
+    if (import.meta.env.DEV && (!error.status || error.status === 404 || error.status >= 500)) {
+      const competition = sampleCompetitionDetails(id);
+      if (!competition) throw new Error("We couldn't find that competition. It may have been removed.", { cause: error });
+      return {
+        competition: { id: competition.id, title: competition.title, submissionDeadline: competition.submissionDeadline ?? competition.registrationClosesAt, submissionRequirements: "", resultsPublished: competition.status === "results" },
+        entry: sampleEntries.get(id) ?? null,
+        acceptingSubmissions: competition.status !== "results",
+        serverNow: new Date().toISOString(),
+        isSample: true,
+      };
+    }
+    throw error;
+  }
+}
+
+export function saveCompetitionEntry(id, fields, { sample } = {}) {
+  return mutate(
+    () => send("PUT", `${competitionPath(id)}/entry`, fields),
+    () => {
+      const previous = sampleEntries.get(id);
+      const now = new Date().toISOString();
+      const submitted = fields.final || previous?.status === "submitted";
+      const entry = {
+        id: "sample-entry", status: submitted ? "submitted" : "draft", title: fields.title, description: fields.description,
+        links: fields.links, submittedAt: submitted ? previous?.submittedAt ?? now : null, updatedAt: now, rank: null, placement: null,
+      };
+      sampleEntries.set(id, entry);
+      return { entry, isSample: true };
+    },
+    sample,
+  );
+}

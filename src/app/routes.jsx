@@ -63,6 +63,7 @@ import CompetitionDetails from "../pages/community/competitions/CompetitionDetai
 import CompetitionRegistration from "../pages/community/competitions/CompetitionRegistration";
 import CompetitionCheckout from "../pages/community/competitions/CompetitionCheckout";
 import CompetitionResults from "../pages/community/competitions/CompetitionResults";
+import CompetitionEntry from "../pages/community/competitions/CompetitionEntry";
 import PremiumPlans from "../pages/premium/PremiumPlans";
 import PremiumCheckout from "../pages/premium/PremiumCheckout";
 import Subscription from "../pages/premium/Subscription";
@@ -205,6 +206,7 @@ export default function AppRoutes() {
           <Route path="competitions/:id/register" element={<CompetitionRegistration />} />
           <Route path="competitions/:id/checkout" element={<CompetitionCheckout />} />
           <Route path="competitions/:id/results" element={<CompetitionResults />} />
+          <Route path="competitions/:id/entry" element={<CompetitionEntry />} />
           <Route path="competitions/*" element={<CommunityComingSoon title="Competitions" />} />
           <Route path="showcase" element={<ProjectShowcase />} />
           <Route path="u/:username" element={<CommunityProfile />} />
