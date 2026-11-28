@@ -57,7 +57,11 @@
 .cmp-hero-body { min-width: 0; }
 .cmp-hero-body .community-tags { margin-bottom: 8px; }
 .cmp-hero h1 { margin: 0 0 8px; color: var(--cm-ink); font-size: clamp(1.5rem, 3.4vw, 2rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
-.cmp-hero-text { max-width: 68ch; margin: 0 0 12px; color: var(--cm-muted); line-height: 1.6; }
+.cmp-hero-text { max-width: 68ch; margin: 0 0 12px; color: var(--cm-muted); font-size: 1rem; line-height: 1.6; }
+/* Fallback when a project has no short summary: show the start of the brief only. */
+.cmp-hero-text.is-excerpt { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; }
+.cmp-about p { max-width: 72ch; margin: 0 0 14px; color: var(--cm-text); line-height: 1.7; }
+.cmp-about p:last-child { margin-bottom: 0; }
 .cmp-hero-meta { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 0; padding: 0; color: var(--cm-muted); font-size: 0.86rem; list-style: none; }
 .cmp-hero-meta li { display: inline-flex; align-items: center; gap: 6px; }
 .cmp-hero-actions { display: grid; gap: 10px; align-content: center; }
