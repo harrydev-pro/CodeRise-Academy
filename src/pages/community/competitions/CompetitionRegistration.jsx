@@ -231,7 +231,7 @@ function RegistrationForm({ competition, sample }) {
             </div>
             <dl className="cmc-facts">
               <div><dt>Entry fee</dt><dd>{free ? "Free" : formatUsd(competition.entryFeeUsd)}</dd></div>
-              <div><dt>Places left</dt><dd>{formatNumber(placesLeft(competition))} of {formatNumber(competition.capacity)}</dd></div>
+              <div><dt>Places left</dt><dd>{competition.capacity == null ? "Unlimited" : `${formatNumber(placesLeft(competition))} of ${formatNumber(competition.capacity)}`}</dd></div>
               <div><dt>Registration closes</dt><dd>{formatDate(competition.registrationClosesAt)}</dd></div>
             </dl>
             <button type="submit" className="btn btn-primary btn-full cmc-submit" disabled={sending} aria-describedby={complete ? undefined : "cmc-hint"}>

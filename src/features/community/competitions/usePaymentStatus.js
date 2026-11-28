@@ -25,7 +25,7 @@ export function usePaymentStatus(competitionId, reference) {
         const result = await getCompetitionPayment(competitionId, reference);
         if (!active) return;
         const payment = result?.payment ?? {};
-        if (payment.status === "successful" || payment.status === "failed") {
+        if (payment.status === "successful" || payment.status === "failed" || payment.status === "refunded") {
           setState({ key, status: payment.status, payment, error: "" });
         } else if (checks >= MAX_CHECKS) {
           setState({ key, status: "slow", payment, error: "" });

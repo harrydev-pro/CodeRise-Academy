@@ -157,6 +157,19 @@ function Checkout({ competition, sample }) {
     );
   }
 
+  if (reference && payment.status === "refunded") {
+    return (
+      <Shell competition={competition} sample={sample} step={2}>
+        <section className="community-card community-empty">
+          <span className="community-icon tone-blue"><CircleAlert size={22} aria-hidden="true" /></span>
+          <h2>This entry fee was refunded</h2>
+          <p className="muted-text">Your payment was refunded, so you're no longer registered for this competition.</p>
+          <Link to={path} className="btn btn-primary">Back to competition</Link>
+        </section>
+      </Shell>
+    );
+  }
+
   // ---- Pay (first time, or again after a declined payment) ----
   const declined = reference && payment.status === "failed";
 
