@@ -107,12 +107,20 @@ export default function ProjectDetails() {
     primary = <Link to="/community/my-projects" className="btn btn-primary">View my submission <ArrowRight size={17} aria-hidden="true" /></Link>;
   }
 
+  // Only offer the brief when the project has one (sample mode keeps the button to show the layout).
   let briefAction = null;
-  if (!locked) {
-    briefAction = briefUrl
-      ? <a href={briefUrl} className="btn btn-outline" target="_blank" rel="noreferrer">Download brief (PDF)</a>
-      : <button type="button" className="btn btn-outline" onClick={unavailable}>Download brief (PDF)</button>;
+  if (!locked && briefUrl) {
+    briefAction = <a href={briefUrl} className="btn btn-outline" target="_blank" rel="noreferrer">Download brief (PDF)</a>;
+  } else if (!locked && sample) {
+    briefAction = <button type="button" className="btn btn-outline" onClick={unavailable}>Download brief (PDF)</button>;
   }
+
+  // The header shows the short card summary; the full brief gets its own section below.
+  const paragraphs = paragraphsOf(project.description);
+  const summary = project.summary?.trim() || paragraphs[0] || "";
+  const about = paragraphs.length > 1 || (paragraphs[0] && paragraphs[0] !== summary)
+    ? <About paragraphs={paragraphs} />
+    : null;
 
   return (
     <div className="cmp-page">
@@ -137,7 +145,7 @@ export default function ProjectDetails() {
             <span className="community-tag tag-blue">{project.category}</span>
           </div>
           <h1>{project.title}</h1>
-          {project.description && <p className="cmp-hero-text">{project.description}</p>}
+          {summary && <p className={`cmp-hero-text${project.summary?.trim() ? "" : " is-excerpt"}`}>{summary}</p>}
           <ul className="cmp-hero-meta">
             <li><Clock size={15} aria-hidden="true" /> {project.duration}</li>
             {typeof project.started === "number" && <li><User size={15} aria-hidden="true" /> {numberFormat.format(project.started)} students started</li>}
@@ -153,6 +161,7 @@ export default function ProjectDetails() {
       {locked ? (
         <div className="cmp-layout">
           <div className="cmp-main">
+            {about}
             {project.previewAvailable !== false && project.objectives?.length > 0 && <Objectives items={project.objectives} />}
             {project.previewAvailable !== false && project.steps?.length > 0 && (
               <section className="community-card cmp-section" aria-labelledby="cmp-steps">
@@ -173,6 +182,7 @@ export default function ProjectDetails() {
       ) : (
         <div className="cmp-layout">
           <div className="cmp-main">
+            {about}
             {project.objectives?.length > 0 && <Objectives items={project.objectives} />}
 
             {project.requirements?.length > 0 && (
@@ -307,6 +317,22 @@ export default function ProjectDetails() {
 
       <Toast message={toast?.message} type={toast?.type} onClose={closeToast} />
     </div>
+  );
+}
+
+// Splits the brief on blank lines (or single line breaks) into paragraphs.
+function paragraphsOf(text) {
+  if (!text) return [];
+  const blocks = String(text).split(/\n\s*\n/).map((part) => part.trim()).filter(Boolean);
+  return blocks.length > 1 ? blocks : String(text).split(/\n/).map((part) => part.trim()).filter(Boolean);
+}
+
+function About({ paragraphs }) {
+  return (
+    <section className="community-card cmp-section cmp-about" aria-labelledby="cmp-about">
+      <h2 id="cmp-about">About this project</h2>
+      {paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+    </section>
   );
 }
 
